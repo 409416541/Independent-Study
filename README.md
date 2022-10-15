@@ -1,3 +1,1 @@
 # Independent-Study
-aaa
-a
