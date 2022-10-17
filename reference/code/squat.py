@@ -1,4 +1,4 @@
-from cvzone.PoseModule import PoseDetector
+from PoseModule import PoseDetector
 import cv2
 import numpy as np
 
