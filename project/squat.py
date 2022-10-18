@@ -1,10 +1,10 @@
 from PoseModule import PoseDetector
-import globaluse
+import Globaluse
 import cv2
 import numpy as np
 
 '''
-cap = cv2.VideoCapture("./reference/code/media/Squat.mp4")
+cap = cv2.VideoCapture("./project/media-for-test/Squat.mp4")
 '''
 
 cap = cv2.VideoCapture(0)
@@ -26,7 +26,7 @@ while True:
             angle, img = detector.findAngle(lmList[24], lmList[26],
                                             lmList[28], img)
             # 顯示進度條
-            globaluse.thebar(img, angle, 95, 175)
+            Globaluse.thebar(img, angle, 95, 175)
             if angle <= 110:  # 目前狀態:蹲下
                 if dir == 0:  # 之前狀態:站起
                     count = count + 0.5
@@ -35,7 +35,7 @@ while True:
                 if dir == 1:  # 之前狀態:蹲下
                     count = count + 0.5
                     dir = 0   # 更新狀態:站起
-            globaluse.thetext(img, str(int(count)))
+            Globaluse.thetext(img, str(int(count)))
         cv2.imshow("Pose", img)        
     else:
         break

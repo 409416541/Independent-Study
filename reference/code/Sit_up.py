@@ -2,7 +2,7 @@ from PoseModule import PoseDetector
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture("./reference/code/media/Site_up.mp4")
+cap = cv2.VideoCapture("./reference/code/media/Sit_Up.mp4")
 detector = PoseDetector()
 dir = 0  # 0: 仰臥 1: 起坐
 count = 0
