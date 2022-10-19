@@ -3,7 +3,7 @@ import Globaluse
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture("./project/media-for-test/Push_Up.mp4")
+cap = cv2.VideoCapture("./Project/Test_Media/Push_Up.mp4") #使用影片
 
 if not cap.isOpened():
     print("Cannot open vedio")
