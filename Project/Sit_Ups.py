@@ -25,7 +25,6 @@ while True:
     success, img = cap.read()
 
     if success:
-        h, w, c = img.shape
         pose, img = detector.findPose(img, draw=True)
 
         if pose:
