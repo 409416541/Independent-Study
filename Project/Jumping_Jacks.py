@@ -35,7 +35,7 @@ while True:
                                              lmList[23], img)
 
             # 顯示進度條
-            Globaluse.thebar(img, angle2, 0, 180)
+            Globaluse.thebar(img, angle2, 80, 100)
 
             # 目前狀態::開
             if angle2 <= 90 and angle2 >= 70 and angle1 >= 0 and angle1 <= 30:
