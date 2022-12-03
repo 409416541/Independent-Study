@@ -10,3 +10,4 @@ def thecount(img, count):
     cv2.putText(img, count, (20, 40),
                cv2.FONT_HERSHEY_SIMPLEX, 
                1, (240, 92, 186), 5)
+

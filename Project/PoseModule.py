@@ -1,26 +1,16 @@
-"""
-Pose Module
-By: Computer Vision Zone
-Website: https://www.computervision.zone/
-"""
 import cv2
 import mediapipe as mp
 import math
 
+'''
+The reference from cvzone
+URL : https://www.computervision.zone/lessons/code-files-14/
+Title : PoseModule.py
+'''
 
 class PoseDetector:
-    """
-    Estimates Pose points of a human body using the mediapipe library.
-    """
-
     def __init__(self, mode=False, smooth=True,
                  detectionCon=0.5, trackCon=0.5):
-        """
-        :param mode: In static mode, detection is done on each image: slower
-        :param smooth: Smoothness Flag
-        :param detectionCon: Minimum Detection Confidence Threshold
-        :param trackCon: Minimum Tracking Confidence Threshold
-        """
 
         self.mode = mode
         self.smooth = smooth
@@ -36,12 +26,6 @@ class PoseDetector:
         self.lmList = [] 
 
     def findPose(self, img, draw=True, bboxWithHands=False):
-        """
-        Find the pose landmarks in an Image of BGR color space.
-        :param img: Image to find the pose in.
-        :param draw: Flag to draw the output on the image.
-        :return: Image with or without drawings
-        """
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
         mylmList = []
@@ -92,17 +76,6 @@ class PoseDetector:
             return poseInfo
 
     def findAngle(self, p1, p2, p3, img=None):
-        """
-        Finds angle between three landmark points.
-        :param img: Image to draw output on.
-        :param p1: Point1
-        :param p2: Point2
-        :param p3: Point3
-        :param img: Image to draw output on.
-        :return: Angle
-                 Image with or without drawings
-        """
-
         # Get the landmarks
         x1, y1 = p1
         x2, y2 = p2
@@ -130,50 +103,3 @@ class PoseDetector:
             return angle, img
         else:
             return angle
-
-    def findDistance(self, p1, p2, img=None):
-        """
-        Find the distance between two landmark points.
-        :param p1: Point1
-        :param p2: Point2
-        :param img: Image to draw on.
-        :return: Distance between the points
-                 Line information
-                 Image with output drawn                 
-        """ 
-        x1, y1 = p1
-        x2, y2 = p2
-        cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
-        length = math.hypot(x2 - x1, y2 - y1)
-        info = [(x1, y1), (x2, y2), (cx, cy)]
-        if img is not None:
-            cv2.line(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
-            cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
-            cv2.circle(img, (x2, y2), 15, (255, 0, 255), cv2.FILLED)
-            cv2.circle(img, (cx, cy), 15, (0, 0, 255), cv2.FILLED)
-            cv2.putText(img, str(int(length)), (cx - 50, cy + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2) 
-            return length, info, img
-        else:
-            return length, info
-
-    def angleCheck(self, myAngle, targetAngle, addOn=20):
-        return targetAngle - addOn < myAngle < targetAngle + addOn
-
-
-def main():
-    cap = cv2.VideoCapture(0)
-    detector = PoseDetector()
-    while True:
-        success, img = cap.read()
-        pose, img = detector.findPose(img, bboxWithHands=False)
-        if pose:
-            center = pose["center"]
-            cv2.circle(img, center, 5, (255, 0, 255), cv2.FILLED)
-
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
-
-
-if __name__ == "__main__":
-    main()

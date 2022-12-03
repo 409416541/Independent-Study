@@ -1,7 +1,6 @@
 from PoseModule import PoseDetector
 import Globaluse
 import cv2
-import numpy as np
 
 cap = cv2.VideoCapture("./Project/Test_Media/leg_raises.mp4")
 
