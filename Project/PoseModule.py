@@ -32,11 +32,14 @@ class PoseDetector:
         if self.results.pose_landmarks:
             for _, landmark in enumerate(self.results.pose_landmarks.landmark):
                 h, w = img.shape[:2]
-                cx, cy = int(landmark.x * w), int(landmark.y * h)
-                landmarks.append([cx, cy])
+                x, y = int(landmark.x * w), int(landmark.y * h)
+                landmarks.append([x, y])
 
-        if draw:
-            return landmarks, img
+            if draw:
+                self.mpDraw.draw_landmarks(img, self.results.pose_landmarks,
+                                           self.mpPose.POSE_CONNECTIONS)
+                
+        return landmarks, img
 
     def findAngle(self, p1, p2, p3, img=None):
 
