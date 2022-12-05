@@ -25,61 +25,26 @@ class PoseDetector:
                                      min_tracking_confidence=self.trackCon)
         self.lmList = [] 
 
-    def findPose(self, img, draw=True, bboxWithHands=False):
+    def findPose(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
-        mylmList = []
-        poseInfo = {}
+        landmarks = []
         if self.results.pose_landmarks:
-            for id, lm in enumerate(self.results.pose_landmarks.landmark):
-                h, w, c = img.shape
-                cx, cy = int(lm.x * w), int(lm.y * h)
-                mylmList.append([cx, cy])
+            for _, landmark in enumerate(self.results.pose_landmarks.landmark):
+                h, w = img.shape[:2]
+                cx, cy = int(landmark.x * w), int(landmark.y * h)
+                landmarks.append([cx, cy])
 
-            # Bounding Box
-            ad = abs(mylmList[12][0] - mylmList[11][0]) // 2
-            if bboxWithHands:
-                if mylmList[15][0] > mylmList[16][0]:
-                    x1 = mylmList[16][0] - ad
-                    x2 = mylmList[15][0] + ad
-                else:
-                    x1 = mylmList[15][0] - ad
-                    x2 = mylmList[16][0] + ad
-            else:
-                if mylmList[11][0] > mylmList[12][0]:
-                    x1 = mylmList[12][0] - ad
-                    x2 = mylmList[11][0] + ad
-                else:
-                    x1 = mylmList[11][0] - ad
-                    x2 = mylmList[12][0] + ad
-
-            y1 = mylmList[1][1] - ad
-            if mylmList[30][1] > mylmList[29][1]:
-                y2 = mylmList[30][1] + ad
-            else:
-                y2 = mylmList[29][1] + ad
-
-            if x1 < 0: x1 = 0
-            if y1 < 0: y1 = 0
-            bbox = (x1, y1, x2 - x1, y2 - y1)
-            cx, cy = bbox[0] + (bbox[2] // 2), \
-                     bbox[1] + bbox[3] // 2
-
-            poseInfo = {"lmList": mylmList, "bbox": bbox, "center": (cx, cy)}
-
-            if draw:
-                self.mpDraw.draw_landmarks(img, self.results.pose_landmarks,
-                                           self.mpPose.POSE_CONNECTIONS)
         if draw:
-            return poseInfo, img
-        else:
-            return poseInfo
+            return landmarks, img
 
     def findAngle(self, p1, p2, p3, img=None):
+
         # Get the landmarks
         x1, y1 = p1
         x2, y2 = p2
         x3, y3 = p3
+
         # Calculate the Angle
         angle = math.degrees(math.atan2(y3 - y2, x3 - x2) -
                              math.atan2(y1 - y2, x1 - x2))

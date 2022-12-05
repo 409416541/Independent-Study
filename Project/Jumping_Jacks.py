@@ -24,14 +24,13 @@ while True:
     success, img = cap.read()
 
     if success:
-        pose, img = detector.findPose(img, draw=True)
+        landmarks, img = detector.findPose(img, draw=True)
 
-        if pose:
-            lmList = pose["lmList"]
-            angle1, img = detector.findAngle(lmList[14], lmList[12],
-                                             lmList[24], img)
-            angle2, img = detector.findAngle(lmList[26], lmList[24],
-                                             lmList[23], img)
+        if landmarks:
+            angle1, img = detector.findAngle(landmarks[14], landmarks[12],
+                                             landmarks[24], img)
+            angle2, img = detector.findAngle(landmarks[26], landmarks[24],
+                                             landmarks[23], img)
 
             # 顯示進度條
             Globaluse.thebar(img, angle2, 80, 100)
@@ -50,7 +49,7 @@ while True:
 
             Globaluse.thecount(img, str(int(count)))
 
-        cv2.imshow("Pose", img)
+        cv2.imshow("landmarks", img)
 
     else:
         break
