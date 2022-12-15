@@ -1,5 +1,5 @@
 from PoseModule import PoseDetector
-import Globaluse
+import Global_Use
 import cv2
 
 def Pose_Detected():
