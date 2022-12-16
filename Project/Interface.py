@@ -23,22 +23,22 @@ while 1:
             'Your choose is ', 'Rock. OK', 'Fuck. NO']
 
     if(not has_choose):
-        cv2.putText(img, text[0], (10, 30), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
-        cv2.putText(img, text[1], (10, 65), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
-        cv2.putText(img, text[2], (10, 105), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
-        cv2.putText(img, text[3], (10, 145), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
-        cv2.putText(img, text[4], (10, 180), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
-        cv2.putText(img, text[5], (10, 215), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
+        Global_Use.interface(img, text[0], 30)
+        Global_Use.interface(img, text[1], 65)
+        Global_Use.interface(img, text[2], 105)
+        Global_Use.interface(img, text[3], 145)
+        Global_Use.interface(img, text[4], 180)
+        Global_Use.interface(img, text[5], 215)
 
         if(choose == '1' or choose == '2' or choose == '3' or choose == '4' or choose == '5'):
             has_choose = 1
             last_choose = choose
 
     elif(not confirm):
-        cv2.putText(img, text[6] + last_choose, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
-        cv2.putText(img, text[7], (10, 65), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
-        cv2.putText(img, text[8], (10, 105), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
-
+        Global_Use.confirm(img, text[6] + last_choose, 30)
+        Global_Use.confirm(img, text[7], 65)
+        Global_Use.confirm(img, text[8], 105)
+        
         if(choose == 'YES'):
             confirm = 1
 
