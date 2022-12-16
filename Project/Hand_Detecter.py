@@ -74,6 +74,8 @@ def hand_pos(finger_angle):
         return '4'
     elif f1 == 1 and f2 == 1 and f3 == 1 and f4 == 1 and f5 == 1:
         return '5'
+    elif f1 == 1 and f2 == 0 and f3 == 0 and f4 == 0 and f5 == 1:
+        return '6'
     elif f1 == 1 and f2 == 1 and f3 == 0 and f4 == 0 and f5 == 1:
         return 'YES'
     elif f1 == 0 and f2 == 0 and f3 == 1 and f4 == 0 and f5 == 0:
