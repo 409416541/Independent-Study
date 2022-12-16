@@ -33,7 +33,7 @@ def Pose_Detected():
                                                 landmarks[28], img)
                                                 
                 # 顯示進度條
-                Global＿Use.thebar(img, angle, 95, 175)
+                Global_Use.thebar(img, angle, 95, 175)
 
                 if angle <= 110:  # 目前狀態:蹲下
                     if dir == 0:  # 之前狀態:站起
@@ -45,7 +45,7 @@ def Pose_Detected():
                         count = count + 0.5
                         dir = 0   # 更新狀態:站起
                         
-                Global＿Use.thecount(img, str(int(count)))
+                Global_Use.thecount(img, str(int(count)))
 
             cv2.imshow("landmarks", img)        
         else:

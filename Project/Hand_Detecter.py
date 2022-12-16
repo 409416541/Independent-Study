@@ -74,26 +74,31 @@ def hand_pos(finger_angle):
         return '4'
     elif f1 == 1 and f2 == 1 and f3 == 1 and f4 == 1 and f5 == 1:
         return '5'
-    elif f1 == 1 and f2 == 0 and f3 == 0 and f4 == 0 and f5 == 0:
-        return 'good'
+    elif f1 == 1 and f2 == 1 and f3 == 0 and f4 == 0 and f5 == 1:
+        return 'YES'
     elif f1 == 0 and f2 == 0 and f3 == 1 and f4 == 0 and f5 == 0:
-        return 'no!!!'
+        return 'NO'
     else:
         return ''
 
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
 
 # mediapipe 啟用偵測手掌
-def Hand_Detecter():
+def Hand_Detecter(cap):
     with mp_hands.Hands(
         model_complexity=0,
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as hands:
 
+        '''
         if not cap.isOpened():
             print("Cannot open camera")
             exit()
+        '''
+
         w, h = 540, 310                                  # 影像尺寸
+        last_test = ''
+
         while True:
             ret, img = cap.read()
 
@@ -114,12 +119,18 @@ def Hand_Detecter():
                         finger_angle = hand_angle(finger_points) # 計算手指角度，回傳長度為 5 的串列
                         #print(finger_angle)                     # 印出角度 ( 有需要就開啟註解 )
                         text = hand_pos(finger_angle)            # 取得手勢所回傳的內容
-                        Global＿Use.thecount(img, text)
+                        if(last_test != text):
+                            last_test = text
+                        #Global_Use.thecount(img, text)
+                        
+            return img, last_test
 
+            '''
             cv2.imshow('oxxostudio', img)
             if cv2.waitKey(5) == ord('q'):
                 break
     cap.release()
     cv2.destroyAllWindows()
+    '''
 
-Hand_Detecter()
+#Hand_Detecter()
