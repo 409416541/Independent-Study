@@ -6,6 +6,7 @@ import math
 mp_hands = mp.solutions.hands
 
 def findAngle(p1,p2, p3):
+
     x1, y1 = p1
     x2, y2 = p2
     x3, y3 = p3
@@ -22,12 +23,13 @@ def findAngle(p1,p2, p3):
     return angle
 
 def hand_angle(hand_):
+
     angle_list = []
 
     # 1 表示手指伸直，0 表示手指捲縮
 
     # thumb 大拇指
-    if(findAngle(hand_[4], hand_[3], hand_[2]) >= 160 and findAngle(hand_[3], hand_[2], hand_[1]) >= 160):
+    if(findAngle(hand_[4], hand_[3], hand_[2]) >= 150 and findAngle(hand_[3], hand_[2], hand_[1]) >= 160):
         angle_list.append(1)
     else:
         angle_list.append(0)
@@ -58,7 +60,8 @@ def hand_angle(hand_):
 
     return angle_list
 
-def hand_pos(finger_angle):  
+def hand_pos(finger_angle):
+
     match finger_angle:
         case [0, 1, 0, 0, 0]:
             return '1'
@@ -73,26 +76,27 @@ def hand_pos(finger_angle):
         case [1, 0, 0, 0, 1]:
             return '6'
         case [1, 1, 0, 0, 1]:
-            return 'YES'
+            return 'OK'
         case [0, 0, 1, 0, 0]:
             return 'NO'
         case _:
             return ''
 
-#cap = cv2.VideoCapture(0)
+'''
+cap = cv2.VideoCapture(0)
+
+if not cap.isOpened():
+    print('Cannot open camera')
+    exit()
+'''
 
 # mediapipe 啟用偵測手掌
 def Hand_Detecter(cap):
+
     with mp_hands.Hands(
         model_complexity=0,
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as hands:
-
-        '''
-        if not cap.isOpened():
-            print("Cannot open camera")
-            exit()
-        '''
 
         w, h = 540, 310                                  # 影像尺寸
         last_test = ''
@@ -123,6 +127,7 @@ def Hand_Detecter(cap):
                         
             return img, last_test
 
+            
             '''
             cv2.imshow('Hand Detecter', img)
             if cv2.waitKey(5) == ord('q'):
@@ -130,5 +135,6 @@ def Hand_Detecter(cap):
     cap.release()
     cv2.destroyAllWindows()
     '''
+    
 
-#Hand_Detecter()
+#Hand_Detecter(cap)

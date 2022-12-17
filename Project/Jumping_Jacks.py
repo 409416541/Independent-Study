@@ -2,23 +2,23 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 
+'''
+cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
+
+if not cap.isOpened():
+    print("Cannot open video")
+    exit()  
+'''  
+
+'''
+cap = cv2.VideoCapture(0)
+
+if not cap.isOpened():
+    print("Cannot open camera")
+    exit()
+'''
+
 def Pose_Detected(cap):
-
-    '''
-    cap = cv2.VideoCapture("./Project/Test_Media/Jumping_Jacks.mp4")
-
-    if not cap.isOpened():
-        print("Cannot open video")
-        exit()  
-    '''  
-
-    '''
-    cap = cv2.VideoCapture(0)
-
-    if not cap.isOpened():
-        print("Cannot open camera")
-        exit()
-    '''
 
     detector = PoseDetector()
     dir = 1  # 0: 開 1: 合
@@ -54,17 +54,17 @@ def Pose_Detected(cap):
                 Global_Use.thecount(img, str(int(count)))
 
             return img
-            #cv2.imshow("Jumping Jacks", img)
+            #cv2.imshow('Jumping Jacks', img)
 
         else:
             break
 
         '''
-        if cv2.waitKey(1) & 0xFF == ord("q"):
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
     cv2.destroyAllWindows()
     '''
 
-#Pose_Detected()
+#Pose_Detected(cap)
