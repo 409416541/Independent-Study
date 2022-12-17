@@ -24,6 +24,8 @@ def findAngle(p1,p2, p3):
 def hand_angle(hand_):
     angle_list = []
 
+    # 1 表示手指伸直，0 表示手指捲縮
+
     # thumb 大拇指
     if(findAngle(hand_[4], hand_[3], hand_[2]) >= 160 and findAngle(hand_[3], hand_[2], hand_[1]) >= 160):
         angle_list.append(1)
@@ -56,32 +58,26 @@ def hand_angle(hand_):
 
     return angle_list
 
-def hand_pos(finger_angle):
-    f1 = finger_angle[0]   # 大拇指
-    f2 = finger_angle[1]   # 食指
-    f3 = finger_angle[2]   # 中指
-    f4 = finger_angle[3]   # 無名指
-    f5 = finger_angle[4]   # 小拇指
-
-    # 1 表示手指伸直，0 表示手指捲縮
-    if f1 == 0 and f2 == 1 and f3 == 0 and f4 == 0 and f5 == 0:
-        return '1'
-    elif f1 == 0 and f2 == 1 and f3 == 1 and f4 == 0 and f5 == 0:
-        return '2'
-    elif f1 == 0 and f2 == 1 and f3 == 1 and f4 == 1 and f5 == 0:
-        return '3'
-    elif f1 == 0 and f2 == 1 and f3 == 1 and f4 == 1 and f5 == 1:
-        return '4'
-    elif f1 == 1 and f2 == 1 and f3 == 1 and f4 == 1 and f5 == 1:
-        return '5'
-    elif f1 == 1 and f2 == 0 and f3 == 0 and f4 == 0 and f5 == 1:
-        return '6'
-    elif f1 == 1 and f2 == 1 and f3 == 0 and f4 == 0 and f5 == 1:
-        return 'YES'
-    elif f1 == 0 and f2 == 0 and f3 == 1 and f4 == 0 and f5 == 0:
-        return 'NO'
-    else:
-        return ''
+def hand_pos(finger_angle):  
+    match finger_angle:
+        case [0, 1, 0, 0, 0]:
+            return '1'
+        case [0, 1, 1, 0, 0]:
+            return '2'
+        case [0, 1, 1, 1, 0]:
+            return '3'
+        case [0, 1, 1, 1, 1]:
+            return '4'
+        case [1, 1, 1, 1, 1]:
+            return '5'
+        case [1, 0, 0, 0, 1]:
+            return '6'
+        case [1, 1, 0, 0, 1]:
+            return 'YES'
+        case [0, 0, 1, 0, 0]:
+            return 'NO'
+        case _:
+            return ''
 
 #cap = cv2.VideoCapture(0)
 
@@ -114,9 +110,9 @@ def Hand_Detecter(cap):
                     finger_points = []                   # 記錄手指節點座標的串列
                     for i in hand_landmarks.landmark:
                         # 將 21 個節點換算成座標，記錄到 finger_points
-                        x = i.x*w
-                        y = i.y*h
-                        finger_points.append((x,y))
+                        x = i.x * w
+                        y = i.y * h
+                        finger_points.append((x, y))
                     if finger_points:
                         finger_angle = hand_angle(finger_points) # 計算手指角度，回傳長度為 5 的串列
                         #print(finger_angle)                     # 印出角度 ( 有需要就開啟註解 )
@@ -128,7 +124,7 @@ def Hand_Detecter(cap):
             return img, last_test
 
             '''
-            cv2.imshow('oxxostudio', img)
+            cv2.imshow('Hand Detecter', img)
             if cv2.waitKey(5) == ord('q'):
                 break
     cap.release()
