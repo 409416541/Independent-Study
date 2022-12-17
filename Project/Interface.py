@@ -12,9 +12,9 @@ if not cap.isOpened():
             print("Cannot open camera")
             exit()
 
-last_choose = ''
-has_choose = 0
 confirm = 0
+has_choose = 0
+last_choose = ''
 
 text = ['Please choose action', 
         '1. Sit Ups', '2. Push Up', '3. Squat', '4. Leg Raises', '5. Jumping Jacks', '6. Break',
@@ -46,7 +46,7 @@ while 1:
                 has_choose = 0
                 continue
 
-            elif(choose == 'YES'):
+            elif(choose == 'OK'):
                 if(last_choose == '6'):
                     break
 
@@ -54,7 +54,17 @@ while 1:
                     confirm = 1
 
     else:
-        img = pose5(cap)
+        match last_choose:
+            case '1':
+                img = pose1(cap)
+            case '2':
+                img = pose2(cap)
+            case '3':
+                img = pose3(cap)
+            case '4':
+                img = pose4(cap)
+            case '5':
+                img = pose5(cap)
         
         
 
