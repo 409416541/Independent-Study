@@ -54,7 +54,7 @@ def Pose_Detected(cap):
                 Global_Use.thecount(img, str(int(count)))
 
             return img
-            #cv2.imshow("landmarks", img)
+            #cv2.imshow("Push Up", img)
 
         else:
             break
