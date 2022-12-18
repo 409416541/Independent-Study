@@ -13,3 +13,6 @@ def interface(img, text, y):
 
 def confirm(img, text, y):
     cv2.putText(img, text, (10, y), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (0, 245, 146))
+
+def byebyecount(img, count, x, y):
+    cv2.putText(img, count, (x//2 -4, y//2 - 4), cv2.FONT_HERSHEY_SIMPLEX, 8, (255, 0, 255), 20)
