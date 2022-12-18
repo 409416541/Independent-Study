@@ -24,7 +24,21 @@ text = ['Please choose action',
         'Your choose is ', 'Rock. OK', 'Fuck. NO']
 
 while(count+1 >= 0):
-    if(not confirm):
+
+    if(bye):
+        img = cap.read()[1]
+        x, y = img.shape[:2]
+
+        if(count > 0):
+            Global_Use.byebyecount(img, str(count), x, y)
+
+        else:
+            Global_Use.byebyecount(img, 'Bye', x//3 + 4, y)
+
+        count -= 1
+        time.sleep(1)
+
+    elif(not confirm):
         img, choose = hd(cap)
 
         if(not has_choose):
@@ -55,7 +69,7 @@ while(count+1 >= 0):
                 if(last_choose == '6'):
                     bye = 1
 
-    elif(not bye):
+    else:
         match last_choose:
             case '1':
                 img = pose1(cap)
@@ -68,18 +82,7 @@ while(count+1 >= 0):
             case '5':
                 img = pose5(cap)
         
-    if(bye):
-        img = cap.read()[1]
-        x, y = img.shape[:2]
-
-        if(count > 0):
-            Global_Use.byebyecount(img, str(count), x, y)
-
-        else:
-            Global_Use.byebyecount(img, 'Bye', x//3 + 4, y)
-
-        count -= 1
-        time.sleep(1)
+    
 
     cv2.imshow('POSE', img)
 
