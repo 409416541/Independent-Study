@@ -18,7 +18,14 @@ if not cap.isOpened():
     exit()
 '''
 
-def Pose_Detected(cap):
+def Pose_Detected(cap, use_vedio):
+
+    if(use_vedio):
+        cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
+
+        if not cap.isOpened():
+            print("Cannot open video")
+            exit()  
 
     detector = PoseDetector()
     dir = 1  # 0: 開 1: 合
@@ -53,18 +60,20 @@ def Pose_Detected(cap):
 
                 Global_Use.thecount(img, str(int(count)))
 
-            return img
-            #cv2.imshow('Jumping Jacks', img)
+            if(not use_vedio):
+                return count, img
+
+            else:
+                cv2.imshow('Jumping Jacks', img)
 
         else:
             break
 
-        '''
+        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
     cv2.destroyAllWindows()
-    '''
 
-#Pose_Detected(cap)
+#Pose_Detected(cap, 1)
