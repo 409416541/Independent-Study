@@ -32,11 +32,11 @@ difficulty = [8, 15, 25]
 text = ['Please choose action', 
         '1. Sit Ups', '2. Push Up', '3. Squat', '4. Leg Raises', '5. Jumping Jacks', '6. Break',
         'Your choose is ', 
-        'Rock. OK', 'Fuck. NO',
+        'Rock. OK', 'Pink. NO',
         'Please choose you want', 
         '1. Sample Video', '2. Go Sport', '3. back to interface',
         'How times we want', 
-        '1. '+str(difficulty[0])+' times', '2. '+str(difficulty[1])+' times', '3. '+str(difficulty[2])+' times', '4. back to choose'] 
+        '1.  '+str(difficulty[0])+' times', '2. '+str(difficulty[1])+' times', '3. '+str(difficulty[2])+' times', '4. back to choose'] 
 
 while(count+1 >= 0):
 

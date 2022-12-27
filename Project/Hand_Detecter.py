@@ -77,7 +77,7 @@ def hand_pos(finger_angle):
             return '6'
         case [1, 1, 0, 0, 1]:
             return 'OK'
-        case [0, 0, 1, 0, 0]:
+        case [0, 0, 0, 0, 1]:
             return 'NO'
         case _:
             return ''
