@@ -35,7 +35,7 @@ text = ['Please choose action',
         'Rock. OK', 'Pink. NO',
         'Please choose you want', 
         '1. Sample Video', '2. Go Sport', '3. back to interface',
-        'How times we want', 
+        'How times you want', 
         '1.  '+str(difficulty[0])+' times', '2. '+str(difficulty[1])+' times', '3. '+str(difficulty[2])+' times', '4. back to choose'] 
 
 while(count+1 >= 0):
