@@ -13,24 +13,24 @@ if not cap.isOpened():
             print("Cannot open camera")
             exit()
 
-count = 3
-bye = 0
-confirm = 0
-has_choose = 0
-last_choose = ''
-vedio_confirm = 0
-vedio_choose = 0
-use_vedio = 0
-count_times_confirm = 0
-count_times_choose = 0
-at_choose_time = ''
-choose_times = ''
-count_times= 0
+count = 3 # break 時的倒數
+bye = 0 # 若為1則表使用者要退出
+confirm = 0 # 若為1則表使用者已確認所選動作無誤
+has_choose = 0 # 若為1則表使用者以選擇動作
+last_choose = '' # 紀錄下剛剛讀取的動作選擇為何
+vedio_confirm = 0 # 若為1則表使用則所選擇的影片無誤
+vedio_has_choose = 0 # 若為1表使用者已選擇要看範例影片或做運動
+last_vedio_choose = '' # 紀錄下剛剛讀取的影片選擇為何
+count_times_confirm = 0 # 若為1則表使用者以確認動作要做幾下
+count_times_choose = 0 # 若為1則表使用者以選擇動作要做幾下
+at_choose_times = '' # 紀錄下剛剛讀取的次數選擇為何
+choose_times = '' # 紀錄下剛剛讀取的次數選擇為何(不含 '4. back to choose')
+count_times= 0 # 紀錄目前使用者以做幾下了
 
 difficulty = [8, 15, 25]
 
 text = ['Please choose action', 
-        '1. Sit Ups', '2. Push Up', '3. Squat', '4. Leg Raises', '5. Jumping Jacks', '6. Break',
+        '1. Sit Ups', '2. Push Up', '3. Squat', '4. Leg Raises', '5. Jumping Jacks', '6. Break', # interface
         'Your choose is ', 
         'Rock. OK', 'Pink. NO',
         'Please choose you want', 
@@ -57,6 +57,7 @@ while(count+1 >= 0):
         img, choose = hd(cap)
 
         if(not has_choose):
+             # interface
             Global_Use.interface(img, text[0], 30)
             Global_Use.interface(img, text[1], 65)
             Global_Use.interface(img, text[2], 105)
@@ -88,38 +89,38 @@ while(count+1 >= 0):
 
         if(not vedio_confirm):
 
-            if(not vedio_choose):
-
+            if(not vedio_has_choose):
+                # choose
                 Global_Use.interface(img, text[10], 30)
                 Global_Use.interface(img, text[11], 65)
                 Global_Use.interface(img, text[12], 105)
                 Global_Use.interface(img, text[13], 145)
 
                 if(choose == '1' or choose == '2' or choose == '3'):
-                    vedio_choose = 1
-                    use_vedio = choose
+                    vedio_has_choose = 1
+                    last_vedio_choose = choose
 
             else:
-                Global_Use.confirm(img, text[7] + text[int(use_vedio) + 10], 30)
+                Global_Use.confirm(img, text[7] + text[int(last_vedio_choose) + 10], 30)
                 Global_Use.confirm(img, text[8], 65)
                 Global_Use.confirm(img, text[9], 105)
 
                 if(choose == 'NO'):
-                        vedio_choose = 0
+                        vedio_has_choose = 0
 
                 elif(choose == 'OK'):
 
-                    if(use_vedio == '3'):
+                    if(last_vedio_choose == '3'):
                         confirm = 0
                         has_choose = 0
                         vedio_confirm = 0
-                        vedio_choose = 0
+                        vedio_has_choose = 0
 
                     else:
                         vedio_confirm = 1
 
         else:
-            if(use_vedio == '1'):
+            if(last_vedio_choose == '1'):
                 match last_choose:
                     case '1':
                         pose1(cap, 1)
@@ -133,9 +134,9 @@ while(count+1 >= 0):
                         pose5(cap, 1)
                 
                 vedio_confirm = 0
-                vedio_choose = 0
+                vedio_has_choose = 0
 
-            elif(use_vedio == '2'):
+            elif(last_vedio_choose == '2'):
                 if(not count_times_confirm):
 
                     if(not count_times_choose):
@@ -147,13 +148,13 @@ while(count+1 >= 0):
 
                         if(choose == '1' or choose == '2' or choose == '3' or choose == '4'):
                             count_times_choose = 1
-                            at_choose_time = choose
+                            at_choose_times = choose
 
                             if(choose != '4'):
                                 choose_times = choose
 
                     else:
-                        Global_Use.confirm(img, text[7] + text[int(at_choose_time) + 14], 30)
+                        Global_Use.confirm(img, text[7] + text[int(at_choose_times) + 14], 30)
                         Global_Use.confirm(img, text[8], 65)
                         Global_Use.confirm(img, text[9], 105)
 
@@ -162,9 +163,9 @@ while(count+1 >= 0):
 
                         elif(choose == 'OK'):
 
-                            if(at_choose_time == '4'):
+                            if(at_choose_times == '4'):
                                 vedio_confirm = 0
-                                vedio_choose = 0
+                                vedio_has_choose = 0
                                 count_times_confirm = 0
                                 count_times_choose = 0
 
@@ -189,7 +190,7 @@ while(count+1 >= 0):
                         confirm = 0
                         has_choose = 0
                         vedio_confirm = 0
-                        vedio_choose = 0
+                        vedio_has_choose = 0
                         count_times_confirm = 0
                         count_times_choose = 0
 
