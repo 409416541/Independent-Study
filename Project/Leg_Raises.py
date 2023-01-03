@@ -62,7 +62,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thecount(img, str(int(count)))
 
             if(not use_vedio):
-                return count, img
+                return dir, count, img
 
             else:
                 cv2.imshow('Leg Raises', img)

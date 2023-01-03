@@ -170,7 +170,6 @@ while(count+1 >= 0):
                                 count_times_confirm = 0
                                 count_times_choose = 0
 
-
                             else:
                                 count_times_confirm = 1
 
@@ -178,14 +177,19 @@ while(count+1 >= 0):
                     match last_choose:
                         case '1':
                             dir, count_times, img = pose1(cap, 0, dir, count_times)
+                            Global_Use.whatsportnow(img, text[1].split('. ')[1])
                         case '2':
                             dir, count_times, img = pose2(cap, 0, dir, count_times)
+                            Global_Use.whatsportnow(img, text[2].split('. ')[1])
                         case '3':
                             dir, count_times, img = pose3(cap, 0, dir, count_times)
+                            Global_Use.whatsportnow(img, text[3].split('. ')[1])
                         case '4':
                             dir, count_times, img = pose4(cap, 0, dir, count_times)
+                            Global_Use.whatsportnow(img, text[4].split('. ')[1])
                         case '5':
                             dir, count_times, img = pose5(cap, 0, dir, count_times)
+                            Global_Use.whatsportnow(img, text[5].split('. ')[1])
 
                     if(count_times == difficulty[int(choose_times) - 1]):
                         confirm = 0

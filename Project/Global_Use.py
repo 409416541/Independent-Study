@@ -8,6 +8,9 @@ def thebar(img, angle, a, b):
 def thecount(img, count):       
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
 
+def whatsportnow(img, text):
+    cv2.putText(img, text, (10, 460), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1, (0, 78, 250), 2)
+
 def interface(img, text, y):
     cv2.putText(img, text, (10, y), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
 
