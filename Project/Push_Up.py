@@ -18,7 +18,10 @@ if not cap.isOpened():
     exit()
 '''
 
-def Pose_Detected(cap, use_vedio):
+dir = 0  # 0: 挺身 1: 伏地
+count = 0
+
+def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/Push_Up.mp4')
@@ -28,8 +31,6 @@ def Pose_Detected(cap, use_vedio):
             exit()  
 
     detector = PoseDetector()
-    dir = 0  # 0: 挺身 1: 伏地
-    count = 0
 
     while True:
         success, img = cap.read()

@@ -18,7 +18,10 @@ if not cap.isOpened():
     exit()
 '''
 
-def Pose_Detected(cap, use_vedio):
+dir = 1  # 0: 開 1: 合
+count = 0
+
+def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
@@ -28,8 +31,6 @@ def Pose_Detected(cap, use_vedio):
             exit()  
 
     detector = PoseDetector()
-    dir = 1  # 0: 開 1: 合
-    count = 0
 
     while True:
         success, img = cap.read()

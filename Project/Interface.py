@@ -25,7 +25,8 @@ count_times_confirm = 0 # 若為1則表使用者以確認動作要做幾下
 count_times_choose = 0 # 若為1則表使用者以選擇動作要做幾下
 at_choose_times = '' # 紀錄下剛剛讀取的次數選擇為何
 choose_times = '' # 紀錄下剛剛讀取的次數選擇為何(不含 '4. back to choose')
-count_times= 0 # 紀錄目前使用者以做幾下了
+dir = 0
+count_times= 0.0 # 紀錄目前使用者以做幾下了
 
 difficulty = [8, 15, 25]
 
@@ -123,15 +124,15 @@ while(count+1 >= 0):
             if(last_vedio_choose == '1'):
                 match last_choose:
                     case '1':
-                        pose1(cap, 1)
+                        pose1(cap, 1, 0, 0.0)
                     case '2':
-                        pose2(cap, 1)
+                        pose2(cap, 1, 0, 0.0)
                     case '3': 
-                        pose3(cap, 1)
+                        pose3(cap, 1, 0, 0.0)
                     case '4':
-                        pose4(cap, 1)
+                        pose4(cap, 1, 0, 0.0)
                     case '5':
-                        pose5(cap, 1)
+                        pose5(cap, 1, 0, 0.0)
                 
                 vedio_confirm = 0
                 vedio_has_choose = 0
@@ -176,15 +177,15 @@ while(count+1 >= 0):
                 else:
                     match last_choose:
                         case '1':
-                            count_times, img = pose1(cap, 0)
+                            dir, count_times, img = pose1(cap, 0, dir, count_times)
                         case '2':
-                            count_times, img = pose2(cap, 0)
+                            dir, count_times, img = pose2(cap, 0, dir, count_times)
                         case '3':
-                            count_times, img = pose3(cap, 0)
+                            dir, count_times, img = pose3(cap, 0, dir, count_times)
                         case '4':
-                            count_times, img = pose4(cap, 0)
+                            dir, count_times, img = pose4(cap, 0, dir, count_times)
                         case '5':
-                            count_times, img = pose5(cap, 0)
+                            dir, count_times, img = pose5(cap, 0, dir, count_times)
 
                     if(count_times == difficulty[int(choose_times) - 1]):
                         confirm = 0
@@ -193,6 +194,7 @@ while(count+1 >= 0):
                         vedio_has_choose = 0
                         count_times_confirm = 0
                         count_times_choose = 0
+                        count_times = 0.0
 
     cv2.imshow('POSE', img)
 

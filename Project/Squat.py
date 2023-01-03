@@ -18,7 +18,10 @@ if not cap.isOpened():
     exit()
 '''
 
-def Pose_Detected(cap, use_vedio):
+dir = 0  # 0: 站起  1: 蹲下
+count = 0
+
+def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
@@ -28,8 +31,6 @@ def Pose_Detected(cap, use_vedio):
             exit()  
 
     detector = PoseDetector()
-    dir = 0  # 0: 站起  1: 蹲下
-    count = 0
 
     while True:
         success, img = cap.read()
@@ -57,7 +58,7 @@ def Pose_Detected(cap, use_vedio):
                 Global_Use.thecount(img, str(int(count)))
 
             if(not use_vedio):
-                return count, img
+                return dir, count, img
 
             else:
                 cv2.imshow('Squat', img)    
