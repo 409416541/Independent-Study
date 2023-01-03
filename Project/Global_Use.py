@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 def thebar(img, angle, a, b):
-    bar = np.interp(angle, (a, b), (50, 250))
+    bar = np.interp(angle, (a, b), (60, 260))
     cv2.rectangle(img, (60, 28), (int(bar), 48), (91, 245, 150), cv2.FILLED)
 
 def thecount(img, count):       
