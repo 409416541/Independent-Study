@@ -48,13 +48,13 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle1, 90, 180)
 
                 # 目前狀態::抬腿
-                if 155 <= angle2 <= 170 and 155 <= angle1 <= 170:
+                if 155 <= angle2 <= 180 and 155 <= angle1 <= 180:
                     if dir == 0:   # 之前狀態:抬腿
                         count = count + 0.5
                         dir = 1    # 更新狀態:躺著
 
                 # 目前狀態::躺著
-                if 155 <= angle2 <= 170 and 75 <= angle1 <= 90:
+                if 155 <= angle2 <= 180 and 75 <= angle1 <= 90:
                     if dir == 1:   # 之前狀態:躺著
                         count = count + 0.5
                         dir = 0    # 更新狀態:抬腿
