@@ -48,13 +48,13 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle2, 60, 175)
 
                 # 目前狀態::伏地
-                if angle2 <= 110 and angle1 >= 165 and angle1 <= 180:
+                if angle2 <= 110 and 165 <= angle1 <= 180:
                     if dir == 0:   # 之前狀態:挺身
                         count = count + 0.5
                         dir = 1    # 更新狀態:伏地
 
                 # 目前狀態::挺身
-                if angle2 >= 160 and angle1 >= 150 and angle1 <= 180:
+                if angle2 >= 160 and 150 <= angle1 <= 180:
                     if dir == 1:   # 之前狀態:伏地
                         count = count + 0.5
                         dir = 0    # 更新狀態:挺身
@@ -76,4 +76,4 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1)
+#Pose_Detected(cap, 1, dir , count)

@@ -72,4 +72,4 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1)
+#Pose_Detected(cap, 1, dir , count)
