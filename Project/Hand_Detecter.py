@@ -64,6 +64,8 @@ def hand_angle(hand_):
 def hand_pos(finger_angle):
 
     match finger_angle:
+        case [0, 0, 0, 0, 0]:
+            return '0'
         case [0, 1, 0, 0, 0]:
             return '1'
         case [0, 1, 1, 0, 0]:
@@ -76,10 +78,6 @@ def hand_pos(finger_angle):
             return '5'
         case [1, 0, 0, 0, 1]:
             return '6'
-        case [1, 1, 0, 0, 1]:
-            return 'OK'
-        case [0, 0, 0, 0, 1]:
-            return 'NO'
         case _:
             return ''
 
