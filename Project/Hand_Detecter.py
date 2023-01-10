@@ -2,6 +2,7 @@ import Global_Use
 import cv2
 import mediapipe as mp
 import math
+import numpy as np
 
 mp_hands = mp.solutions.hands
 
@@ -125,7 +126,11 @@ def Hand_Detecter(cap):
                             last_test = text
                         #Global_Use.thecount(img, text)
                         
-            return img, last_test
+            imgx, imgy, imgz = img.shape
+            background = np.zeros([imgx, imgy, imgz], dtype='uint8')
+            background[:, :, :] = 255 
+            
+            return background, last_test
 
             
             '''
