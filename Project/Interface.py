@@ -119,8 +119,10 @@ while(count+1 >= 0):
 
         else:
             match last_vedio_choose:
+
                 case '1':
                     match last_choose:
+
                         case '1':
                             pose1(cap, 1, 0, 0.0)
                         case '2':
@@ -168,6 +170,7 @@ while(count+1 >= 0):
 
                     else:
                         match last_choose:
+                            
                             case '1':
                                 dir, count_times, img = pose1(cap, 0, dir, count_times)
                                 Global_Use.whatsportnow(img, text[1].split('. ')[1])
