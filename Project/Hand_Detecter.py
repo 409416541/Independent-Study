@@ -124,8 +124,7 @@ def Hand_Detecter(cap):
                             last_test = text
                         #Global_Use.thecount(img, text)
                         
-            imgx, imgy, imgz = img.shape
-            background = np.zeros([imgx, imgy, imgz], dtype='uint8')
+            background = img.copy()
             background[:, :, :] = 255 
             
             return background, last_test

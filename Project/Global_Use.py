@@ -8,11 +8,20 @@ def thebar(img, angle, a, b):
 def thecount(img, count):       
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
 
-def whatsportnow(img, text):
-    cv2.putText(img, text, (10, 460), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1, (0, 78, 250), 2)
+def whatsportnow(img, text, row):
+    cv2.putText(img, text, (10, row-20), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1, (0, 78, 250), 2)
 
-def interface(img, text, y):
-    cv2.putText(img, text, (10, y), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
+def interface(img, text, row):
+    cv2.putText(img, text, (10, row), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
 
-def byebyecount(img, count, x, y):
-    cv2.putText(img, count, (x//2 -4, y//2 - 4), cv2.FONT_HERSHEY_SIMPLEX, 8, (255, 0, 255), 20)
+def byebyecount(img, count, row, col):
+    cv2.putText(img, count, (col//2 -4, row//2 - 4), cv2.FONT_HERSHEY_SIMPLEX, 8, (255, 0, 255), 20)
+
+def handpose(img, text, row, col):
+    col -= 50
+
+    if(text == ''):
+        text = 'NAN'
+        col -= 25
+
+    cv2.putText(img, text, (col, row-20), cv2.FONT_HERSHEY_SCRIPT_COMPLEX, 0.8, (35, 78, 250), 1)

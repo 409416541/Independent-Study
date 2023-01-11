@@ -13,9 +13,13 @@ if not cap.isOpened():
             print("Cannot open camera")
             exit()
 
+img = cap.read()[1]
+imgr, imgc = img.shape[:2]
+print(imgr, imgc)
+
 start = 0
 end = 0
-wait_time = 0.5
+wait_time = 0.3
 
 count = 3 # break 時的倒數
 bye = 0 # 若為1則表使用者要退出
@@ -27,8 +31,7 @@ vedio_has_choose = 0 # 若為1表使用者已選擇要看範例影片或做運�
 last_vedio_choose = '' # 紀錄下剛剛讀取的影片選擇為何
 count_times_confirm = 0 # 若為1則表使用者以確認動作要做幾下
 count_times_choose = 0 # 若為1則表使用者以選擇動作要做幾下
-at_choose_times = '' # 紀錄下剛剛讀取的次數選擇為何
-choose_times = '' # 紀錄下剛剛讀取的次數選擇為何(不含 '4. back to choose')
+last_times_choose = '' # 紀錄下剛剛讀取的次數選擇為何
 dir = 0
 count_times= 0.0 # 紀錄目前使用者以做幾下了
 
@@ -46,14 +49,13 @@ while(count+1 >= 0):
 
     if(bye):
         img = cap.read()[1]
-        x, y = img.shape[:2]
         img[:, :, :] = 255
 
         if(count > 0):
-            Global_Use.byebyecount(img, str(count), x, y)
+            Global_Use.byebyecount(img, str(count), imgr, imgc)
 
         else:
-            Global_Use.byebyecount(img, 'Bye', x//3 + 4, y)
+            Global_Use.byebyecount(img, 'Bye', imgr//3 + 4, imgc)
 
         count -= 1
         time.sleep(1)
@@ -69,6 +71,8 @@ while(count+1 >= 0):
         Global_Use.interface(img, text[4], 180)
         Global_Use.interface(img, text[5], 215)
         Global_Use.interface(img, text[6], 250)
+
+        Global_Use.handpose(img, choose, imgr, imgc)
 
         if(not has_choose):
             if(choose == '1' or choose == '2' or choose == '3' or choose == '4' or choose == '5' or choose == '6'):
@@ -100,6 +104,8 @@ while(count+1 >= 0):
             Global_Use.interface(img, text[9], 110)
             Global_Use.interface(img, text[10], 145)
             Global_Use.interface(img, text[11], 180)
+
+            Global_Use.handpose(img, choose, imgr, imgc)
 
             if(not vedio_has_choose):
                 if(choose == '1' or choose == '2' or choose == '3'):
@@ -145,18 +151,20 @@ while(count+1 >= 0):
                         Global_Use.interface(img, text[15], 145)
                         Global_Use.interface(img, text[16], 180)
 
+                        Global_Use.handpose(img, choose, imgr, imgc)
+
                         if(not count_times_choose):
                             if(choose == '1' or choose == '2' or choose == '3' or choose == '4'):
                                 count_times_choose = 1
-                                at_choose_times = choose
+                                last_times_choose = choose
                                 start = time.time()
 
                         else:
-                            if(choose == at_choose_times or choose == '0'):
+                            if(choose == last_times_choose or choose == '0'):
                                 end = time.time()
 
                                 if(end - start > wait_time and choose == '0'):
-                                    if(at_choose_times == '4'):
+                                    if(last_times_choose == '4'):
                                         vedio_confirm = 0
                                         vedio_has_choose = 0
                                         count_times_confirm = 0
@@ -173,21 +181,21 @@ while(count+1 >= 0):
                             
                             case '1':
                                 dir, count_times, img = pose1(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[1].split('. ')[1])
+                                Global_Use.whatsportnow(img, text[1].split('. ')[1], imgr)
                             case '2':
                                 dir, count_times, img = pose2(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[2].split('. ')[1])
+                                Global_Use.whatsportnow(img, text[2].split('. ')[1], imgr)
                             case '3':
                                 dir, count_times, img = pose3(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[3].split('. ')[1])
+                                Global_Use.whatsportnow(img, text[3].split('. ')[1], imgr)
                             case '4':
                                 dir, count_times, img = pose4(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[4].split('. ')[1])
+                                Global_Use.whatsportnow(img, text[4].split('. ')[1], imgr)
                             case '5':
                                 dir, count_times, img = pose5(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[5].split('. ')[1])
+                                Global_Use.whatsportnow(img, text[5].split('. ')[1], imgr)
 
-                        if(count_times == difficulty[int(choose_times) - 1]):
+                        if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0
                             has_choose = 0
                             vedio_confirm = 0
