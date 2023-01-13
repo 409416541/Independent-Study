@@ -79,7 +79,7 @@ def hand_pos(finger_angle):
         case [1, 0, 0, 0, 1]:
             return '6'
         case _:
-            return ''
+            return 'NAN'
 
 '''
 cap = cv2.VideoCapture(0)

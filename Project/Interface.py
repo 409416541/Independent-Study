@@ -15,23 +15,25 @@ if not cap.isOpened():
 
 img = cap.read()[1]
 imgr, imgc = img.shape[:2]
-print(imgr, imgc)
 
-start = 0
-end = 0
+start = 0.0
+end = 0.0
 wait_time = 0.3
+
+nan_start = 0.0
+nan_end = 0.0
 
 count = 3 # break 時的倒數
 bye = 0 # 若為1則表使用者要退出
 confirm = 0 # 若為1則表使用者已確認所選動作無誤
 has_choose = 0 # 若為1則表使用者以選擇動作
-last_choose = '' # 紀錄下剛剛讀取的動作選擇為何
+last_choose = 'NAN' # 紀錄下剛剛讀取的動作選擇為何
 vedio_confirm = 0 # 若為1則表使用則所選擇的影片無誤
 vedio_has_choose = 0 # 若為1表使用者已選擇要看範例影片或做運動
-last_vedio_choose = '' # 紀錄下剛剛讀取的影片選擇為何
+last_vedio_choose = 'NAN' # 紀錄下剛剛讀取的影片選擇為何
 count_times_confirm = 0 # 若為1則表使用者以確認動作要做幾下
 count_times_choose = 0 # 若為1則表使用者以選擇動作要做幾下
-last_times_choose = '' # 紀錄下剛剛讀取的次數選擇為何
+last_times_choose = 'NAN' # 紀錄下剛剛讀取的次數選擇為何
 dir = 0
 count_times= 0.0 # 紀錄目前使用者以做幾下了
 
@@ -48,7 +50,6 @@ text = ['Please choose action',
 while(count+1 >= 0):
 
     if(bye):
-        img = cap.read()[1]
         img[:, :, :] = 255
 
         if(count > 0):
@@ -80,8 +81,13 @@ while(count+1 >= 0):
                 last_choose = choose
                 start = time.time()
 
+            elif(not nan_start and choose == 'NAN'):
+                has_choose = 1
+                nan_start = time.time()
+
         else:
             if(choose == last_choose or choose == '0'):
+                nan_start = 0.0
                 end = time.time()
 
                 if(end - start > wait_time and choose == '0'):
@@ -90,6 +96,13 @@ while(count+1 >= 0):
                     if(last_choose == '6' and choose == '0'):
                         bye = 1
 
+            elif(nan_start):
+                nan_end = time.time()
+
+                if(nan_end - nan_start > wait_time):
+                    has_choose = 0
+                    end = 0.0
+
             else:
                 has_choose = 0
 
@@ -97,6 +110,8 @@ while(count+1 >= 0):
         img, choose = hd(cap)
 
         if(not vedio_confirm):
+            if(choose == '4' or choose == '5' or choose == '6'):
+                choose = 'NAN'
 
             # choose
             Global_Use.interface(img, text[7] + text[int(last_choose)], 30)
@@ -113,8 +128,20 @@ while(count+1 >= 0):
                     last_vedio_choose = choose
                     start = time.time()
 
+                elif(not nan_start and choose == 'NAN'):
+                    vedio_has_choose = 1
+                    nan_start = time.time()
+
+            elif(nan_start):
+                nan_end = time.time()
+
+                if(nan_end - nan_start > wait_time):
+                    vedio_has_choose = 0
+                    end = 0.0
+            
             else:
                 if(choose == last_vedio_choose or choose == '0'):
+                    nan_start = 0.0
                     end = time.time()
 
                     if(end - start > wait_time and choose == '0'):
@@ -145,6 +172,9 @@ while(count+1 >= 0):
 
                 case '2':
                     if(not count_times_confirm):
+                        if(choose == '4' or choose == '5' or choose == '6'):
+                            choose = 'NAN'
+
                         Global_Use.interface(img, text[12], 30)
                         Global_Use.interface(img, text[13], 75)
                         Global_Use.interface(img, text[14], 110)            
@@ -159,8 +189,13 @@ while(count+1 >= 0):
                                 last_times_choose = choose
                                 start = time.time()
 
+                            elif(not nan_start and choose == 'NAN'):
+                                count_times_choose = 1
+                                nan_start = time.time()
+
                         else:
                             if(choose == last_times_choose or choose == '0'):
+                                nan_start = 0.0
                                 end = time.time()
 
                                 if(end - start > wait_time and choose == '0'):
@@ -172,6 +207,13 @@ while(count+1 >= 0):
 
                                     else:
                                         count_times_confirm = 1
+
+                            elif(nan_start):
+                                nan_end = time.time()
+
+                                if(nan_end - nan_start > wait_time):
+                                    count_times_choose = 0
+                                    end = 0.0
 
                             else:
                                 count_times_choose = 0
