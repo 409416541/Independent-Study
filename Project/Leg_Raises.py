@@ -39,28 +39,51 @@ def Pose_Detected(cap, use_vedio, dir, count):
             landmarks, img = detector.findPose(img, draw=True)
 
             if landmarks:
-                angle1, img = detector.findAngle(landmarks[12], landmarks[24],
+                angle1_1, img = detector.findAngle(landmarks[14], landmarks[12],
+                                                landmarks[24], img)
+                angle1_2, img = detector.findAngle(landmarks[13], landmarks[11],
+                                                landmarks[23], img)
+                angle2_1, img = detector.findAngle(landmarks[12], landmarks[24],
                                                 landmarks[26], img)
-                angle2, img = detector.findAngle(landmarks[24], landmarks[26],
+                angle2_2, img = detector.findAngle(landmarks[11], landmarks[23],
+                                                landmarks[25], img)
+                angle3_1, img = detector.findAngle(landmarks[24], landmarks[26],
                                                 landmarks[28], img)
+                angle3_2, img = detector.findAngle(landmarks[23], landmarks[25],
+                                                landmarks[27], img)
+                angle4_1, img = detector.findAngle(landmarks[12], landmarks[14],
+                                                landmarks[16], img)
+                angle4_2, img = detector.findAngle(landmarks[11], landmarks[13],
+                                                landmarks[15], img)
+                #angle5_1, img = detector.findAngle(landmarks[23], landmarks[24],
+                #                                landmarks[26], img)
+                #angle5_2, img = detector.findAngle(landmarks[24], landmarks[23],
+                #                                landmarks[25], img)
 
                 # 顯示進度條
-                Global_Use.thebar(img, angle1, 90, 180)
+                Global_Use.thebar(img, angle2_1, 90, 180)
 
-                # 目前狀態::抬腿
-                if 155 <= angle2 <= 180 and 155 <= angle1 <= 180:
-                    if dir == 0:   # 之前狀態:抬腿
-                        count = count + 0.5
-                        dir = 1    # 更新狀態:躺著
+                if 0 <= angle1_1 <= 20 and 0 <= angle1_2 <= 20 \
+                    and 70 <= angle2_1 <= 180 and 70 <= angle2_2 <= 180 \
+                    and 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
+                    and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
 
-                # 目前狀態::躺著
-                if 155 <= angle2 <= 180 and 75 <= angle1 <= 90:
+                    # 目前狀態::抬腿
+                    if dir == 0:# 之前狀態:抬腿
+                        if 160 <= angle2_1 <= 180 and 160 <= angle2_2 <= 180:
+                            count = count + 0.5
+                            #correct_x = (30/(167-157))*(167-angle2_1)
+                            dir = 1    # 更新狀態:躺著
+
+                    # 目前狀態::躺著
                     if dir == 1:   # 之前狀態:躺著
-                        count = count + 0.5
-                        dir = 0    # 更新狀態:抬腿
-
+                        if 70 <= angle2_1 <= 90 and 70 <= angle2_2 <= 90:
+                            count = count + 0.5
+                            #correct_y = (30/(81-71))*(81-angle2_1)
+                            dir = 0    # 更新狀態:抬腿
+               # correct = 100-((correct_x+correct_y)/2)
                 Global_Use.thecount(img, str(int(count)))
-
+                #Global_Use.thecount(img, str(int(correct)))
             if(not use_vedio):
                 return dir, count, img
 
