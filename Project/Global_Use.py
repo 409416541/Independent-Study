@@ -8,8 +8,8 @@ def thebar(img, angle, a, b):
 def thecount(img, count):       
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
 
-def accuracy(img, count):       
-    cv2.putText(img, count, (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
+def accuracy(img, count, col):       
+    cv2.putText(img, count, (col-120, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
 
 def whatsportnow(img, text, row):
     cv2.putText(img, text, (10, row-20), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1, (0, 78, 250), 2)

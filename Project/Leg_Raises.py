@@ -2,13 +2,15 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 
+
 '''
 cap = cv2.VideoCapture('./Project/Test_Media/leg_raises.mp4')
 
 if not cap.isOpened():
     print("Cannot open video")
     exit()  
-'''  
+'''
+  
 
 '''
 cap = cv2.VideoCapture(0)
@@ -31,6 +33,12 @@ def Pose_Detected(cap, use_vedio, dir, count):
             exit()
 
     detector = PoseDetector()
+
+    img = cap.read()[1]
+    imgr, imgc = img.shape[:2]
+
+    accuracy_x = 0 
+    accuracy_y = 0
 
     while True:
         success, img = cap.read()
@@ -55,10 +63,12 @@ def Pose_Detected(cap, use_vedio, dir, count):
                                                 landmarks[16], img)
                 angle4_2, img = detector.findAngle(landmarks[11], landmarks[13],
                                                 landmarks[15], img)
-                #angle5_1, img = detector.findAngle(landmarks[23], landmarks[24],
-                #                                landmarks[26], img)
-                #angle5_2, img = detector.findAngle(landmarks[24], landmarks[23],
-                #                                landmarks[25], img)
+                '''
+                angle5_1, img = detector.findAngle(landmarks[23], landmarks[24],
+                                                landmarks[26], img)
+                angle5_2, img = detector.findAngle(landmarks[24], landmarks[23],
+                                                landmarks[25], img)
+                '''
 
                 # 顯示進度條
                 Global_Use.thebar(img, angle2_1, 90, 180)
@@ -72,18 +82,20 @@ def Pose_Detected(cap, use_vedio, dir, count):
                     if dir == 0:# 之前狀態:抬腿
                         if 160 <= angle2_1 <= 180 and 160 <= angle2_2 <= 180:
                             count = count + 0.5
-                            correct_x = (30/(167-157))*(167-angle2_1)
+                            accuracy_x = (30/(167-157)) * (167-angle2_1)
                             dir = 1    # 更新狀態:躺著
 
                     # 目前狀態::躺著
                     if dir == 1:   # 之前狀態:躺著
                         if 70 <= angle2_1 <= 90 and 70 <= angle2_2 <= 90:
                             count = count + 0.5
-                            correct_y = (30/(81-71))*(81-angle2_1)
+                            accuracy_y = (30/(81-71)) * (81-angle2_1)
                             dir = 0    # 更新狀態:抬腿
-                correct = 100-((correct_x+correct_y)/2)
+
+                accuracy = 100 - ((accuracy_x + accuracy_y) / 2)
                 Global_Use.thecount(img, str(int(count)))
-                Global_Use.accuracy(img, str(int(correct)))
+                Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
+
             if(not use_vedio):
                 return dir, count, img
 
