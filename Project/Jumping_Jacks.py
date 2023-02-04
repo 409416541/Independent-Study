@@ -24,7 +24,7 @@ count = 0
 def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/jump2.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
 
         if not cap.isOpened():
             print("Cannot open video")
