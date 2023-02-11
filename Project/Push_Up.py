@@ -44,7 +44,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
                                                 landmarks[15], img)
                 angle1_2, img = detector.findAngle(landmarks[12], landmarks[14],
                                                 landmarks[16], img)
-                #angle2:
+                #angle2:髖到手肘到肩膀的角度
                 angle2_1, img = detector.findAngle(landmarks[13], landmarks[11],
                                                 landmarks[23], img)
                 angle2_2, img = detector.findAngle(landmarks[14], landmarks[12],
@@ -54,7 +54,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
                                                 landmarks[25], img)
                 angle3_2, img = detector.findAngle(landmarks[12], landmarks[24],
                                                 landmarks[26], img)
-                #angle4:
+                #angle4:髖到膝蓋到腳踝
                 angle4_1, img = detector.findAngle(landmarks[23], landmarks[25],
                                                 landmarks[27], img)
                 angle4_2, img = detector.findAngle(landmarks[24], landmarks[26],
