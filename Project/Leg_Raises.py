@@ -80,14 +80,14 @@ def Pose_Detected(cap, use_vedio, dir, count):
                     if dir == 0:# 之前狀態:抬腿
                         if 160 <= angle2_1 <= 180 and 160 <= angle2_2 <= 180:
                             count = count + 0.5
-                            accuracy_x = (30/(167-157)) * (167-angle2_1)
+                            accuracy_x = abs (3 * (angle2_1-170))
                             dir = 1    # 更新狀態:躺著
 
                     # 目前狀態::躺著
                     if dir == 1:   # 之前狀態:躺著
                         if 70 <= angle2_1 <= 90 and 70 <= angle2_2 <= 90:
                             count = count + 0.5
-                            accuracy_y = (30/(81-71)) * (81-angle2_1)
+                            accuracy_y = abs (3 * (angle2_1-80))
                             dir = 0    # 更新狀態:抬腿
 
                 accuracy = 100 - ((accuracy_x + accuracy_y) / 2)
