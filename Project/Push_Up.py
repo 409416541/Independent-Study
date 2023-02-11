@@ -39,10 +39,16 @@ def Pose_Detected(cap, use_vedio, dir, count):
             landmarks, img = detector.findPose(img, draw=True)
 
             if landmarks:
-                angle1, img = detector.findAngle(landmarks[11], landmarks[23],
+                #angle1:肩膀到髖到膝蓋的角度
+                angle1_1, img = detector.findAngle(landmarks[11], landmarks[23],
                                                 landmarks[25], img)
-                angle2, img = detector.findAngle(landmarks[11], landmarks[13],
+                angle1_2, img = detector.findAngle(landmarks[12], landmarks[24],
+                                                landmarks[26], img)
+                #angle2:肩膀到手肘到手腕的角度
+                angle2_1, img = detector.findAngle(landmarks[11], landmarks[13],
                                                 landmarks[15], img)
+                angle2_2, img = detector.findAngle(landmarks[12], landmarks[14],
+                                                landmarks[16], img)
 
                 # 顯示進度條
                 Global_Use.thebar(img, angle2, 60, 175)
