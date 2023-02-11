@@ -62,16 +62,19 @@ def Pose_Detected(cap, use_vedio, dir, count):
 
                 # 顯示進度條
                 Global_Use.thebar(img, angle1_1, 60, 175)
+                if 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
+                    and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
+                    if dir == 0:   # 之前狀態:挺身
+                        if 60 <= angle1_1 <= 80 and 60 <= angle1_2 <= 80 \
+                        and 0 <= angle2_1 <= 20 and 0 <= angle2_2 <= 20: # 目前狀態::伏地
+                            count = count + 0.5
+                            dir = 1    # 更新狀態:伏地
 
-                if dir == 0:   # 之前狀態:挺身
-                    if 60 <= angle1_1 <= 80 and 60 <= angle1_2 <= 80: # 目前狀態::伏地
-                        count = count + 0.5
-                        dir = 1    # 更新狀態:伏地
-
-                if dir == 1:   # 之前狀態:伏地
-                    if 160 <= angle1_1 <= 180 and 160 <= angle1_2 <= 180: # 目前狀態::挺身
-                        count = count + 0.5
-                        dir = 0    # 更新狀態:挺身
+                    if dir == 1:   # 之前狀態:伏地
+                        if 160 <= angle1_1 <= 180 and 160 <= angle1_2 <= 180 \
+                        and 50 <= angle2_1 <= 70 and 50 <= angle2_2 <= 70: # 目前狀態::挺身
+                            count = count + 0.5
+                            dir = 0    # 更新狀態:挺身
 
                 Global_Use.thecount(img, str(int(count)))
 
