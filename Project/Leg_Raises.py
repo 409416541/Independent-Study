@@ -2,21 +2,21 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 
-'''
+
 cap = cv2.VideoCapture('./Project/Test_Media/leg_raises.mp4')
 
 if not cap.isOpened():
     print("Cannot open video")
     exit()  
-'''
 
-'''
+
+
 cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-'''
+
 
 dir = 1  # 0: 抬腿 1: 躺著
 count = 0
@@ -80,17 +80,29 @@ def Pose_Detected(cap, use_vedio, dir, count):
                     if dir == 0:# 之前狀態:抬腿
                         if 160 <= angle2_1 <= 180 and 160 <= angle2_2 <= 180:
                             count = count + 0.5
-                            accuracy_x = abs (3 * (angle2_1-170))
                             dir = 1    # 更新狀態:躺著
-
+                            accuracy_y = 0
+                    
                     # 目前狀態::躺著
-                    if dir == 1:   # 之前狀態:躺著
-                        if 70 <= angle2_1 <= 90 and 70 <= angle2_2 <= 90:
-                            count = count + 0.5
-                            accuracy_y = abs (3 * (angle2_1-80))
-                            dir = 0    # 更新狀態:抬腿
-
-                accuracy = 100 - ((accuracy_x + accuracy_y) / 2)
+                    if 76 <= angle2_1 <= 95 and 76 <= angle2_2 <= 95:
+                        while dir == 1:   # 之前狀態:躺著
+                            if angle2_2 >= 96:
+                                count = count + 0.5
+                                dir = 0    # 更新狀態:抬腿
+                            else:
+                                if 76 <= angle2_1 <= 80 and 76 <= angle2_2 <= 80:
+                                    accuracy_y = 100
+                                else:
+                                    if 81 <= angle2_1 <= 85 and 81 <= angle2_2 <= 85:
+                                        accuracy_y = 90
+                                    else:
+                                        if 86 <= angle2_1 <= 90 and 86 <= angle2_2 <= 90:
+                                            accuracy_y = 75
+                                        else:
+                                            if 91 <= angle2_1 <= 95 and 91 <= angle2_2 <= 95:
+                                                accuracy_y = 60
+                            
+                accuracy = accuracy_y
                 Global_Use.thecount(img, str(int(count)))
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
 
@@ -109,5 +121,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+Pose_Detected(cap, 1, dir , count)
+Pose_Detected(cap, 0, dir , count)

@@ -31,6 +31,11 @@ def Pose_Detected(cap, use_vedio, dir, count):
             exit()  
 
     detector = PoseDetector()
+    img = cap.read()[1]
+    imgr, imgc = img.shape[:2]
+
+    accuracy_x = 0 
+    accuracy_y = 0
 
     while True:
         success, img = cap.read()
@@ -44,7 +49,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
                                                 landmarks[15], img)
                 angle1_2, img = detector.findAngle(landmarks[12], landmarks[14],
                                                 landmarks[16], img)
-                #angle2:髖到手肘到肩膀的角度
+                #angle2:髖到肩膀到手肘的角度
                 angle2_1, img = detector.findAngle(landmarks[13], landmarks[11],
                                                 landmarks[23], img)
                 angle2_2, img = detector.findAngle(landmarks[14], landmarks[12],
@@ -64,19 +69,41 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle1_1, 60, 175)
                 if 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
                     and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
+
                     if dir == 0:   # 之前狀態:挺身
-                        if 60 <= angle1_1 <= 80 and 60 <= angle1_2 <= 80 \
-                        and 0 <= angle2_1 <= 20 and 0 <= angle2_2 <= 20: # 目前狀態::伏地
+                        if 51 <= angle1_1 <= 70 and 51 <= angle1_2 <= 70: # 目前狀態::伏地
                             count = count + 0.5
                             dir = 1    # 更新狀態:伏地
-
+                            accuracy_x = 100
+                            
+                        else:
+                            if 61 <= angle1_1 <= 70 and 61 <= angle1_2 <= 70:
+                                accuracy_x = 90
+                            else:
+                                if 71 <= angle1_1 <= 80 and 71 <= angle1_2 <= 80:
+                                    accuracy_x = 75
+                                else:
+                                    if 81 <= angle1_1 <= 90 and 81 <= angle1_2 <= 90:
+                                        accuracy_x = 60
+                                    
                     if dir == 1:   # 之前狀態:伏地
-                        if 160 <= angle1_1 <= 180 and 160 <= angle1_2 <= 180 \
-                        and 50 <= angle2_1 <= 70 and 50 <= angle2_2 <= 70: # 目前狀態::挺身
+                        if 161 <= angle1_1 <= 170 and 161 <= angle1_2 <= 170: # 目前狀態::挺身
+                            accuracy_y = 100
                             count = count + 0.5
                             dir = 0    # 更新狀態:挺身
-
+                        else:
+                            if 151 <= angle1_1 <= 160 and 151 <= angle1_2 <= 160:
+                                accuracy_y = 90
+                            else:
+                                if 141 <= angle1_1 <= 150 and 141 <= angle1_2 <= 150:
+                                    accuracy_y = 75
+                                else:
+                                    if 131 <= angle1_1 <= 140 and 131 <= angle1_2 <= 140:
+                                        accuracy_y = 60
+                                        
+                accuracy = (accuracy_x+accuracy_y)/2
                 Global_Use.thecount(img, str(int(count)))
+                Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
 
             if(not use_vedio):
                 return dir, count, img
