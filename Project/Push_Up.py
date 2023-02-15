@@ -18,7 +18,7 @@ if not cap.isOpened():
     exit()
 
 
-dir = 1  # 0: 挺身 1: 伏地
+dir = 0  # 0: 挺身 1: 伏地
 count = 0
 
 def Pose_Detected(cap, use_vedio, dir, count):
@@ -35,7 +35,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
     imgr, imgc = img.shape[:2]
 
     accuracy = 0 
-    angle_top = 0
+    angle_top = 100
 
     while True:
         success, img = cap.read()
@@ -81,22 +81,17 @@ def Pose_Detected(cap, use_vedio, dir, count):
                                 angle_top = (angle1_1 + angle1_2)/2
 
                             if angle_top < (angle1_1 + angle1_2)/2 and (angle1_1 + angle1_2)/2 - angle_top > 5:
-                                accuracy = 100 - 2.5 * abs(angle_top - 60)    # 更新正確度
                                 count = count + 0.5
                                 dir = 1    # 更新狀態:伏地
 
                     # 目前狀態::挺身
                     if dir == 1:   # 之前狀態:伏地
-                        if 151 <= angle1_1 <= 180 and 151 <= angle1_2 <= 180:
+                        if 161 <= angle1_1 <= 180 and 161 <= angle1_2 <= 180:
 
-                            # angle_top:角度極值
-                            if angle_top < (angle1_1 + angle1_2)/2:
-                                angle_top = (angle1_1 + angle1_2)/2
-
-                            if angle_top > (angle1_1 + angle1_2)/2 and angle_top - (angle1_1 + angle1_2)/2 > 5:
-                                accuracy = 100 - 2 * abs(angle_top - 170)    # 更新正確度
-                                count = count + 0.5
-                                dir = 0    # 更新狀態:挺身
+                            accuracy = 100 - 2.5 * abs(angle_top - 60)    # 更新正確度
+                            angle_top = 180
+                            count = count + 0.5
+                            dir = 0    # 更新狀態:挺身
                 
                 
                 Global_Use.thecount(img, str(int(count)))

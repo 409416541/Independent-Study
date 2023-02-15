@@ -2,21 +2,21 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 
-'''
+
 cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
 
 if not cap.isOpened():
     print("Cannot open video")
     exit()  
-'''  
+ 
 
-'''
+
 cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-'''
+
 
 dir = 0  # 0: 站起  1: 蹲下
 count = 0
@@ -31,6 +31,12 @@ def Pose_Detected(cap, use_vedio, dir, count):
             exit()  
 
     detector = PoseDetector()
+
+    img = cap.read()[1]
+    imgr, imgc = img.shape[:2]
+
+    accuracy = 0 
+    angle_top = 185
 
     while True:
         success, img = cap.read()
@@ -58,27 +64,37 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 '''
                                                 
                 # 顯示進度條
-                Global_Use.thebar(img, angle2_1, 90, 175)
+                Global_Use.thebar(img, angle1_1, 90, 175)
                 
+                # 正確姿勢的範圍
                 if 70 <= angle1_1 <= 180 and 70 <= angle1_2 <= 180 \
-                    and 80 <= angle2_1 <= 180 and 80 <= angle2_2 <= 180 :
-                    '''
-                    and 60 <= angle3_1 <= 170 and 60 <= angle3_2 <= 175:
-                    '''
+                    and 80 <= angle2_1 <= 180 and 80 <= angle2_2 <= 180:
 
+                    # 目前狀態:蹲下
                     if dir == 0:  # 之前狀態:站起
-                        if 70 <= angle1_1 <=110 and 70 <= angle1_2 <= 110 \
-                            and 80 <= angle2_1 <= 110 and 80 <= angle2_2 <= 110:  # 目前狀態:蹲下
-                            count = count + 0.5
-                            dir = 1   # 更新狀態:蹲下
+                        if 71 <= angle1_1 <=110 and 71 <= angle1_2 <= 110 \
+                            and 81 <= angle2_1 <= 110 and 81 <= angle2_2 <= 110:
 
+                            # angle_top:角度極值
+                            if angle_top > (angle1_1 + angle1_2)/2:
+                                angle_top = (angle1_1 + angle1_2)/2
+
+                            if angle_top < (angle1_1 + angle1_2)/2 and (angle1_1 + angle1_2)/2 - angle_top > 5:
+                                count = count + 0.5
+                                dir = 1    # 更新狀態:蹲下
+
+                    # 目前狀態:站起
                     if dir == 1:  # 之前狀態:蹲下
-                        if 155 <= angle1_1 <=180 and 155 <= angle1_2 <= 180 \
-                            and 160 <= angle2_1 <= 180 and 160 <= angle2_2 <= 180:  # 目前狀態:站起
+                        if 156 <= angle1_1 <=180 and 156 <= angle1_2 <= 180 \
+                            and 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
+
+                            accuracy = 100 - 1 * abs(angle_top - 85)    # 更新正確度
+                            angle_top = 180
                             count = count + 0.5
                             dir = 0   # 更新狀態:站起
                         
                 Global_Use.thecount(img, str(int(count)))
+                Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
 
             if(not use_vedio):
                 return dir, count, img
@@ -95,5 +111,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+Pose_Detected(cap, 1, dir , count)
+Pose_Detected(cap, 0, dir , count)
