@@ -18,7 +18,7 @@ if not cap.isOpened():
     exit()
 
 
-dir = 0  # 0: 挺身 1: 伏地
+dir = 1  # 0: 挺身 1: 伏地
 count = 0
 
 def Pose_Detected(cap, use_vedio, dir, count):
@@ -34,8 +34,8 @@ def Pose_Detected(cap, use_vedio, dir, count):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
-    accuracy_x = 0 
-    accuracy_y = 0
+    accuracy = 0 
+    angle_top = 0
 
     while True:
         success, img = cap.read()
@@ -67,41 +67,38 @@ def Pose_Detected(cap, use_vedio, dir, count):
 
                 # 顯示進度條
                 Global_Use.thebar(img, angle1_1, 60, 175)
+
+                # 正確姿勢的範圍
                 if 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
                     and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
 
+                    # 目前狀態::伏地
                     if dir == 0:   # 之前狀態:挺身
-                        if 51 <= angle1_1 <= 70 and 51 <= angle1_2 <= 70: # 目前狀態::伏地
-                            count = count + 0.5
-                            dir = 1    # 更新狀態:伏地
-                            accuracy_x = 100
-                            
-                        else:
-                            if 61 <= angle1_1 <= 70 and 61 <= angle1_2 <= 70:
-                                accuracy_x = 90
-                            else:
-                                if 71 <= angle1_1 <= 80 and 71 <= angle1_2 <= 80:
-                                    accuracy_x = 75
-                                else:
-                                    if 81 <= angle1_1 <= 90 and 81 <= angle1_2 <= 90:
-                                        accuracy_x = 60
-                                    
+                        if 56 <= angle1_1 <= 85 and 56 <= angle1_2 <= 85:
+
+                            # angle_top:角度極值
+                            if angle_top > (angle1_1 + angle1_2)/2:
+                                angle_top = (angle1_1 + angle1_2)/2
+
+                            if angle_top < (angle1_1 + angle1_2)/2 and (angle1_1 + angle1_2)/2 - angle_top > 5:
+                                accuracy = 100 - 2.5 * abs(angle_top - 60)    # 更新正確度
+                                count = count + 0.5
+                                dir = 1    # 更新狀態:伏地
+
+                    # 目前狀態::挺身
                     if dir == 1:   # 之前狀態:伏地
-                        if 161 <= angle1_1 <= 170 and 161 <= angle1_2 <= 170: # 目前狀態::挺身
-                            accuracy_y = 100
-                            count = count + 0.5
-                            dir = 0    # 更新狀態:挺身
-                        else:
-                            if 151 <= angle1_1 <= 160 and 151 <= angle1_2 <= 160:
-                                accuracy_y = 90
-                            else:
-                                if 141 <= angle1_1 <= 150 and 141 <= angle1_2 <= 150:
-                                    accuracy_y = 75
-                                else:
-                                    if 131 <= angle1_1 <= 140 and 131 <= angle1_2 <= 140:
-                                        accuracy_y = 60
-                                        
-                accuracy = (accuracy_x+accuracy_y)/2
+                        if 151 <= angle1_1 <= 180 and 151 <= angle1_2 <= 180:
+
+                            # angle_top:角度極值
+                            if angle_top < (angle1_1 + angle1_2)/2:
+                                angle_top = (angle1_1 + angle1_2)/2
+
+                            if angle_top > (angle1_1 + angle1_2)/2 and angle_top - (angle1_1 + angle1_2)/2 > 5:
+                                accuracy = 100 - 2 * abs(angle_top - 170)    # 更新正確度
+                                count = count + 0.5
+                                dir = 0    # 更新狀態:挺身
+                
+                
                 Global_Use.thecount(img, str(int(count)))
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
 
