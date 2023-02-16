@@ -35,7 +35,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
     imgr, imgc = img.shape[:2]
 
     accuracy = 0 
-    angle_top = 100
+    angle_top = 180
 
     while True:
         success, img = cap.read()
@@ -86,13 +86,12 @@ def Pose_Detected(cap, use_vedio, dir, count):
 
                     # 目前狀態::挺身
                     if dir == 1:   # 之前狀態:伏地
+                       
                         if 161 <= angle1_1 <= 180 and 161 <= angle1_2 <= 180:
-
-                            accuracy = 100 - 2.5 * abs(angle_top - 60)    # 更新正確度
+                            accuracy = 100 - 1.5 * abs(angle_top - 60)    # 更新正確度
                             angle_top = 180
                             count = count + 0.5
                             dir = 0    # 更新狀態:挺身
-                
                 
                 Global_Use.thecount(img, str(int(count)))
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)

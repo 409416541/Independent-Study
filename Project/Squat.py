@@ -36,7 +36,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
     imgr, imgc = img.shape[:2]
 
     accuracy = 0 
-    angle_top = 185
+    angle_top = 180
 
     while True:
         success, img = cap.read()
@@ -67,13 +67,13 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle1_1, 90, 175)
                 
                 # 正確姿勢的範圍
-                if 70 <= angle1_1 <= 180 and 70 <= angle1_2 <= 180 \
-                    and 80 <= angle2_1 <= 180 and 80 <= angle2_2 <= 180:
+                if 56 <= angle1_1 <= 180 and 56 <= angle1_2 <= 180 \
+                    and 71 <= angle2_1 <= 180 and 71 <= angle2_2 <= 180:
 
                     # 目前狀態:蹲下
                     if dir == 0:  # 之前狀態:站起
-                        if 71 <= angle1_1 <=110 and 71 <= angle1_2 <= 110 \
-                            and 81 <= angle2_1 <= 110 and 81 <= angle2_2 <= 110:
+                        if 56 <= angle1_1 <= 110 and 56 <= angle1_2 <= 110 \
+                            and 71 <= angle2_1 <= 100 and 71 <= angle2_2 <= 100:
 
                             # angle_top:角度極值
                             if angle_top > (angle1_1 + angle1_2)/2:
@@ -85,14 +85,14 @@ def Pose_Detected(cap, use_vedio, dir, count):
 
                     # 目前狀態:站起
                     if dir == 1:  # 之前狀態:蹲下
-                        if 156 <= angle1_1 <=180 and 156 <= angle1_2 <= 180 \
+                        if 161 <= angle1_1 <=180 and 161 <= angle1_2 <= 180 \
                             and 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
 
-                            accuracy = 100 - 1 * abs(angle_top - 85)    # 更新正確度
+                            accuracy = 100 - 1 * abs(angle_top - 65)    # 更新正確度
                             angle_top = 180
                             count = count + 0.5
                             dir = 0   # 更新狀態:站起
-                        
+                
                 Global_Use.thecount(img, str(int(count)))
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
 

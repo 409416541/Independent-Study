@@ -86,7 +86,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
                     if dir == 0:# 之前狀態:抬腿
                         if 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
 
-                            accuracy = 100 - 3 * abs(angle_top - 80)    # 更新正確度
+                            accuracy = 100 - 2.5 * abs(angle_top - 80)    # 更新正確度
                             angle_top = 180
                             count = count + 0.5
                             dir = 1    # 更新狀態:躺著
