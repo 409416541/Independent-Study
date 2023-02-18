@@ -2,7 +2,7 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 
-
+'''
 cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
 
 if not cap.isOpened():
@@ -16,7 +16,7 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-
+'''
 
 dir = 0  # 0: 站起  1: 蹲下
 count = 0
@@ -24,7 +24,7 @@ count = 0
 def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/Squat1.mp4')
 
         if not cap.isOpened():
             print("Cannot open video")
@@ -111,5 +111,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-Pose_Detected(cap, 1, dir , count)
-Pose_Detected(cap, 0, dir , count)
+#Pose_Detected(cap, 1, dir , count)
+#Pose_Detected(cap, 0, dir , count)

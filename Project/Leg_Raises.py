@@ -3,6 +3,7 @@ import Global_Use
 import cv2
 
 
+'''
 cap = cv2.VideoCapture('./Project/Test_Media/leg_raises.mp4')
 
 if not cap.isOpened():
@@ -16,7 +17,7 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-
+'''
 
 dir = 1  # 0: 抬腿 1: 躺著
 count = 0
@@ -121,5 +122,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-Pose_Detected(cap, 1, dir , count)
-Pose_Detected(cap, 0, dir , count)
+#Pose_Detected(cap, 1, dir , count)
+#Pose_Detected(cap, 0, dir , count)
