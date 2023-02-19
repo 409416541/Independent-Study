@@ -54,7 +54,7 @@ def hand_angle(hand_):
         angle_list.append(0)
 
     # pink 小拇指
-    if(findAngle(hand_[20], hand_[19], hand_[18]) >= 160 and findAngle(hand_[19], hand_[18], hand_[17]) >= 160):
+    if(findAngle(hand_[20], hand_[19], hand_[18]) >= 160 and findAngle(hand_[19], hand_[18], hand_[17]) >= 148):
         angle_list.append(1)
     else:
         angle_list.append(0)
