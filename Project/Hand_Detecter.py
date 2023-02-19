@@ -101,25 +101,26 @@ def Hand_Detecter(cap):
         last_test = ''
 
         while True:
-            ret, img = cap.read()
+            img = cap.read()[1]
 
-            if not ret:
-                print("Cannot receive frame")
-                break
             img2 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # 轉換成 RGB 色彩
             results = hands.process(img2)                # 偵測手勢
+
             if results.multi_hand_landmarks:
                 for hand_landmarks in results.multi_hand_landmarks:
                     finger_points = []                   # 記錄手指節點座標的串列
+
                     for i in hand_landmarks.landmark:
                         # 將 21 個節點換算成座標，記錄到 finger_points
                         x = i.x * w
                         y = i.y * h
                         finger_points.append((x, y))
+
                     if finger_points:
                         finger_angle = hand_angle(finger_points) # 計算手指角度，回傳長度為 5 的串列
                         #print(finger_angle)                     # 印出角度 ( 有需要就開啟註解 )
                         text = hand_pos(finger_angle)            # 取得手勢所回傳的內容
+                        
                         if(last_test != text):
                             last_test = text
                         #Global_Use.thecount(img, text)
