@@ -130,7 +130,6 @@ def Hand_Detecter(cap):
             
             return background, last_test
 
-            
             '''
             cv2.imshow('Hand Detecter', img)
             if cv2.waitKey(5) == ord('q'):
@@ -139,5 +138,4 @@ def Hand_Detecter(cap):
     cv2.destroyAllWindows()
     '''
     
-
 #Hand_Detecter(cap)
