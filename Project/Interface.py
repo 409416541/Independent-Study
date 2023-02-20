@@ -57,7 +57,8 @@ text = ['Please choose action',
 
 choose_text = ['Bye',
                'Sit Up', 'Push Up', 'Squat', 'Leg Raises', 'Jumping Jacks', 'Break',
-               'Sample Video', 'Go Sport', 'back to interface']
+               'Sample Video', 'Go Sport', 'back to interface',
+               str(difficulty[0])+' times', str(difficulty[1])+' times', str(difficulty[2])+' times', 'back to choose']
 
 while(count+1 >= 0):
 
@@ -228,6 +229,9 @@ while(count+1 >= 0):
 
                                     else:
                                         count_times_confirm = 1
+
+                                        engine.say(choose_text[int(last_times_choose)+10])
+                                        engine.runAndWait()
 
                             elif(nan_start):
                                 nan_end = time.time()
