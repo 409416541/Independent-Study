@@ -6,11 +6,19 @@ from Leg_Raises import Pose_Detected as pose4
 from Jumping_Jacks import Pose_Detected as pose5
 import Global_Use
 import cv2
+import numpy as np
 import time
+import pyttsx3
+
+engine = pyttsx3.init()
+engine.setProperty('rate', 160)
 
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
-            print("Cannot open camera")
+            print('Cannot open camera')
+            engine.say('Cannot open camera')
+            engine.runAndWait()
+
             exit()
 
 img = cap.read()[1]
@@ -46,6 +54,10 @@ text = ['Please choose action',
         '1. Sample Video', '2. Go Sport', '3. back to interface', # choose
         'How times you want', 
         '1.  '+str(difficulty[0])+' times', '2. '+str(difficulty[1])+' times', '3. '+str(difficulty[2])+' times', '4. back to choose'] 
+
+choose_text = ['Bye',
+               'Sit Up', 'Push Up', 'Squat', 'Leg Raises', 'Jumping Jacks', 'Break',
+               'Sample Video', 'Go Sport', 'back to interface']
 
 while(count+1 >= 0):
 
@@ -92,6 +104,9 @@ while(count+1 >= 0):
 
                 if(end - start > wait_time and choose == '0'):
                     confirm = 1
+
+                    engine.say(choose_text[int(last_choose)])
+                    engine.runAndWait()
 
                     if(last_choose == '6' and choose == '0'):
                         bye = 1
@@ -147,6 +162,9 @@ while(count+1 >= 0):
                     if(end - start > wait_time and choose == '0'):
                         vedio_confirm = 1
 
+                        engine.say(choose_text[int(last_vedio_choose)+6])
+                        engine.runAndWait()
+
                 else:
                     vedio_has_choose = 0
 
@@ -185,6 +203,9 @@ while(count+1 >= 0):
 
                         if(not count_times_choose):
                             if(choose == '1' or choose == '2' or choose == '3' or choose == '4'):
+                                engine.say(text[int(choose)+12])
+                                engine.runAndWait()
+
                                 count_times_choose = 1
                                 last_times_choose = choose
                                 start = time.time()
@@ -256,6 +277,9 @@ while(count+1 >= 0):
 
     if cv2.waitKey(5) == ord('q'):
         break
+
+engine.say(choose_text[0])
+engine.runAndWait()
 
 cap.release()
 cv2.destroyAllWindows()
