@@ -3,8 +3,8 @@ import Global_Use
 import cv2
 import winsound
 
-'''
-cap = cv2.VideoCapture('./Project/Test_Media/Push_Up.mp4')
+
+cap = cv2.VideoCapture('./Project/Test_Media/push.mp4')
 
 if not cap.isOpened():
     print("Cannot open video")
@@ -18,14 +18,13 @@ if not cap.isOpened():
     print("Cannot open camera")
     exit()
 
-'''
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
 
 def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/Push_Up.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/push.mp4')
         
         if not cap.isOpened():
             print("Cannot open video")
@@ -70,12 +69,12 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle1_1, 60, 175)
 
                 # 正確姿勢的範圍
-                if 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
-                    and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
+                if 140 <= angle3_1 <= 180 and 140 <= angle3_2 <= 180 \
+                    and 140 <= angle4_1 <= 180 and 140 <= angle4_2 <= 180:
 
                     # 目前狀態::伏地
                     if dir == 0:   # 之前狀態:挺身
-                        if 56 <= angle1_1 <= 85 and 56 <= angle1_2 <= 85:
+                        if 46 <= angle1_1 <= 95 and 46 <= angle1_2 <= 95:
 
                             # angle_top:角度極值
                             if angle_top > (angle1_1 + angle1_2)/2:
@@ -88,8 +87,8 @@ def Pose_Detected(cap, use_vedio, dir, count):
                     # 目前狀態::挺身
                     if dir == 1:   # 之前狀態:伏地
                        
-                        if 161 <= angle1_1 <= 180 and 161 <= angle1_2 <= 180:
-                            accuracy = 100 - 1.5 * abs(angle_top - 60)    # 更新正確度
+                        if 141 <= angle1_1 <= 180 and 141 <= angle1_2 <= 180:
+                            accuracy = 100 - 1 * abs(angle_top - 60)    # 更新正確度
                             angle_top = 180
                             count = count + 0.5
                             dir = 0    # 更新狀態:挺身
@@ -114,5 +113,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+Pose_Detected(cap, 1, dir , count)
+Pose_Detected(cap, 0, dir , count)

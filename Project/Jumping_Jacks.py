@@ -71,7 +71,6 @@ def Pose_Detected(cap, use_vedio, dir, count):
                     and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
                         accuracy1=100
                         accuracy2=100
-                        
                         accuracy4=100
                         # 目前狀態::開
                         if dir==0: # 之前狀態:close

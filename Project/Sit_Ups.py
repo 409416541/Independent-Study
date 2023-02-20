@@ -2,7 +2,7 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 import winsound
-'''
+
 cap = cv2.VideoCapture('./Project/Test_Media/situp.mp4')
 
 if not cap.isOpened():
@@ -15,7 +15,7 @@ if not cap.isOpened():
     print("Cannot open camera")
     exit()
 
-'''
+
 dir = 0  # 0: 仰臥 1: 起坐
 count = 0
 
@@ -67,13 +67,13 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle1_1, 85, 125)
 
                 # 正確姿勢的範圍
-                if 60 <= angle2_1 <= 70 and 60 <= angle2_2 <= 70 \
-                    and 150 <= angle3_1 <= 180 and 150 <= angle3_2 <= 180 \
-                    and 50 <= angle4_1 <= 80 and 50 <= angle4_2 <= 80:
+                if 50 <= angle2_1 <= 80 and 50 <= angle2_2 <= 80 \
+                    and 130 <= angle3_1 <= 180 and 130 <= angle3_2 <= 180 \
+                    and 40 <= angle4_1 <= 90 and 40 <= angle4_2 <= 90:
 
                     # 目前狀態:起坐
                     if dir == 0:  # 之前狀態:躺著
-                        if  76 <= (angle1_1 + angle1_2)/2 <= 95:
+                        if  66 <= (angle1_1 + angle1_2)/2 <= 105:
                             
                              # angle_top:角度極值
                             if angle_top > (angle1_1 + angle1_2)/2:
@@ -85,9 +85,9 @@ def Pose_Detected(cap, use_vedio, dir, count):
 
                     # 目前狀態:躺著
                     if dir == 1:  # 之前狀態:起坐
-                        if (angle1_1 + angle1_2)/2 >= 110:
+                        if (angle1_1 + angle1_2)/2 >= 105:
 
-                            accuracy = 100 - 4 * abs(angle_top - 85)    # 更新正確度
+                            accuracy = 100 - 2 * abs(angle_top - 85)    # 更新正確度
                             angle_top = 180
                             count = count + 0.5
                             dir = 0   # 更新狀態:躺著
@@ -112,5 +112,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+Pose_Detected(cap, 1, dir , count)
+Pose_Detected(cap, 0, dir , count)

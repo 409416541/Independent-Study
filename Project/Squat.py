@@ -2,7 +2,7 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 import winsound
-'''
+
 cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
 
 if not cap.isOpened():
@@ -17,7 +17,7 @@ if not cap.isOpened():
     print("Cannot open camera")
     exit()
 
-'''
+
 dir = 0  # 0: 站起  1: 蹲下
 count = 0
 
@@ -67,13 +67,13 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 Global_Use.thebar(img, angle1_1, 90, 175)
                 
                 # 正確姿勢的範圍
-                if 56 <= angle1_1 <= 180 and 56 <= angle1_2 <= 180 \
-                    and 71 <= angle2_1 <= 180 and 71 <= angle2_2 <= 180:
+                if 46 <= angle1_1 <= 180 and 46 <= angle1_2 <= 180 \
+                    and 61 <= angle2_1 <= 180 and 61 <= angle2_2 <= 180:
 
                     # 目前狀態:蹲下
                     if dir == 0:  # 之前狀態:站起
-                        if 56 <= angle1_1 <= 110 and 56 <= angle1_2 <= 110 \
-                            and 71 <= angle2_1 <= 100 and 71 <= angle2_2 <= 100:
+                        if 46 <= angle1_1 <= 120 and 46 <= angle1_2 <= 120 \
+                            and 61 <= angle2_1 <= 110 and 61 <= angle2_2 <= 10:
 
                             # angle_top:角度極值
                             if angle_top > (angle1_1 + angle1_2)/2:
@@ -85,16 +85,15 @@ def Pose_Detected(cap, use_vedio, dir, count):
 
                     # 目前狀態:站起
                     if dir == 1:  # 之前狀態:蹲下
-                        if 161 <= angle1_1 <=180 and 161 <= angle1_2 <= 180 \
-                            and 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
+                        if 141 <= angle1_1 <=180 and 141 <= angle1_2 <= 180 \
+                            and 141 <= angle2_1 <= 180 and 141 <= angle2_2 <= 180:
 
-                            accuracy = 100 - 1 * abs(angle_top - 65)    # 更新正確度
+                            accuracy = 100 - 0.75 * abs(angle_top - 65)    # 更新正確度
                             angle_top = 180
                             count = count + 0.5
                             dir = 0   # 更--*新狀態:站起
                             if count%1==0:
                                     winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
-                
                 Global_Use.thecount(img, str(int(count)))
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
 
@@ -113,5 +112,5 @@ def Pose_Detected(cap, use_vedio, dir, count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+Pose_Detected(cap, 1, dir , count)
+Pose_Detected(cap, 0, dir , count)
