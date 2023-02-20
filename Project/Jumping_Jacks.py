@@ -1,7 +1,7 @@
 from PoseModule import PoseDetector
 import Global_Use
 import cv2
-
+import winsound
 
 '''
 cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
@@ -17,8 +17,8 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-'''
 
+'''
 dir = 1  # 0: 開 1: 合
 count = 0
 
@@ -65,107 +65,48 @@ def Pose_Detected(cap, use_vedio, dir, count):
                 
                 # 顯示進度條
                 Global_Use.thebar(img, angle2_1, 80, 100)
+                
                 if 0 <= angle1_1 <= 180 and  0 <= angle1_2 <= 180\
                     and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
                     and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
+                        accuracy1=100
+                        accuracy2=100
+                        
+                        accuracy4=100
                         # 目前狀態::開
-                        if dir==0: # 之前狀態:開
+                        if dir==0: # 之前狀態:close
                             if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
-                            and 170 <= angle3_1 <= 180 and 78<=angle4_1 <= 110\
+                            and 170 <= angle3_1 <= 180 \
                             and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
-                            and 170 <= angle3_2 <= 180 and 78<=angle4_2 <= 110:
-                                accuracy1=100
-                                accuracy2=100
-                                accuracy3=100
-                                accuracy4=100
+                            and 170 <= angle3_2 <= 180:
                                 count = count + 0.5
                                 dir = 1    # 更新狀態:合
-                            else:
-                                if angle2_1<70:
-                                    accuracy2=100*(angle2_1/70)
-                                if angle2_1>90:
-                                    accuracy2=100*(90/angle2_1)
-                                if angle1_1>30:
-                                    accuracy1=100*(30/angle1_1)
-                                if angle3_1<170:
-                                    accuracy3=100*(angle3_1/170)
-                                if angle3_1>180:
-                                    accuracy3=100*(180/angle3_1)
-                                if angle4_1<78:
-                                    accuracy4=100*(angle4_1/78) 
-                                if angle4_1>110:
-                                    accuracy4=100*(110/angle4_1)
-                                
-                                if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
-                                and 50 <=angle4_1 <= 65\
-                                and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
-                                and 50 <=angle4_2 <= 65:
-                                    accuracy3=100
-                                    accuracy1=100
-                                    accuracy2=100
-                                    accuracy4=100
-                                    if angle2_1<90:
-                                        accuracy2=100*(angle2_1/90)
-                                    if angle2_1>125:
-                                        accuracy2=100*(125/angle2_1)
-                                    if angle1_1<150:
-                                        accuracy1=100*(angle1_1/150)
-                                    if angle1_1>180:
-                                        accuracy1=100*(180/angle1_1)
-                                    if angle4_1<50:
-                                        accuracy4=100*(angle4_1/50) 
-                                    if angle4_1>65:
-                                        accuracy4=100*(65/angle4_1)
+                                if count%1==0:
+                                    winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
+
+                                    
                         # 目前狀態::合
-                        if dir==1: # 之前狀態:合
-                            accuracy3=100
+                        if dir==1: # 之前狀態:open
+
                             if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
-                            and 50 <=angle4_1 <= 65\
+                            \
                             and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
-                            and 50 <=angle4_2 <= 65:
-                                accuracy1=100
-                                accuracy2=100
-                                accuracy4=100
+                            :
                                 count = count + 0.5
                                 dir = 0    # 更新狀態:開
-                            else:
-                                if angle2_1<90:
-                                    accuracy2=100*(angle2_1/90)
-                                if angle2_1>125:
-                                    accuracy2=100*(125/angle2_1)
-                                if angle1_1<150:
-                                    accuracy1=100*(angle1_1/150)
-                                if angle1_1>180:
-                                    accuracy1=100*(180/angle1_1)
-                                if angle4_1<50:
-                                    accuracy4=100*(angle4_1/50) 
-                                if angle4_1>65:
-                                    accuracy4=100*(65/angle4_1)
-                                if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
-                                 and 170 <= angle3_1 <= 180 and 78<=angle4_1 <= 110\
-                                 and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
-                                 and 170 <= angle3_2 <= 180 and 78<=angle4_2 <= 110:
-                                    accuracy1=100
-                                    accuracy2=100
-                                    accuracy3=100
-                                    accuracy4=100
-                                    if angle2_1<70:
-                                        accuracy2=100*(angle2_1/70)
-                                    if angle2_1>90:
-                                        accuracy2=100*(90/angle2_1)
-                                    if angle1_1>30:
-                                        accuracy1=100*(30/angle1_1)
-                                    if angle3_1<170:
-                                        accuracy3=100*(angle3_1/170)
-                                    if angle3_1>180:
-                                        accuracy3=100*(180/angle3_1)
-                                    if angle4_1<78:
-                                        accuracy4=100*(angle4_1/78) 
-                                    if angle4_1>110:
-                                        accuracy4=100*(110/angle4_1)
-                #
-                accuracy = ((accuracy1 +accuracy2+accuracy3+accuracy4) / 4)
-                #accuracy = ((accuracy1 +accuracy2+accuracy4) / 3)
+                else:
+                    if angle2_1<70:
+                        accuracy2=100*(angle2_1/70)
+                    if angle2_1>125:
+                        accuracy2=100*(125/angle2_1)
+                    if angle1_1>180:
+                        accuracy1=100*(180/angle1_1)
+                    if angle4_1<50:
+                        accuracy4=100*(angle4_1/50) 
+                    if angle4_1>110:
+                        accuracy4=100*(110/angle4_1) 
+                
+                accuracy = ((accuracy1 +accuracy2+accuracy4) / 3)
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
                 Global_Use.thecount(img, str(int(count)))
 

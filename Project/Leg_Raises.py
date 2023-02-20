@@ -1,10 +1,10 @@
 from PoseModule import PoseDetector
 import Global_Use
 import cv2
-
+import winsound
 
 '''
-cap = cv2.VideoCapture('./Project/Test_Media/leg_raises.mp4')
+cap = cv2.VideoCapture('./Project/Test_Media/legraises.mp4')
 
 if not cap.isOpened():
     print("Cannot open video")
@@ -18,14 +18,13 @@ if not cap.isOpened():
     print("Cannot open camera")
     exit()
 '''
-
 dir = 1  # 0: 抬腿 1: 躺著
 count = 0
 
 def Pose_Detected(cap, use_vedio, dir, count):
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/leg_raises.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/legraises.mp4')
 
         if not cap.isOpened():
             print("Cannot open camera")
@@ -91,6 +90,8 @@ def Pose_Detected(cap, use_vedio, dir, count):
                             angle_top = 180
                             count = count + 0.5
                             dir = 1    # 更新狀態:躺著
+                            if count%1==0:
+                                    winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
                     
                     # 目前狀態::抬腿
                     if dir == 1:   # 之前狀態:躺著
@@ -99,6 +100,7 @@ def Pose_Detected(cap, use_vedio, dir, count):
                             # angle_top:角度極值
                             if angle_top > (angle2_1 + angle2_2)/2:
                                 angle_top = (angle2_1 + angle2_2)/2
+
 
                             if angle_top < (angle2_1 + angle2_2)/2 and (angle2_1 + angle2_2)/2 - angle_top > 5:
                                 count = count + 0.5

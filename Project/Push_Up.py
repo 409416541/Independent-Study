@@ -1,7 +1,7 @@
 from PoseModule import PoseDetector
 import Global_Use
 import cv2
-
+import winsound
 
 '''
 cap = cv2.VideoCapture('./Project/Test_Media/Push_Up.mp4')
@@ -17,8 +17,8 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-'''
 
+'''
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
 
@@ -93,6 +93,8 @@ def Pose_Detected(cap, use_vedio, dir, count):
                             angle_top = 180
                             count = count + 0.5
                             dir = 0    # 更新狀態:挺身
+                            if count%1==0:
+                                    winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
                 
                 Global_Use.thecount(img, str(int(count)))
                 Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
