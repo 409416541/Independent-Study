@@ -127,7 +127,7 @@ while(count+1 >= 0):
 
         if(not vedio_confirm):
             if(choose == '4' or choose == '5' or choose == '6'):
-                choose = 'NONE+'
+                choose = 'NAN'
 
             # choose
             Global_Use.interface(img, text[7] + text[int(last_choose)], 30)
