@@ -22,7 +22,7 @@ if not cap.isOpened():
 dir = 1  # 0: 開 1: 合
 count = 0
 
-def Pose_Detected(cap, use_vedio, dir, count):
+def Pose_Detected(cap, use_vedio, dir, count, text):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
@@ -106,8 +106,8 @@ def Pose_Detected(cap, use_vedio, dir, count):
                         accuracy4=100*(110/angle4_1) 
                 
                 accuracy = ((accuracy1 +accuracy2+accuracy4) / 3)
-                Global_Use.accuracy(img, str(int(accuracy)) + ' %', imgc)
-                Global_Use.thecount(img, str(int(count)))
+
+                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text.split('. ')[1], imgc, imgr)
 
             if(not use_vedio):
                 return dir, count, img

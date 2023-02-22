@@ -212,15 +212,15 @@ while(count+1 >= 0):
                     match last_choose:
 
                         case '1':
-                            pose1(cap, 1, 0, 0.0)
+                            pose1(cap, 1, 0, 0.0, '')
                         case '2':
-                            pose2(cap, 1, 0, 0.0)
+                            pose2(cap, 1, 0, 0.0, '')
                         case '3': 
-                            pose3(cap, 1, 0, 0.0)
+                            pose3(cap, 1, 0, 0.0, '')
                         case '4':
-                            pose4(cap, 1, 0, 0.0)
+                            pose4(cap, 1, 0, 0.0, '')
                         case '5':
-                            pose5(cap, 1, 0, 0.0)
+                            pose5(cap, 1, 0, 0.0, '')
                     
                     vedio_confirm = 0
                     vedio_has_choose = 0
@@ -301,20 +301,15 @@ while(count+1 >= 0):
                         match last_choose:
                             
                             case '1':
-                                dir, count_times, img = pose1(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[1].split('. ')[1], imgr)
+                                dir, count_times, img = pose1(cap, 0, dir, count_times, text[int(last_choose)])
                             case '2':
-                                dir, count_times, img = pose2(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[2].split('. ')[1], imgr)
+                                dir, count_times, img = pose2(cap, 0, dir, count_times, text[int(last_choose)])
                             case '3':
-                                dir, count_times, img = pose3(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[3].split('. ')[1], imgr)
+                                dir, count_times, img = pose3(cap, 0, dir, count_times, text[int(last_choose)])
                             case '4':
-                                dir, count_times, img = pose4(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[4].split('. ')[1], imgr)
+                                dir, count_times, img = pose4(cap, 0, dir, count_times, text[int(last_choose)])
                             case '5':
-                                dir, count_times, img = pose5(cap, 0, dir, count_times)
-                                Global_Use.whatsportnow(img, text[5].split('. ')[1], imgr)
+                                dir, count_times, img = pose5(cap, 0, dir, count_times, text[int(last_choose)])
 
                         if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0
