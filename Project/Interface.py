@@ -31,6 +31,10 @@ wait_time = 0.3
 nan_start = 0.0
 nan_end = 0.0
 
+other_start = 0.0
+other_end = 0.0
+other_time = 0.1
+
 count = 3 # break 時的倒數
 bye = 0 # 若為1則表使用者要退出
 confirm = 0 # 若為1則表使用者已確認所選動作無誤
@@ -102,9 +106,16 @@ while(count+1 >= 0):
             if(choose == last_choose or choose == '0'):
                 nan_start = 0.0
                 end = time.time()
+                other_start = 0.0
 
-                if(end - start > wait_time and choose == '0'):
+                if(start and end - start > wait_time and choose == '0'):
                     confirm = 1
+                    start = 0.0
+                    end = 0.0
+                    nan_start = 0.0
+                    nan_end = 0.0
+                    other_start = 0.0
+                    other_end = 0.0
 
                     engine.say(choose_text[int(last_choose)])
                     engine.runAndWait()
@@ -118,9 +129,19 @@ while(count+1 >= 0):
                 if(nan_end - nan_start > wait_time):
                     has_choose = 0
                     end = 0.0
+                    nan_end = 0.0
 
-            else:
+            elif(other_end - other_start > other_time):
                 has_choose = 0
+                end = 0.0
+                other_start = 0.0
+                other_end = 0.0
+                    
+            elif(not other_start):
+                other_start = time.time()
+
+            elif(other_start):
+                    other_end = time.time()
 
     else:
         img, choose = hd(cap)
@@ -154,20 +175,35 @@ while(count+1 >= 0):
                 if(nan_end - nan_start > wait_time):
                     vedio_has_choose = 0
                     end = 0.0
-            
-            else:
-                if(choose == last_vedio_choose or choose == '0'):
+                    nan_end = 0.0
+
+            elif(other_end - other_start > other_time):
+                vedio_has_choose = 0
+                end = 0.0
+                other_start = 0.0
+                other_end = 0.0
+
+            elif(not other_start):
+                other_start = time.time()
+
+            elif(other_start):
+                other_end = time.time()
+
+            if(choose == last_vedio_choose or choose == '0'):
+                nan_start = 0.0
+                end = time.time()
+
+                if(start and end - start > wait_time and choose == '0'):
+                    vedio_confirm = 1
+                    start = 0.0
+                    end = 0.0
                     nan_start = 0.0
-                    end = time.time()
+                    nan_end = 0.0
+                    other_start = 0.0
+                    other_end = 0.0
 
-                    if(end - start > wait_time and choose == '0'):
-                        vedio_confirm = 1
-
-                        engine.say(choose_text[int(last_vedio_choose)+6])
-                        engine.runAndWait()
-
-                else:
-                    vedio_has_choose = 0
+                    engine.say(choose_text[int(last_vedio_choose)+6])
+                    engine.runAndWait()
 
         else:
             match last_vedio_choose:
@@ -204,9 +240,6 @@ while(count+1 >= 0):
 
                         if(not count_times_choose):
                             if(choose == '1' or choose == '2' or choose == '3' or choose == '4'):
-                                engine.say(text[int(choose)+12])
-                                engine.runAndWait()
-
                                 count_times_choose = 1
                                 last_times_choose = choose
                                 start = time.time()
@@ -220,17 +253,29 @@ while(count+1 >= 0):
                                 nan_start = 0.0
                                 end = time.time()
 
-                                if(end - start > wait_time and choose == '0'):
+                                if(start and end - start > wait_time and choose == '0'):
                                     if(last_times_choose == '4'):
                                         vedio_confirm = 0
                                         vedio_has_choose = 0
                                         count_times_confirm = 0
                                         count_times_choose = 0
+                                        start = 0.0
+                                        end = 0.0
+                                        nan_start = 0.0
+                                        nan_end = 0.0
+                                        other_start = 0.0
+                                        other_end = 0.0
 
                                     else:
                                         count_times_confirm = 1
+                                        start = 0.0
+                                        end = 0.0
+                                        nan_start = 0.0
+                                        nan_end = 0.0
+                                        other_start = 0.0
+                                        other_end = 0.0
 
-                                        engine.say(choose_text[int(last_times_choose)+10])
+                                        engine.say(choose_text[int(last_times_choose)+9])
                                         engine.runAndWait()
 
                             elif(nan_start):
@@ -240,8 +285,17 @@ while(count+1 >= 0):
                                     count_times_choose = 0
                                     end = 0.0
 
-                            else:
+                            elif(other_end - other_start > other_time):
                                 count_times_choose = 0
+                                end = 0.0
+                                other_start = 0.0
+                                other_end = 0.0
+                                    
+                            elif(not other_start):
+                                other_start = time.time()
+
+                            elif(other_start):
+                                other_end = time.time()
 
                     else:
                         match last_choose:
@@ -271,11 +325,16 @@ while(count+1 >= 0):
                             count_times_choose = 0
                             count_times = 0.0
 
+                            other_start = 0.0
+                            other_end = 0.0
+
                 case '3':
                     confirm = 0
                     has_choose = 0
                     vedio_confirm = 0
                     vedio_has_choose = 0
+                    other_start = 0.0
+                    other_end = 0.0
 
     cv2.imshow('POSE', img)
 
