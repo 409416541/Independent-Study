@@ -98,10 +98,6 @@ while(count+1 >= 0):
                 last_choose = choose
                 start = time.time()
 
-            elif(not nan_start and choose == 'NAN'):
-                has_choose = 1
-                nan_start = time.time()
-
         else:
             if(choose == last_choose or choose == '0'):
                 nan_start = 0.0
@@ -122,6 +118,10 @@ while(count+1 >= 0):
 
                     if(last_choose == '6' and choose == '0'):
                         bye = 1
+
+            elif(not nan_start and choose == 'NAN'):
+                has_choose = 1
+                nan_start = time.time()
 
             elif(nan_start):
                 nan_end = time.time()
@@ -165,45 +165,46 @@ while(count+1 >= 0):
                     last_vedio_choose = choose
                     start = time.time()
 
-                elif(not nan_start and choose == 'NAN'):
+            else:
+                if(not nan_start and choose == 'NAN'):
                     vedio_has_choose = 1
                     nan_start = time.time()
 
-            elif(nan_start):
-                nan_end = time.time()
+                elif(nan_start):
+                    nan_end = time.time()
 
-                if(nan_end - nan_start > wait_time):
+                    if(nan_end - nan_start > wait_time):
+                        vedio_has_choose = 0
+                        end = 0.0
+                        nan_end = 0.0
+
+                elif(other_end - other_start > other_time):
                     vedio_has_choose = 0
                     end = 0.0
-                    nan_end = 0.0
-
-            elif(other_end - other_start > other_time):
-                vedio_has_choose = 0
-                end = 0.0
-                other_start = 0.0
-                other_end = 0.0
-
-            elif(not other_start):
-                other_start = time.time()
-
-            elif(other_start):
-                other_end = time.time()
-
-            if(choose == last_vedio_choose or choose == '0'):
-                nan_start = 0.0
-                end = time.time()
-
-                if(start and end - start > wait_time and choose == '0'):
-                    vedio_confirm = 1
-                    start = 0.0
-                    end = 0.0
-                    nan_start = 0.0
-                    nan_end = 0.0
                     other_start = 0.0
                     other_end = 0.0
 
-                    engine.say(choose_text[int(last_vedio_choose)+6])
-                    engine.runAndWait()
+                elif(not other_start):
+                    other_start = time.time()
+
+                elif(other_start):
+                    other_end = time.time()
+
+                if(choose == last_vedio_choose or choose == '0'):
+                    nan_start = 0.0
+                    end = time.time()
+
+                    if(start and end - start > wait_time and choose == '0'):
+                        vedio_confirm = 1
+                        start = 0.0
+                        end = 0.0
+                        nan_start = 0.0
+                        nan_end = 0.0
+                        other_start = 0.0
+                        other_end = 0.0
+
+                        engine.say(choose_text[int(last_vedio_choose)+6])
+                        engine.runAndWait()
 
         else:
             match last_vedio_choose:
@@ -244,10 +245,6 @@ while(count+1 >= 0):
                                 last_times_choose = choose
                                 start = time.time()
 
-                            elif(not nan_start and choose == 'NAN'):
-                                count_times_choose = 1
-                                nan_start = time.time()
-
                         else:
                             if(choose == last_times_choose or choose == '0'):
                                 nan_start = 0.0
@@ -277,6 +274,10 @@ while(count+1 >= 0):
 
                                         engine.say(choose_text[int(last_times_choose)+9])
                                         engine.runAndWait()
+
+                            elif(not nan_start and choose == 'NAN'):
+                                count_times_choose = 1
+                                nan_start = time.time()
 
                             elif(nan_start):
                                 nan_end = time.time()
