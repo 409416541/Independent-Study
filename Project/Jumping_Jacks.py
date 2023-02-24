@@ -107,7 +107,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                 
                 accuracy = ((accuracy1 +accuracy2+accuracy4) / 3)
 
-                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text.split('. ')[1], imgc, imgr)
+                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
 
             if(not use_vedio):
                 return dir, count, img

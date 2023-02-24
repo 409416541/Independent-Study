@@ -167,7 +167,6 @@ while(count+1 >= 0):
 
             else:
                 if(not nan_start and choose == 'NAN'):
-                    vedio_has_choose = 1
                     nan_start = time.time()
 
                 elif(nan_start):
@@ -177,18 +176,6 @@ while(count+1 >= 0):
                         vedio_has_choose = 0
                         end = 0.0
                         nan_end = 0.0
-
-                elif(other_end - other_start > other_time):
-                    vedio_has_choose = 0
-                    end = 0.0
-                    other_start = 0.0
-                    other_end = 0.0
-
-                elif(not other_start):
-                    other_start = time.time()
-
-                elif(other_start):
-                    other_end = time.time()
 
                 if(choose == last_vedio_choose or choose == '0'):
                     nan_start = 0.0
@@ -205,6 +192,18 @@ while(count+1 >= 0):
 
                         engine.say(choose_text[int(last_vedio_choose)+6])
                         engine.runAndWait()
+
+                elif(other_start):
+                    other_end = time.time()
+
+                    if(other_end - other_start > other_time):
+                        vedio_has_choose = 0
+                        end = 0.0
+                        other_start = 0.0
+                        other_end = 0.0
+
+                elif(not other_start):
+                    other_start = time.time()
 
         else:
             match last_vedio_choose:
@@ -286,31 +285,31 @@ while(count+1 >= 0):
                                     count_times_choose = 0
                                     end = 0.0
 
-                            elif(other_end - other_start > other_time):
-                                count_times_choose = 0
-                                end = 0.0
-                                other_start = 0.0
-                                other_end = 0.0
-                                    
-                            elif(not other_start):
-                                other_start = time.time()
-
                             elif(other_start):
                                 other_end = time.time()
+
+                                if(other_end - other_start > other_time):
+                                    count_times_choose = 0
+                                    end = 0.0
+                                    other_start = 0.0
+                                    other_end = 0.0
+                                        
+                            elif(not other_start):
+                                other_start = time.time()                                
 
                     else:
                         match last_choose:
                             
                             case '1':
-                                dir, count_times, img = pose1(cap, 0, dir, count_times, text[int(last_choose)])
+                                dir, count_times, img = pose1(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
                             case '2':
-                                dir, count_times, img = pose2(cap, 0, dir, count_times, text[int(last_choose)])
+                                dir, count_times, img = pose2(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
                             case '3':
-                                dir, count_times, img = pose3(cap, 0, dir, count_times, text[int(last_choose)])
+                                dir, count_times, img = pose3(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
                             case '4':
-                                dir, count_times, img = pose4(cap, 0, dir, count_times, text[int(last_choose)])
+                                dir, count_times, img = pose4(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
                             case '5':
-                                dir, count_times, img = pose5(cap, 0, dir, count_times, text[int(last_choose)])
+                                dir, count_times, img = pose5(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
 
                         if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0

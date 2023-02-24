@@ -96,7 +96,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                             if count%1==0:
                                     winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
                 
-                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text.split('. ')[1], imgc, imgr)
+                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
 
             if(not use_vedio):
                 return dir, count, img
