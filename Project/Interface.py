@@ -166,17 +166,6 @@ while(count+1 >= 0):
                     start = time.time()
 
             else:
-                if(not nan_start and choose == 'NAN'):
-                    nan_start = time.time()
-
-                elif(nan_start):
-                    nan_end = time.time()
-
-                    if(nan_end - nan_start > wait_time):
-                        vedio_has_choose = 0
-                        end = 0.0
-                        nan_end = 0.0
-
                 if(choose == last_vedio_choose or choose == '0'):
                     nan_start = 0.0
                     end = time.time()
@@ -192,6 +181,17 @@ while(count+1 >= 0):
 
                         engine.say(choose_text[int(last_vedio_choose)+6])
                         engine.runAndWait()
+
+                if(not nan_start and choose == 'NAN'):
+                    nan_start = time.time()
+
+                elif(nan_start):
+                    nan_end = time.time()
+
+                    if(nan_end - nan_start > wait_time):
+                        vedio_has_choose = 0
+                        end = 0.0
+                        nan_end = 0.0
 
                 elif(other_start):
                     other_end = time.time()
