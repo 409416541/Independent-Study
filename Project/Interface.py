@@ -182,7 +182,7 @@ while(count+1 >= 0):
                         engine.say(choose_text[int(last_vedio_choose)+6])
                         engine.runAndWait()
 
-                if(not nan_start and choose == 'NAN'):
+                elif(not nan_start and choose == 'NAN'):
                     nan_start = time.time()
 
                 elif(nan_start):

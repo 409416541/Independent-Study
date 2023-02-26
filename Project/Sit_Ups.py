@@ -94,7 +94,8 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                             angle_top = 180
                             count = count + 0.5
                             dir = 0   # 更新狀態:躺著
-                            if count%1==0:
+
+                            if count % 1 == 0:
                                     pygame.mixer.init()
                                     pygame.mixer.music.load('./Project/Test_Media/sound.wav')
                                     pygame.mixer.music.play()

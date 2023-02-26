@@ -91,11 +91,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                             angle_top = 180
                             count = count + 0.5
                             dir = 1    # 更新狀態:躺著
-                            if count%1==0:
-                                    pygame.mixer.init()
-                                    pygame.mixer.music.load('./Project/Test_Media/sound.wav')
-                                    pygame.mixer.music.play()
-                                    #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
                     
                     # 目前狀態::抬腿
                     if dir == 1:   # 之前狀態:躺著
@@ -109,6 +104,12 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                             if angle_top < (angle2_1 + angle2_2)/2 and (angle2_1 + angle2_2)/2 - angle_top > 5:
                                 count = count + 0.5
                                 dir = 0    # 更新狀態:抬腿
+
+                                if count % 1 == 0:
+                                    pygame.mixer.init()
+                                    pygame.mixer.music.load('./Project/Test_Media/sound.wav')
+                                    pygame.mixer.music.play()
+                                    #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
                     
                 Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
 

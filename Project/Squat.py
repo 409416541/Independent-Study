@@ -3,6 +3,7 @@ import Global_Use
 import cv2
 import winsound
 import pygame
+
 '''
 
 cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
