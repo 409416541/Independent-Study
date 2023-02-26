@@ -2,9 +2,9 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 import winsound
+import pygame  
 
 '''
-
 cap = cv2.VideoCapture('./Project/Test_Media/situp.mp4')
 
 if not cap.isOpened():
@@ -17,7 +17,7 @@ if not cap.isOpened():
     print("Cannot open camera")
     exit()
 
-    '''
+ '''
 
 dir = 0  # 0: 仰臥 1: 起坐
 count = 0
@@ -95,7 +95,10 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                             count = count + 0.5
                             dir = 0   # 更新狀態:躺著
                             if count%1==0:
-                                    winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
+                                    pygame.mixer.init()
+                                    pygame.mixer.music.load('./Project/Test_Media/sound.wav')
+                                    pygame.mixer.music.play()
+                                    #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
                 Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
                 
@@ -114,5 +117,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+#Pose_Detected(cap, 1, dir , count,'a')
+#Pose_Detected(cap, 0, dir , count,'a')
