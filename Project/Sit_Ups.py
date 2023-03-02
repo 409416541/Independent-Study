@@ -16,8 +16,8 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-
- '''
+'''
+ 
 
 dir = 0  # 0: 仰臥 1: 起坐
 count = 0
