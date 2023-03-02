@@ -4,8 +4,8 @@ import cv2
 import winsound
 import pygame
 
-'''
 
+'''
 cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
 
 if not cap.isOpened():
@@ -75,7 +75,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                     # 目前狀態:蹲下
                     if dir == 0:  # 之前狀態:站起
                         if 46 <= angle1_1 <= 120 and 46 <= angle1_2 <= 120 \
-                            and 61 <= angle2_1 <= 110 and 61 <= angle2_2 <= 10:
+                            and 61 <= angle2_1 <= 110 and 61 <= angle2_2 <= 110:
 
                             # angle_top:角度極值
                             if angle_top > (angle1_1 + angle1_2)/2:
@@ -117,5 +117,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+#Pose_Detected(cap, 1, dir , count,'a')
+#Pose_Detected(cap, 0, dir , count,'a')
