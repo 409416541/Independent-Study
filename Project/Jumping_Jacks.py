@@ -15,8 +15,8 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-'''
 
+'''
 dir = 0  # 0: 開 1: 合
 count = 0
 
@@ -33,10 +33,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
-    accuracy1 = 0 
-    accuracy2 = 0
-    accuracy3 = 0
-
+    accuracy = 0 
+    angle_top1 = 180
+    angle_top2 = 180
     while True:
         success, img = cap.read()
 
@@ -67,17 +66,31 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                 if 0 <= angle1_1 <= 180 and  0 <= angle1_2 <= 180\
                     and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
                     and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
-                        
-                        accuracy1 = 100
-                        accuracy2 = 100
-                        accuracy3 = 100
+                        # 目前狀態::合
+                        if dir == 0: # 之前狀態:open
 
+                            if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
+                            and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
+                            :
+                                if angle_top1 > (angle1_1 + angle1_2)/2:
+                                    angle_top1 = (angle1_1 + angle1_2)/2
+                                if angle_top2 > (angle2_1 + angle2_2)/2:
+                                    angle_top2 = (angle2_1 + angle2_2)/2
+                                count = count + 0.5
+                                dir = 1    # 更新狀態:開
+    
                         # 目前狀態::開
                         if dir == 1: # 之前狀態:close
                             if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
                             and 170 <= angle3_1 <= 180 \
                             and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
                             and 170 <= angle3_2 <= 180:
+                                
+                                accuracy1 = 100 - 1 * abs(angle_top1 - 165)
+                                accuracy2 = 100 - 1 * abs(angle_top2 - 115)
+                                accuracy=(accuracy1+accuracy2)/2# 更新正確度
+                                angle_top1 = 180
+                                angle_top2 = 180
                                 count = count + 0.5
                                 dir = 0    # 更新狀態:合
                                 if count % 1 == 0:
@@ -85,37 +98,10 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                                     pygame.mixer.music.load('./Project/Test_Media/sound.wav')
                                     pygame.mixer.music.play()
                                    #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )                                   
-                        # 目前狀態::合
-                        if dir == 0: # 之前狀態:open
-
-                            if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
-                            \
-                            and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
-                            :
-                                count = count + 0.5
-                                dir = 1    # 更新狀態:開
-
-                               
-
+                if(accuracy<60):
+                    Global_Use.sport1(img, str(int(count)), 'Out of Range', text, imgc, imgr)        
                 else:
-                    if angle2_1 < 70:
-                        accuracy2 = 100*(angle2_1/70)
-
-                    if angle2_1 > 125:
-                        accuracy2 = 100*(125/angle2_1)
-
-                    if angle1_1 > 180:
-                        accuracy1 = 100*(180/angle1_1)
-
-                    if angle4_1 < 50:
-                        accuracy3 = 100*(angle4_1/50)
-
-                    if angle4_1 > 110:
-                        accuracy3 = 100*(110/angle4_1) 
-                
-                accuracy = ((accuracy1 +accuracy2+accuracy3) / 3)
-
-                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
+                    Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
 
             if(not use_vedio):
                 return dir, count, img

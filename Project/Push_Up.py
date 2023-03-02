@@ -17,8 +17,7 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
-    
-'''
+''' 
 
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
@@ -118,5 +117,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count)
-#Pose_Detected(cap, 0, dir , count)
+#Pose_Detected(cap, 1, dir , count,'a')
+#Pose_Detected(cap, 0, dir , count,'a')
