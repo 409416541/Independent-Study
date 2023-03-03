@@ -4,13 +4,7 @@ import cv2
 import winsound
 import pygame
 
-
-
-cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
-
-if not cap.isOpened():
-    print("Cannot open video")
-    exit()  
+'''
 
 cap = cv2.VideoCapture(0)
 
@@ -18,6 +12,7 @@ if not cap.isOpened():
     print("Cannot open camera")
     exit()
 
+'''
 
 dir = 0  # 0: 站起  1: 蹲下
 count = 0
