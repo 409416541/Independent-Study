@@ -2,13 +2,9 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 import winsound
-import pygame  
+import pygame 
+ 
 '''
-cap = cv2.VideoCapture('./Project/Test_Media/Jumping_Jacks.mp4')
-
-if not cap.isOpened():
-    print("Cannot open video")
-    exit()  
 
 cap = cv2.VideoCapture(0)
 
