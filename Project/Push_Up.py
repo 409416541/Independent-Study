@@ -6,17 +6,12 @@ import pygame
 
 '''
 
-cap = cv2.VideoCapture('./Project/Test_Media/push.mp4')
-
-if not cap.isOpened():
-    print("Cannot open video")
-    exit()  
-
 cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
+
 ''' 
 
 dir = 0  # 0: 挺身 1: 伏地
