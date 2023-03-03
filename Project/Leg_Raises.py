@@ -17,8 +17,9 @@ if not cap.isOpened():
 
 dir = 0  # 0: 抬腿 1: 躺著
 count = 0
+accuracy = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text):
+def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/legraises.mp4')
@@ -78,20 +79,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                     and 70 <= angle2_1 <= 180 and 70 <= angle2_2 <= 180 \
                     and 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
                     and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
-  
-                    # 目前狀態::躺著
-                    if dir == 1:# 之前狀態:抬腿
-                        if 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
-
-                            accuracy = 100 - 2.5 * abs(angle_top - 80)    # 更新正確度
-                            angle_top = 180
-                            count = count + 0.5
-                            dir = 0    # 更新狀態:躺著
-                            if count % 1 == 0:
-                                    pygame.mixer.init()
-                                    pygame.mixer.music.load('./Project/Test_Media/sound.wav')
-                                    pygame.mixer.music.play()
-                                    #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
                                     
                     # 目前狀態::抬腿
                     if dir == 0:   # 之前狀態:躺著
@@ -104,14 +91,26 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                             
                             if angle_top < (angle2_1 + angle2_2)/2 and (angle2_1 + angle2_2)/2 - angle_top > 5:
                                 count = count + 0.5
-                                dir = 1    # 更新狀態:抬腿
+                                dir = 1    # 更新狀態:抬腿      
 
-                               
+                    # 目前狀態::躺著
+                    if dir == 1:# 之前狀態:抬腿
+                        if 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
+
+                            accuracy = 100 - 2.5 * abs(angle_top - 80)    # 更新正確度
+                            angle_top = 180
+                            count = count + 0.5
+                            dir = 0    # 更新狀態:躺著
+                            if count % 1 == 0:
+                                    pygame.mixer.init()
+                                    pygame.mixer.music.load('./Project/Test_Media/sound.wav')
+                                    pygame.mixer.music.play()
+                                    #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )        
                     
                 Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
 
             if(not use_vedio):
-                return dir, count, img
+                return dir, count, img, accuracy
 
             else:
                 cv2.imshow('Leg Raises', img)
@@ -125,5 +124,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count,'a')
-#Pose_Detected(cap, 0, dir , count,'a')
+#Pose_Detected(cap, 1, dir , count, 'Leg Raises')
+#Pose_Detected(cap, 0, dir , count, 'Leg Raises')

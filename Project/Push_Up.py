@@ -16,8 +16,9 @@ if not cap.isOpened():
 
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
+accuracy = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text):
+def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/push.mp4')
@@ -98,7 +99,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
                 Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
 
             if(not use_vedio):
-                return dir, count, img
+                return dir, count, img, accuracy
 
             else:
                 cv2.imshow('Push Up', img)
@@ -112,5 +113,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count,'a')
-#Pose_Detected(cap, 0, dir , count,'a')
+#Pose_Detected(cap, 1, dir , count, 'Push Up')
+#Pose_Detected(cap, 0, dir , count, 'Push Up')

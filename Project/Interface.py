@@ -47,7 +47,8 @@ count_times_confirm = 0 # 若為1則表使用者以確認動作要做幾下
 count_times_choose = 0 # 若為1則表使用者以選擇動作要做幾下
 last_times_choose = 'NAN' # 紀錄下剛剛讀取的次數選擇為何
 dir = 0
-count_times= 0.0 # 紀錄目前使用者以做幾下了
+count_times= 0.0
+accuracy = 0
 
 difficulty = [8, 15, 25]
 
@@ -212,15 +213,15 @@ while(count+1 >= 0):
                     match last_choose:
 
                         case '1':
-                            pose1(cap, 1, 0, 0.0, '')
+                            pose1(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
                         case '2':
-                            pose2(cap, 1, 0, 0.0, '')
+                            pose2(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
                         case '3': 
-                            pose3(cap, 1, 0, 0.0, '')
+                            pose3(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
                         case '4':
-                            pose4(cap, 1, 0, 0.0, '')
+                            pose4(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
                         case '5':
-                            pose5(cap, 1, 0, 0.0, '')
+                            pose5(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
                     
                     vedio_confirm = 0
                     vedio_has_choose = 0
@@ -301,15 +302,15 @@ while(count+1 >= 0):
                         match last_choose:
                             
                             case '1':
-                                dir, count_times, img = pose1(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
+                                dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                             case '2':
-                                dir, count_times, img = pose2(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
+                                dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                             case '3':
-                                dir, count_times, img = pose3(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
+                                dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                             case '4':
-                                dir, count_times, img = pose4(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
+                                dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                             case '5':
-                                dir, count_times, img = pose5(cap, 0, dir, count_times, text[int(last_choose)].split('. ')[1])
+                                dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
 
                         if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0
