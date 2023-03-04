@@ -21,7 +21,7 @@ accuracy = 0
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/Squat.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/Squat_sample.mp4')
 
         if not cap.isOpened():
             print("Cannot open video")
