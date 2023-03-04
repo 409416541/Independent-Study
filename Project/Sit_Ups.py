@@ -97,6 +97,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                     pygame.mixer.music.play()
                                     #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
+            if(accuracy<60):
+                Global_Use.sport1(img, str(int(count)), 'Out of Range', text, imgc, imgr)
+            else:
                 Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
                 
             if(not use_vedio):
