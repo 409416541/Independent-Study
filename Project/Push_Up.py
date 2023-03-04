@@ -113,5 +113,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count, 'Push Up')
-#Pose_Detected(cap, 0, dir , count, 'Push Up')
+#Pose_Detected(cap, 1, dir , count, 'Push Up', accuracy)
+#Pose_Detected(cap, 0, dir , count, 'Push Up', accuracy)
