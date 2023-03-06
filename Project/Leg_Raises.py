@@ -119,13 +119,17 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                         angle_top = 180
                         count = count + 0.5
                         dir = 0    # 更新狀態:躺著
+
+                        if(accuracy < 62.5):
+                            count = count - 1
+                        
                         if count % 1 == 0:
                                 pygame.mixer.init()
                                 pygame.mixer.music.load('./Project/Test_Media/sound.wav')
                                 pygame.mixer.music.play()
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )        
             
-            if(accuracy<62.5):
+            if(accuracy < 62.5):
                 Global_Use.sport1(img, str(int(count)), 'Out of Range', text, imgc, imgr)
                 
             else:
