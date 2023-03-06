@@ -85,12 +85,14 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 # 目前狀態:合
                 if dir == 0: # 之前狀態:open
                     if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
-                    and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
-                    :
+                    and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180:
+                        
                         if angle_top1 > (angle1_1 + angle1_2)/2:
                             angle_top1 = (angle1_1 + angle1_2)/2
+                            
                         if angle_top2 > (angle2_1 + angle2_2)/2:
                             angle_top2 = (angle2_1 + angle2_2)/2
+                            
                         count = count + 0.5
                         dir = 1    # 更新狀態:開
 
