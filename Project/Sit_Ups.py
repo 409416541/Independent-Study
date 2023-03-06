@@ -26,6 +26,8 @@ cap = 0
 dir = 0  # 0: 仰臥 1: 起坐
 count = 0
 accuracy = 0
+text_accuray = ''
+displacement = 0
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
@@ -48,7 +50,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
-    accuracy = 0 
+    accuracy = 0
+    text_accuray = ''
+    displacement = 0
     angle_top = 180
 
     while True:
@@ -77,8 +81,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                             landmarks[24], img)
             angle4_2, img = detector.findAngle(landmarks[13], landmarks[11],
                                             landmarks[23], img)
-            # 顯示進度條
-            Global_Use.thebar(img, angle1_1, 85, 125)
 
             # 正確姿勢的範圍
             if 50 <= angle2_1 <= 108 and 50 <= angle2_2 <= 108 \
@@ -108,6 +110,12 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
                         if(accuracy < 58.75):
                             count = count - 1
+                            text_accuray = 'Out of Range'
+                            displacement = 220
+
+                        else:
+                            text_accuray = str(int(accuracy)) + ' %'
+                            displacement = 120
                         
                         if count % 1 == 0:
                                 pygame.mixer.init()
@@ -115,11 +123,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.play()
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
-            if(accuracy<60):
-                Global_Use.sport1(img, str(int(count)), 'Out of Range', text, imgc, imgr)
-
-            else:
-                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
+            Global_Use.sport(img, angle1_1, 85, 125, str(int(count)), text_accuray, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Sit Ups', img)

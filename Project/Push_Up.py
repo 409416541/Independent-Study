@@ -26,6 +26,8 @@ cap = 0
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
 accuracy = 0
+text_accuray = ''
+displacement = 0
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
@@ -47,7 +49,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
-    accuracy = 0 
+    accuracy = 0
+    text_accuray = ''
+    displacement = 0
     angle_top = 180
 
     while True:
@@ -73,9 +77,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                             landmarks[27], img)
             angle3_2, img = detector.findAngle(landmarks[24], landmarks[26],
                                             landmarks[28], img)
-
-            # 顯示進度條
-            Global_Use.thebar(img, angle1_1, 60, 175)
 
             # 正確姿勢的範圍
             if 140 <= angle2_1 <= 180 and 140 <= angle2_2 <= 180 \
@@ -103,18 +104,20 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                         
                         if(accuracy < 58.75):
                             count = count - 1
+                            text_accuray = 'Out of Range'
+                            displacement = 220
+
+                        else:
+                            text_accuray = str(int(accuracy)) + ' %'
+                            displacement = 120
                         
                         if count % 1 == 0:
                                 pygame.mixer.init()
                                 pygame.mixer.music.load('./Project/Test_Media/sound.wav')
                                 pygame.mixer.music.play()
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
-                                
-            if(accuracy < 65):
-                Global_Use.sport1(img, str(int(count)), 'Out of Range', text, imgc, imgr)
-                
-            else:
-                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
+
+            Global_Use.sport(img, angle1_1, 60, 175, str(int(count)), text_accuray, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Push Up', img)

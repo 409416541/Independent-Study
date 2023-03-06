@@ -1,21 +1,14 @@
 import cv2
 import numpy as np
 
-def thebar(img, angle, a, b):
-    bar = np.interp(angle, (a, b), (60, 260))
-    cv2.rectangle(img, (60, 28), (int(bar), 48), (91, 245, 150), cv2.FILLED)
-
 def thecount(img, count):       
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
 
-def sport(img, count, accuracy, text, col, row):
+def sport(img, angle, a, b, count, accuracy, displacement, text, col, row):
+    bar = np.interp(angle, (a, b), (60, 260))
+    cv2.rectangle(img, (60, 28), (int(bar), 48), (91, 245, 150), cv2.FILLED)
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
-    cv2.putText(img, accuracy, (col-120, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
-    cv2.putText(img, text, (10, row-20), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1, (0, 78, 250), 2)
-    
-def sport1(img, count, accuracy, text, col, row):
-    cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
-    cv2.putText(img, accuracy, (col-220, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
+    cv2.putText(img, accuracy, (col-displacement, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
     cv2.putText(img, text, (10, row-20), cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, 1, (0, 78, 250), 2)
     
 def interface(img, text, row):

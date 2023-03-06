@@ -26,6 +26,8 @@ cap = 0
 dir = 0  # 0: 開 1: 合
 count = 0
 accuracy = 0
+text_accuray = ''
+displacement = 0
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
@@ -47,7 +49,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
-    accuracy = 0 
+    accuracy = 0
+    text_accuray = ''
+    displacement = 0
     angle_top1 = 180
     angle_top2 = 180
 
@@ -74,54 +78,53 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
             angle4_2, img = detector.findAngle(landmarks[25], landmarks[27],
                                             landmarks[28], img)
             
-            # 顯示進度條
-            Global_Use.thebar(img, angle2_1, 80, 100)
-            
             if 0 <= angle1_1 <= 180 and  0 <= angle1_2 <= 180\
                 and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
                 and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
                     
-                    # 目前狀態::合
-                    if dir == 0: # 之前狀態:open
-                        if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
-                        and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
-                        :
-                            if angle_top1 > (angle1_1 + angle1_2)/2:
-                                angle_top1 = (angle1_1 + angle1_2)/2
-                            if angle_top2 > (angle2_1 + angle2_2)/2:
-                                angle_top2 = (angle2_1 + angle2_2)/2
-                            count = count + 0.5
-                            dir = 1    # 更新狀態:開
+                # 目前狀態::合
+                if dir == 0: # 之前狀態:open
+                    if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
+                    and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180\
+                    :
+                        if angle_top1 > (angle1_1 + angle1_2)/2:
+                            angle_top1 = (angle1_1 + angle1_2)/2
+                        if angle_top2 > (angle2_1 + angle2_2)/2:
+                            angle_top2 = (angle2_1 + angle2_2)/2
+                        count = count + 0.5
+                        dir = 1    # 更新狀態:開
 
-                    # 目前狀態::開
-                    if dir == 1: # 之前狀態:close
-                        if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
-                        and 170 <= angle3_1 <= 180 \
-                        and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
-                        and 170 <= angle3_2 <= 180:
-                            
-                            accuracy1 = 100 - 1 * abs(angle_top1 - 165)
-                            accuracy2 = 100 - 1 * abs(angle_top2 - 115)
-                            accuracy = (accuracy1+accuracy2)/2# 更新正確度
-                            angle_top1 = 180
-                            angle_top2 = 180
-                            count = count + 0.5
-                            dir = 0    # 更新狀態:合
+                # 目前狀態::開
+                if dir == 1: # 之前狀態:close
+                    if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
+                    and 170 <= angle3_1 <= 180 \
+                    and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
+                    and 170 <= angle3_2 <= 180:
+                        
+                        accuracy1 = 100 - 1 * abs(angle_top1 - 165)
+                        accuracy2 = 100 - 1 * abs(angle_top2 - 115)
+                        accuracy = (accuracy1+accuracy2)/2# 更新正確度
+                        angle_top1 = 180
+                        angle_top2 = 180
+                        count = count + 0.5
+                        dir = 0    # 更新狀態:合
 
-                            if(accuracy < 60):
-                                count = count - 1
-                            
-                            if count % 1 == 0:
-                                    pygame.mixer.init()
-                                    pygame.mixer.music.load('./Project/Test_Media/sound.wav')
-                                    pygame.mixer.music.play()
-                                #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS ) 
-                                
-            if(accuracy < 60):
-                Global_Use.sport1(img, str(int(count)), 'Out of Range', text, imgc, imgr)
+                        if(accuracy < 60):
+                            count = count - 1
+                            text_accuray = 'Out of Range'
+                            displacement = 220
 
-            else:
-                Global_Use.sport(img, str(int(count)), str(int(accuracy)) + ' %', text, imgc, imgr)
+                        else:
+                            text_accuray = str(int(accuracy)) + ' %'
+                            displacement = 120
+                        
+                        if count % 1 == 0:
+                            pygame.mixer.init()
+                            pygame.mixer.music.load('./Project/Test_Media/sound.wav')
+                            pygame.mixer.music.play()
+                            #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS ) 
+
+            Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), text_accuray, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Jumping Jacks', img)
