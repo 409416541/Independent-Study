@@ -36,17 +36,24 @@ other_start = 0.0
 other_end = 0.0
 other_time = 0.1
 
-count = 3 # break 時的倒數
-bye = 0 # 若為1則表使用者要退出
-confirm = 0 # 若為1則表使用者已確認所選動作無誤
-has_choose = 0 # 若為1則表使用者以選擇動作
-last_choose = 'NAN' # 紀錄下剛剛讀取的動作選擇為何
-vedio_confirm = 0 # 若為1則表使用則所選擇的影片無誤
-vedio_has_choose = 0 # 若為1表使用者已選擇要看範例影片或做運動
-last_vedio_choose = 'NAN' # 紀錄下剛剛讀取的影片選擇為何
-count_times_confirm = 0 # 若為1則表使用者以確認動作要做幾下
-count_times_choose = 0 # 若為1則表使用者以選擇動作要做幾下
-last_times_choose = 'NAN' # 紀錄下剛剛讀取的次數選擇為何
+count = 3 # break counter
+bye = 0
+
+# for first interface
+confirm = 0
+has_choose = 0
+last_choose = 'NAN'
+
+# for second interface which use to choose action
+vedio_confirm = 0
+vedio_has_choose = 0
+last_vedio_choose = 'NAN'
+
+# for third interface which use to choose sport times
+count_times_confirm = 0
+count_times_choose = 0
+last_times_choose = 'NAN'
+
 dir = 0
 count_times= 0.0
 accuracy = 0
