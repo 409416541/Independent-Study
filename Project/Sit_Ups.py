@@ -33,7 +33,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     engine.setProperty('rate', 160)
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/Sit_ups_sample.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/Sit_ups.mp4')
 
         if not cap.isOpened():
             print("Cannot open video")
@@ -80,7 +80,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
         Global_Use.thebar(img, angle1_1, 85, 125)
 
         # 正確姿勢的範圍
-        if 50 <= angle2_1 <= 80 and 50 <= angle2_2 <= 80 \
+        if 50 <= angle2_1 <= 108 and 50 <= angle2_2 <= 108 \
             and 130 <= angle3_1 <= 180 and 130 <= angle3_2 <= 180 \
             and 40 <= angle4_1 <= 90 and 40 <= angle4_2 <= 90:
 

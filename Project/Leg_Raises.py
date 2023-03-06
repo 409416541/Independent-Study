@@ -62,16 +62,19 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                         landmarks[24], img)
         angle1_2, img = detector.findAngle(landmarks[13], landmarks[11],
                                         landmarks[23], img)
+        
         #angle2:肩膀到髖到膝蓋的角度
         angle2_1, img = detector.findAngle(landmarks[12], landmarks[24],
                                         landmarks[26], img)
         angle2_2, img = detector.findAngle(landmarks[11], landmarks[23],
                                         landmarks[25], img)
+        
         #angle3:髖到膝蓋到腳踝的角度
         angle3_1, img = detector.findAngle(landmarks[24], landmarks[26],
                                         landmarks[28], img)
         angle3_2, img = detector.findAngle(landmarks[23], landmarks[25],
                                         landmarks[27], img)
+        
         #angle4:肩膀到手肘到手腕的角度
         angle4_1, img = detector.findAngle(landmarks[12], landmarks[14],
                                         landmarks[16], img)
@@ -89,9 +92,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
         Global_Use.thebar(img, angle2_1, 90, 180)
 
         # 正確姿勢的範圍
-        if 0 <= angle1_1 <= 20 and 0 <= angle1_2 <= 20 \
+        if 0 <= angle1_1 <= 32 and 0 <= angle1_2 <= 32 \
             and 70 <= angle2_1 <= 180 and 70 <= angle2_2 <= 180 \
-            and 160 <= angle3_1 <= 180 and 160 <= angle3_2 <= 180 \
+            and 155 <= angle3_1 <= 180 and 155 <= angle3_2 <= 180 \
             and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
                             
             # 目前狀態::抬腿
