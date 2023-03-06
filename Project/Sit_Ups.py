@@ -105,15 +105,15 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
                         accuracy = 100 - 2 * abs(angle_top - 85)    # 更新正確度
                         angle_top = 180
-                        count = count + 0.5
                         dir = 0   # 更新狀態:躺著
 
                         if(accuracy < 58.75):
-                            count = count - 1
+                            count = count - 0.5
                             text_accuray = 'Out of Range'
                             displacement = 220
 
                         else:
+                            count = count + 0.5
                             text_accuray = str(int(accuracy)) + ' %'
                             displacement = 120
                         

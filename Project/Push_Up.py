@@ -82,7 +82,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
             if 140 <= angle2_1 <= 180 and 140 <= angle2_2 <= 180 \
                 and 140 <= angle3_1 <= 180 and 140 <= angle3_2 <= 180:
 
-                # 目前狀態::伏地
+                # 目前狀態:伏地
                 if dir == 0:   # 之前狀態:挺身
                     if 46 <= angle1_1 <= 95 and 46 <= angle1_2 <= 95:
 
@@ -94,20 +94,20 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             count = count + 0.5
                             dir = 1    # 更新狀態:伏地
 
-                # 目前狀態::挺身
+                # 目前狀態:挺身
                 if dir == 1:   # 之前狀態:伏地
                     if 141 <= angle1_1 <= 180 and 141 <= angle1_2 <= 180:
                         accuracy = 100 - 1 * abs(angle_top - 60)    # 更新正確度
                         angle_top = 180
-                        count = count + 0.5
                         dir = 0    # 更新狀態:挺身
                         
                         if(accuracy < 58.75):
-                            count = count - 1
+                            count = count - 0.5
                             text_accuray = 'Out of Range'
                             displacement = 220
 
                         else:
+                            count = count + 0.5
                             text_accuray = str(int(accuracy)) + ' %'
                             displacement = 120
                         

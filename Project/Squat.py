@@ -107,15 +107,15 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
                         accuracy = 100 - 0.75 * abs(angle_low - 65)    # 更新正確度
                         angle_low = 180
-                        count = count + 0.5
-                        dir = 0   # 更--*新狀態:站起
+                        dir = 0   # 更新狀態:站起
 
                         if(accuracy < 58.75):
-                            count = count - 1
+                            count = count - 0.5
                             text_accuray = 'Out of Range'
                             displacement = 220
 
                         else:
+                            count = count + 0.5
                             text_accuray = str(int(accuracy)) + ' %'
                             displacement = 120
                         
@@ -142,6 +142,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cap.release()
     cv2.destroyAllWindows()
 
-Pose_Detected(cap, 1, dir , count, 'Squat', accuracy)
+#Pose_Detected(cap, 1, dir , count, 'Squat', accuracy)
 #internal_test = 1
 #Pose_Detected(cap, 0, dir , count, 'Squat', accuracy)
