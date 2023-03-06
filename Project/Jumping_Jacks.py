@@ -26,7 +26,7 @@ cap = 0
 dir = 0  # 0: 開 1: 合
 count = 0
 accuracy = 0
-text_accuray = ''
+accuray_text = ''
 displacement = 0
 internal_test = 0
 
@@ -50,7 +50,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     imgr, imgc = img.shape[:2]
 
     accuracy = 0
-    text_accuray = ''
+    accuray_text = ''
     displacement = 0
     angle_top1 = 180
     angle_top2 = 180
@@ -92,7 +92,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             
                         if angle_top2 > (angle2_1 + angle2_2)/2:
                             angle_top2 = (angle2_1 + angle2_2)/2
-                            
+
                         count = count + 0.5
                         dir = 1    # 更新狀態:開
 
@@ -112,12 +112,12 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
                         if(accuracy < 60):
                             count = count - 0.5
-                            text_accuray = 'Out of Range'
+                            accuray_text = 'Out of Range'
                             displacement = 220
 
                         else:
                             count = count + 0.5
-                            text_accuray = str(int(accuracy)) + ' %'
+                            accuray_text = str(int(accuracy)) + ' %'
                             displacement = 120
                         
                         if count % 1 == 0:
@@ -126,7 +126,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             pygame.mixer.music.play()
                             #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS ) 
 
-            Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), text_accuray, displacement, text, imgc, imgr)
+            Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), accuray_text, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Jumping Jacks', img)

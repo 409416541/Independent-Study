@@ -26,7 +26,7 @@ cap = 0
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
 accuracy = 0
-text_accuray = ''
+accuray_text = ''
 displacement = 0
 internal_test = 0
 
@@ -50,7 +50,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     imgr, imgc = img.shape[:2]
 
     accuracy = 0
-    text_accuray = ''
+    accuray_text = ''
     displacement = 0
     angle_top = 180
 
@@ -103,12 +103,12 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                         
                         if(accuracy < 58.75):
                             count = count - 0.5
-                            text_accuray = 'Out of Range'
+                            accuray_text = 'Out of Range'
                             displacement = 220
 
                         else:
                             count = count + 0.5
-                            text_accuray = str(int(accuracy)) + ' %'
+                            accuray_text = str(int(accuracy)) + ' %'
                             displacement = 120
                         
                         if count % 1 == 0:
@@ -117,7 +117,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.play()
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
-            Global_Use.sport(img, angle1_1, 60, 175, str(int(count)), text_accuray, displacement, text, imgc, imgr)
+            Global_Use.sport(img, angle1_1, 60, 175, str(int(count)), accuray_text, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Push Up', img)
