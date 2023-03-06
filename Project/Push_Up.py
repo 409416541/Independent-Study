@@ -22,6 +22,7 @@ if not cap.isOpened():
 
 '''
 
+cap = 0
 dir = 0  # 0: 挺身 1: 伏地
 count = 0
 accuracy = 0

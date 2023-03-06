@@ -22,6 +22,7 @@ if not cap.isOpened():
 
 '''
  
+cap = 0
 dir = 0  # 0: 仰臥 1: 起坐
 count = 0
 accuracy = 0

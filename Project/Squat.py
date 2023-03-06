@@ -22,6 +22,7 @@ if not cap.isOpened():
 
 '''
 
+cap = 0
 dir = 0  # 0: 站起  1: 蹲下
 count = 0
 accuracy = 0

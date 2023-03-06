@@ -23,6 +23,7 @@ if not cap.isOpened():
 '''
 
 
+cap = 0
 dir = 0  # 0: 抬腿 1: 躺著
 count = 0
 accuracy = 0
@@ -33,7 +34,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     engine.setProperty('rate', 160)
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/Leg_raises_sample.mp4')
+        cap = cv2.VideoCapture('./Project/Test_Media/Leg_raises.mp4')
 
         if not cap.isOpened():
             print("Cannot open camera")
