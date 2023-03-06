@@ -36,7 +36,8 @@ other_start = 0.0
 other_end = 0.0
 other_time = 0.1
 
-count = 3 # break counter
+# break
+count = 3
 bye = 0
 
 # for first interface
@@ -44,7 +45,7 @@ confirm = 0
 has_choose = 0
 last_choose = 'NAN'
 
-# for second interface which use to choose action
+# for second interface which use to choose act
 vedio_confirm = 0
 vedio_has_choose = 0
 last_vedio_choose = 'NAN'
@@ -54,6 +55,7 @@ count_times_confirm = 0
 count_times_choose = 0
 last_times_choose = 'NAN'
 
+# temp per act value
 dir = 0
 count_times= 0.0
 accuracy = 0
