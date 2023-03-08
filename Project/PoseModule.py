@@ -41,23 +41,31 @@ class PoseDetector:
                 
         return landmarks, img
 
-    def findAngle(self, p1, p2, p3, img=None):
+    def findAngle(self, all_angle, img=None):
+        calculate = []
 
-        # Get the landmarks
-        x1, y1 = p1
-        x2, y2 = p2
-        x3, y3 = p3
+        for i in range(int(len(all_angle)/3)):
+            x1, y1 = all_angle[i * 3]
+            x2, y2 = all_angle[i * 3 + 1]
+            x3, y3 = all_angle[i * 3 + 2]
 
-        # Calculate the Angle
-        angle = math.degrees(math.atan2(y3 - y2, x3 - x2) -
-                             math.atan2(y1 - y2, x1 - x2))
-        if angle < 0:
-            angle += 360
-            
-        if angle > 180:
-            angle = 360 - angle
+            '''# Get the landmarks
+            x1, y1 = p1
+            x2, y2 = p2
+            x3, y3 = p3'''
 
-        if img is not None:
+            # Calculate the Angle
+            angle = math.degrees(math.atan2(y3 - y2, x3 - x2) -
+                                math.atan2(y1 - y2, x1 - x2))
+            if angle < 0:
+                angle += 360
+                
+            if angle > 180:
+                angle = 360 - angle
+
+            calculate.append(angle)
+
+        '''if img is not None:
             cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 1)
             cv2.line(img, (x3, y3), (x2, y2), (255, 255, 255), 1)
             cv2.circle(img, (x1, y1), 4, (240, 222, 0), cv2.FILLED)
@@ -67,5 +75,5 @@ class PoseDetector:
             cv2.circle(img, (x3, y3), 4, (240, 222, 0), cv2.FILLED)
             cv2.circle(img, (x3, y3), 8, (240, 222, 0), 2)
             cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (91, 183, 240), 2)
-        return angle
+                        cv2.FONT_HERSHEY_PLAIN, 2, (91, 183, 240), 2)'''
+        return calculate

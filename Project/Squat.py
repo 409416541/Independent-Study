@@ -66,24 +66,20 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
         if success:
             landmarks, img = detector.findPose(img, draw=True)
 
+            angle = [landmarks[12], landmarks[24], landmarks[26],
+                     landmarks[11], landmarks[23], landmarks[25],
+                     landmarks[24], landmarks[26], landmarks[28],
+                     landmarks[23], landmarks[25], landmarks[27]]
+
+            angle = detector.findAngle(angle)
+
             #angle1:肩膀到髖到膝蓋的角度
-            angle1_1 = detector.findAngle(landmarks[12], landmarks[24],
-                                            landmarks[26], img)
-            angle1_2 = detector.findAngle(landmarks[11], landmarks[23],
-                                            landmarks[25], img)
-            
+            angle1_1 = angle[0]
+            angle1_2 = angle[1]
+
             #angle2:髖到膝蓋到腳踝的角度
-            angle2_1 = detector.findAngle(landmarks[24], landmarks[26],
-                                            landmarks[28], img)
-            angle2_2 = detector.findAngle(landmarks[23], landmarks[25],
-                                            landmarks[27], img)
-            '''
-            #angle3:髖到髖到膝蓋的角度
-            angle3_1 = detector.findAngle(landmarks[26], landmarks[24],
-                                            landmarks[23], img)
-            angle3_2 = detector.findAngle(landmarks[24], landmarks[23],
-                                            landmarks[25], img)
-            '''
+            angle2_1 = angle[2]
+            angle2_2 = angle[3]
             
             # 正確姿勢的範圍
             if 46 <= angle1_1 <= 180 and 46 <= angle1_2 <= 180 \

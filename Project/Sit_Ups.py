@@ -5,7 +5,7 @@ import winsound
 import pygame  
 import pyttsx3
 
-
+'''
 
 engine = pyttsx3.init()
 engine.setProperty('rate', 160)
@@ -20,7 +20,7 @@ if not cap.isOpened():
             
     exit()
 
-
+'''
  
 dir = 0  # 0: 仰臥 1: 起坐
 text = 'Sit Ups'
@@ -66,26 +66,32 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
         if success:
             landmarks, img = detector.findPose(img, draw=True)
 
+            angle = [landmarks[12], landmarks[24], landmarks[26],
+                     landmarks[11], landmarks[23], landmarks[25],
+                     landmarks[24], landmarks[26], landmarks[28],
+                     landmarks[23], landmarks[25], landmarks[27],
+                     landmarks[12], landmarks[14], landmarks[16],
+                     landmarks[11], landmarks[13], landmarks[15],
+                     landmarks[14], landmarks[12], landmarks[24],
+                     landmarks[13], landmarks[11], landmarks[23]]
+            
+            angle = detector.findAngle(angle)
+
             #肩膀到髖到膝蓋
-            angle1_1 = detector.findAngle(landmarks[12], landmarks[24],
-                                            landmarks[26], img)
-            angle1_2 = detector.findAngle(landmarks[11], landmarks[23],
-                                            landmarks[25], img)
+            angle1_1 = angle[0]
+            angle1_2 = angle[1]
+
             #髖到膝蓋到腳踝
-            angle2_1 = detector.findAngle(landmarks[24], landmarks[26],
-                                            landmarks[28], img)
-            angle2_2 = detector.findAngle(landmarks[23], landmarks[25],
-                                            landmarks[27], img)
+            angle2_1 = angle[2]
+            angle2_2 = angle[3]
+
             #肩膀到手肘到手腕
-            angle3_1 = detector.findAngle(landmarks[12], landmarks[14],
-                                            landmarks[16], img)
-            angle3_2 = detector.findAngle(landmarks[11], landmarks[13],
-                                            landmarks[15], img)
+            angle3_1 = angle[4]
+            angle3_2 = angle[5]
+
             #手肘到肩膀到髖
-            angle4_1 = detector.findAngle(landmarks[14], landmarks[12],
-                                            landmarks[24], img)
-            angle4_2 = detector.findAngle(landmarks[13], landmarks[11],
-                                            landmarks[23], img)
+            angle4_1 = angle[6]
+            angle4_2 = angle[7]
 
             # 正確姿勢的範圍
             if 50 <= angle2_1 <= 108 and 50 <= angle2_2 <= 108 \
