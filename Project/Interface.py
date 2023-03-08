@@ -347,6 +347,9 @@ while(count+1 >= 0):
                             other_start = 0.0
                             other_end = 0.0
 
+                            act_start = 0.0
+                            act_end = 0.0
+
                 case '3':
                     confirm = 0
                     has_choose = 0
