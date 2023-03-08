@@ -5,7 +5,7 @@ import winsound
 import pygame  
 import pyttsx3
 
-'''
+
 
 engine = pyttsx3.init()
 engine.setProperty('rate', 160)
@@ -20,10 +20,10 @@ if not cap.isOpened():
             
     exit()
 
-'''
+
  
-cap = 0
 dir = 0  # 0: 仰臥 1: 起坐
+text = 'Sit Ups'
 count = 0
 accuracy = 0
 accuray_text = ''
@@ -31,11 +31,12 @@ displacement = 0
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
-    engine = pyttsx3.init()
-    engine.setProperty('rate', 160)
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Project/Test_Media/Sit_ups.mp4')
+
+        engine = pyttsx3.init()
+        engine.setProperty('rate', 160)
 
         if not cap.isOpened():
             print("Cannot open video")
@@ -56,30 +57,34 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     angle_top = 180
 
     while True:
-        success, img = cap.read()
+        if(use_vedio or internal_test):
+            success, img = cap.read()
+
+        else:
+            success = cap.read()[0]
 
         if success:
             landmarks, img = detector.findPose(img, draw=True)
 
             #肩膀到髖到膝蓋
-            angle1_1, img = detector.findAngle(landmarks[12], landmarks[24],
+            angle1_1 = detector.findAngle(landmarks[12], landmarks[24],
                                             landmarks[26], img)
-            angle1_2, img = detector.findAngle(landmarks[11], landmarks[23],
+            angle1_2 = detector.findAngle(landmarks[11], landmarks[23],
                                             landmarks[25], img)
             #髖到膝蓋到腳踝
-            angle2_1, img = detector.findAngle(landmarks[24], landmarks[26],
+            angle2_1 = detector.findAngle(landmarks[24], landmarks[26],
                                             landmarks[28], img)
-            angle2_2, img = detector.findAngle(landmarks[23], landmarks[25],
+            angle2_2 = detector.findAngle(landmarks[23], landmarks[25],
                                             landmarks[27], img)
             #肩膀到手肘到手腕
-            angle3_1, img = detector.findAngle(landmarks[12], landmarks[14],
+            angle3_1 = detector.findAngle(landmarks[12], landmarks[14],
                                             landmarks[16], img)
-            angle3_2, img = detector.findAngle(landmarks[11], landmarks[13],
+            angle3_2 = detector.findAngle(landmarks[11], landmarks[13],
                                             landmarks[15], img)
             #手肘到肩膀到髖
-            angle4_1, img = detector.findAngle(landmarks[14], landmarks[12],
+            angle4_1 = detector.findAngle(landmarks[14], landmarks[12],
                                             landmarks[24], img)
-            angle4_2, img = detector.findAngle(landmarks[13], landmarks[11],
+            angle4_2 = detector.findAngle(landmarks[13], landmarks[11],
                                             landmarks[23], img)
 
             # 正確姿勢的範圍
@@ -115,7 +120,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                         else:
                             count = count + 0.5
                             accuray_text = str(int(accuracy)) + ' %'
-                            displacement = 120
+                            displacement = 100
                         
                         if count % 1 == 0:
                                 pygame.mixer.init()
@@ -124,13 +129,13 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
             img = Global_Use.sport(img, angle1_1, 85, 125, str(int(count)), accuray_text, displacement, text, imgc, imgr)
-
+            
             if(use_vedio or internal_test):
                 cv2.imshow('Sit Ups', img)
 
             else:
                 return dir, count, img, accuracy
-        
+                
         else:
             break
 
@@ -140,6 +145,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count, 'Sit Ups', accuracy)
+#cap = 0
+#Pose_Detected(cap, 1, dir , count, text, accuracy)
 #internal_test = 1
-#Pose_Detected(cap, 0, dir , count, 'Sit Ups', accuracy)
+#Pose_Detected(cap, 0, dir , count, text, accuracy)

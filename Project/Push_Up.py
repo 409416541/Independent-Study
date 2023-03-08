@@ -24,6 +24,7 @@ if not cap.isOpened():
 
 cap = 0
 dir = 0  # 0: 挺身 1: 伏地
+text = 'Push Up'
 count = 0
 accuracy = 0
 accuray_text = ''
@@ -55,27 +56,31 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     angle_top = 180
 
     while True:
-        success, img = cap.read()
+        if(use_vedio or internal_test):
+            success, img = cap.read()
+
+        else:
+            success = cap.read()[0]
 
         if success:
             landmarks, img = detector.findPose(img, draw=True)
 
             #angle1:肩膀到手肘到手腕的角度
-            angle1_1, img = detector.findAngle(landmarks[11], landmarks[13],
+            angle1_1 = detector.findAngle(landmarks[11], landmarks[13],
                                             landmarks[15], img)
-            angle1_2, img = detector.findAngle(landmarks[12], landmarks[14],
+            angle1_2 = detector.findAngle(landmarks[12], landmarks[14],
                                             landmarks[16], img)
             
             #angle2:肩膀到髖到膝蓋的角度
-            angle2_1, img = detector.findAngle(landmarks[11], landmarks[23],
+            angle2_1 = detector.findAngle(landmarks[11], landmarks[23],
                                             landmarks[25], img)
-            angle2_2, img = detector.findAngle(landmarks[12], landmarks[24],
+            angle2_2 = detector.findAngle(landmarks[12], landmarks[24],
                                             landmarks[26], img)
             
             #angle3:髖到膝蓋到腳踝
-            angle3_1, img = detector.findAngle(landmarks[23], landmarks[25],
+            angle3_1 = detector.findAngle(landmarks[23], landmarks[25],
                                             landmarks[27], img)
-            angle3_2, img = detector.findAngle(landmarks[24], landmarks[26],
+            angle3_2 = detector.findAngle(landmarks[24], landmarks[26],
                                             landmarks[28], img)
 
             # 正確姿勢的範圍
@@ -109,7 +114,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                         else:
                             count = count + 0.5
                             accuray_text = str(int(accuracy)) + ' %'
-                            displacement = 120
+                            displacement = 100
                         
                         if count % 1 == 0:
                                 pygame.mixer.init()
@@ -118,7 +123,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
             img = Global_Use.sport(img, angle1_1, 60, 175, str(int(count)), accuray_text, displacement, text, imgc, imgr)
-
+            
             if(use_vedio or internal_test):
                 cv2.imshow('Push Up', img)
 
@@ -134,6 +139,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count, 'Push Up', accuracy)
+#cap = 0
+#Pose_Detected(cap, 1, dir , count, text, accuracy)
 #internal_test = 1
-#Pose_Detected(cap, 0, dir , count, 'Push Up', accuracy)
+#Pose_Detected(cap, 0, dir , count, text, accuracy)

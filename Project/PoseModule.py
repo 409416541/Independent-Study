@@ -68,6 +68,4 @@ class PoseDetector:
             cv2.circle(img, (x3, y3), 8, (240, 222, 0), 2)
             cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50),
                         cv2.FONT_HERSHEY_PLAIN, 2, (91, 183, 240), 2)
-            return angle, img
-        else:
-            return angle
+        return angle

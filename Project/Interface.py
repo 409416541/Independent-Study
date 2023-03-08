@@ -11,7 +11,7 @@ import time
 import pyttsx3
 
 engine = pyttsx3.init()
-engine.setProperty('rate', 160)
+engine.setProperty('rate', 180)
 
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
@@ -60,9 +60,11 @@ dir = 0
 count_times= 0.0
 accuracy = 0
 
-act_start = 0.0
-act_end = 0.0
-fps = 1/15
+angle = 0
+bar_a = 0
+bar_b = 0
+accuray_text = ''
+displacement = 0
 
 difficulty = [8, 15, 25]
 
@@ -74,7 +76,7 @@ text = ['請選擇您要做的動作',
         '請選擇您要做的次數', 
         '1.  '+str(difficulty[0])+' 次', '2. '+str(difficulty[1])+' 次', '3. '+str(difficulty[2])+' 次', '4. 回到上一頁'] 
 
-choose_text = ['Bye',
+choose_text = ['再見',
                '仰臥起坐', '伏地挺身', '深蹲', '仰臥抬腿', '開合跳', '離開',
                '範例影片', '開始運動', '回到上一頁',
                str(difficulty[0])+' 次', str(difficulty[1])+' 次', str(difficulty[2])+' 次', '回到上一頁']
@@ -159,9 +161,9 @@ while(count+1 >= 0):
                     other_end = time.time()
 
     else:
-        img, choose = hd(cap)
-
         if(not vedio_confirm):
+            img, choose = hd(cap)
+
             if(choose == '4' or choose == '5' or choose == '6'):
                 choose = 'NAN'
 
@@ -242,7 +244,9 @@ while(count+1 >= 0):
 
                 case '2':
                     if(not count_times_confirm):
-                        if(choose == '4' or choose == '5' or choose == '6'):
+                        img, choose = hd(cap)
+
+                        if(choose == '5' or choose == '6'):
                             choose = 'NAN'
 
                         img = Global_Use.interface(img, text[12], 30)
@@ -286,10 +290,8 @@ while(count+1 >= 0):
                                         other_start = 0.0
                                         other_end = 0.0
 
-                                        act_start = time.time()
-
-                                        engine.say(choose_text[int(last_times_choose)+9])
-                                        engine.runAndWait()
+                                    engine.say(choose_text[int(last_times_choose)+9])
+                                    engine.runAndWait()
 
                             elif(not nan_start and choose == 'NAN'):
                                 count_times_choose = 1
@@ -315,25 +317,20 @@ while(count+1 >= 0):
                                 other_start = time.time()                                
 
                     else:
-                        act_end = time.time()
+                        img = cap.read()[1]
 
-                        if(act_end - act_start > fps):
-
-                            match last_choose:
-                                
-                                case '1':
-                                    dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                                case '2':
-                                    dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                                case '3':
-                                    dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                                case '4':
-                                    dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                                case '5':
-                                    dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-
-                            act_start = time.time()
-                            act_end = 0.0
+                        match last_choose:
+                            
+                            case '1':
+                                dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                            case '2':
+                                dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                            case '3':
+                                dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                            case '4':
+                                dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                            case '5':
+                                dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
 
                         if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0
@@ -346,9 +343,6 @@ while(count+1 >= 0):
 
                             other_start = 0.0
                             other_end = 0.0
-
-                            act_start = 0.0
-                            act_end = 0.0
 
                 case '3':
                     confirm = 0
