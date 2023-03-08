@@ -117,7 +117,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.play()
                                 #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
 
-            Global_Use.sport(img, angle1_1, 60, 175, str(int(count)), accuray_text, displacement, text, imgc, imgr)
+            img = Global_Use.sport(img, angle1_1, 60, 175, str(int(count)), accuray_text, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Push Up', img)
