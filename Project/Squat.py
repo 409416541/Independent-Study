@@ -114,6 +114,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             accuray_text = 'Out of Range'
                             displacement = 220
 
+                            if(angle1_1 < 70 and angle1_2 < 70):
+                                accuray_text = '蹲太低'
+
                         else:
                             count = count + 0.5
                             accuray_text = str(int(accuracy)) + ' %'

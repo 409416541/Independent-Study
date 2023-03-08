@@ -60,20 +60,24 @@ dir = 0
 count_times= 0.0
 accuracy = 0
 
+act_start = 0.0
+act_end = 0.0
+fps = 1/15
+
 difficulty = [8, 15, 25]
 
-text = ['Please choose action', 
-        '1. Sit Ups', '2. Push Up', '3. Squat', '4. Leg Raises', '5. Jumping Jacks', '6. Break', # interface
-        'Your choose is ', 
-        'Please choose you want', 
-        '1. Sample Video', '2. Go Sport', '3. back to interface', # choose
-        'How times you want', 
-        '1.  '+str(difficulty[0])+' times', '2. '+str(difficulty[1])+' times', '3. '+str(difficulty[2])+' times', '4. back to choose'] 
+text = ['請選擇您要做的動作', 
+        '1. 仰臥起坐', '2. 伏地挺身', '3. 深蹲', '4. 仰臥抬腿', '5. 開合跳', '6. 離開',
+        '您的選擇是 ', 
+        '請選擇您要的操作', 
+        '1. 範例影片', '2. 開始運動', '3. 回到上一頁',
+        '請選擇您要做的次數', 
+        '1.  '+str(difficulty[0])+' 次', '2. '+str(difficulty[1])+' 次', '3. '+str(difficulty[2])+' 次', '4. 回到上一頁'] 
 
 choose_text = ['Bye',
-               'Sit Up', 'Push Up', 'Squat', 'Leg Raises', 'Jumping Jacks', 'Break',
-               'Sample Video', 'Go Sport', 'back to interface',
-               str(difficulty[0])+' times', str(difficulty[1])+' times', str(difficulty[2])+' times', 'back to choose']
+               '仰臥起坐', '伏地挺身', '深蹲', '仰臥抬腿', '開合跳', '離開',
+               '範例影片', '開始運動', '回到上一頁',
+               str(difficulty[0])+' 次', str(difficulty[1])+' 次', str(difficulty[2])+' 次', '回到上一頁']
 
 while(count+1 >= 0):
 
@@ -93,13 +97,13 @@ while(count+1 >= 0):
         img, choose = hd(cap)
 
         # interface
-        Global_Use.interface(img, text[0], 30)
-        Global_Use.interface(img, text[1], 75)
-        Global_Use.interface(img, text[2], 110)
-        Global_Use.interface(img, text[3], 145)
-        Global_Use.interface(img, text[4], 180)
-        Global_Use.interface(img, text[5], 215)
-        Global_Use.interface(img, text[6], 250)
+        img = Global_Use.interface(img, text[0], 30)
+        img = Global_Use.interface(img, text[1], 75)
+        img = Global_Use.interface(img, text[2], 110)
+        img = Global_Use.interface(img, text[3], 145)
+        img = Global_Use.interface(img, text[4], 180)
+        img = Global_Use.interface(img, text[5], 215)
+        img = Global_Use.interface(img, text[6], 250)
 
         Global_Use.handpose(img, choose, imgr, imgc)
 
@@ -162,11 +166,11 @@ while(count+1 >= 0):
                 choose = 'NAN'
 
             # choose
-            Global_Use.interface(img, text[7] + text[int(last_choose)], 30)
-            Global_Use.interface(img, text[8], 65)
-            Global_Use.interface(img, text[9], 110)
-            Global_Use.interface(img, text[10], 145)
-            Global_Use.interface(img, text[11], 180)
+            img = Global_Use.interface(img, text[7] + text[int(last_choose)], 30)
+            img = Global_Use.interface(img, text[8], 65)
+            img = Global_Use.interface(img, text[9], 110)
+            img = Global_Use.interface(img, text[10], 145)
+            img = Global_Use.interface(img, text[11], 180)
 
             Global_Use.handpose(img, choose, imgr, imgc)
 
@@ -241,11 +245,11 @@ while(count+1 >= 0):
                         if(choose == '4' or choose == '5' or choose == '6'):
                             choose = 'NAN'
 
-                        Global_Use.interface(img, text[12], 30)
-                        Global_Use.interface(img, text[13], 75)
-                        Global_Use.interface(img, text[14], 110)            
-                        Global_Use.interface(img, text[15], 145)
-                        Global_Use.interface(img, text[16], 180)
+                        img = Global_Use.interface(img, text[12], 30)
+                        img = Global_Use.interface(img, text[13], 75)
+                        img = Global_Use.interface(img, text[14], 110)            
+                        img = Global_Use.interface(img, text[15], 145)
+                        img = Global_Use.interface(img, text[16], 180)
 
                         Global_Use.handpose(img, choose, imgr, imgc)
 
@@ -282,6 +286,8 @@ while(count+1 >= 0):
                                         other_start = 0.0
                                         other_end = 0.0
 
+                                        act_start = time.time()
+
                                         engine.say(choose_text[int(last_times_choose)+9])
                                         engine.runAndWait()
 
@@ -309,18 +315,25 @@ while(count+1 >= 0):
                                 other_start = time.time()                                
 
                     else:
-                        match last_choose:
-                            
-                            case '1':
-                                dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '2':
-                                dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '3':
-                                dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '4':
-                                dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '5':
-                                dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                        act_end = time.time()
+
+                        if(act_end - act_start > fps):
+
+                            match last_choose:
+                                
+                                case '1':
+                                    dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '2':
+                                    dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '3':
+                                    dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '4':
+                                    dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '5':
+                                    dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+
+                            act_start = time.time()
+                            act_end = 0.0
 
                         if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0
