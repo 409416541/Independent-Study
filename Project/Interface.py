@@ -317,8 +317,6 @@ while(count+1 >= 0):
                                 other_start = time.time()                                
 
                     else:
-                        img = cap.read()[1]
-
                         match last_choose:
                             
                             case '1':
