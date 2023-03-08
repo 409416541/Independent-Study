@@ -66,75 +66,76 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
         if success:
             landmarks, img = detector.findPose(img, draw=True)
 
-            angle = [landmarks[14], landmarks[12], landmarks[24],
-                     landmarks[13], landmarks[11], landmarks[23],
-                     landmarks[26], landmarks[24], landmarks[23],
-                     landmarks[25], landmarks[23], landmarks[24],
-                     landmarks[16], landmarks[14], landmarks[12],
-                     landmarks[15], landmarks[13], landmarks[11],
-                     landmarks[26], landmarks[28], landmarks[27],
-                     landmarks[25], landmarks[27], landmarks[28]]
-            
-            angle = detector.findAngle(angle)
+            if landmarks:
+                angle = [landmarks[14], landmarks[12], landmarks[24],
+                         landmarks[13], landmarks[11], landmarks[23],
+                         landmarks[26], landmarks[24], landmarks[23],
+                         landmarks[25], landmarks[23], landmarks[24],
+                         landmarks[16], landmarks[14], landmarks[12],
+                         landmarks[15], landmarks[13], landmarks[11],
+                         landmarks[26], landmarks[28], landmarks[27],
+                         landmarks[25], landmarks[27], landmarks[28]]
+                
+                angle = detector.findAngle(angle)
 
-            angle1_1 = angle[0]
-            angle1_2 = angle[1]
-            angle2_1 = angle[2]
-            angle2_2 = angle[3]
-            angle3_1 = angle[4]
-            angle3_2 = angle[5]
-            angle4_1 = angle[6]
-            angle4_2 = angle[7]
-            
-            if 0 <= angle1_1 <= 180 and  0 <= angle1_2 <= 180\
-                and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
-                and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
-                    
-                # 目前狀態:合
-                if dir == 0: # 之前狀態:open
-                    if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
-                    and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180:
+                angle1_1 = angle[0]
+                angle1_2 = angle[1]
+                angle2_1 = angle[2]
+                angle2_2 = angle[3]
+                angle3_1 = angle[4]
+                angle3_2 = angle[5]
+                angle4_1 = angle[6]
+                angle4_2 = angle[7]
+                
+                if 0 <= angle1_1 <= 180 and  0 <= angle1_2 <= 180\
+                    and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
+                    and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
                         
-                        if angle_top1 > (angle1_1 + angle1_2)/2:
-                            angle_top1 = (angle1_1 + angle1_2)/2
+                    # 目前狀態:合
+                    if dir == 0: # 之前狀態:open
+                        if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
+                        and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180:
                             
-                        if angle_top2 > (angle2_1 + angle2_2)/2:
-                            angle_top2 = (angle2_1 + angle2_2)/2
+                            if angle_top1 > (angle1_1 + angle1_2)/2:
+                                angle_top1 = (angle1_1 + angle1_2)/2
+                                
+                            if angle_top2 > (angle2_1 + angle2_2)/2:
+                                angle_top2 = (angle2_1 + angle2_2)/2
 
-                        count = count + 0.5
-                        dir = 1    # 更新狀態:開
-
-                # 目前狀態:開
-                if dir == 1: # 之前狀態:close
-                    if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
-                    and 170 <= angle3_1 <= 180 \
-                    and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
-                    and 170 <= angle3_2 <= 180:
-                        
-                        accuracy1 = 100 - 1 * abs(angle_top1 - 165)
-                        accuracy2 = 100 - 1 * abs(angle_top2 - 115)
-                        accuracy = (accuracy1+accuracy2)/2# 更新正確度
-                        angle_top1 = 180
-                        angle_top2 = 180
-                        dir = 0    # 更新狀態:合
-
-                        if(accuracy < 60):
-                            count = count - 0.5
-                            accuray_text = 'Out of Range'
-                            displacement = 220
-
-                        else:
                             count = count + 0.5
-                            accuray_text = str(int(accuracy)) + ' %'
-                            displacement = 100
-                        
-                        if count % 1 == 0:
-                            pygame.mixer.init()
-                            pygame.mixer.music.load('./Project/Test_Media/sound.wav')
-                            pygame.mixer.music.play()
-                            #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS ) 
+                            dir = 1    # 更新狀態:開
 
-            img = Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), accuray_text, displacement, text, imgc, imgr)
+                    # 目前狀態:開
+                    if dir == 1: # 之前狀態:close
+                        if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
+                        and 170 <= angle3_1 <= 180 \
+                        and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
+                        and 170 <= angle3_2 <= 180:
+                            
+                            accuracy1 = 100 - 1 * abs(angle_top1 - 165)
+                            accuracy2 = 100 - 1 * abs(angle_top2 - 115)
+                            accuracy = (accuracy1+accuracy2)/2# 更新正確度
+                            angle_top1 = 180
+                            angle_top2 = 180
+                            dir = 0    # 更新狀態:合
+
+                            if(accuracy < 60):
+                                count = count - 0.5
+                                accuray_text = 'Out of Range'
+                                displacement = 220
+
+                            else:
+                                count = count + 0.5
+                                accuray_text = str(int(accuracy)) + ' %'
+                                displacement = 100
+                            
+                            if count % 1 == 0:
+                                pygame.mixer.init()
+                                pygame.mixer.music.load('./Project/Test_Media/sound.wav')
+                                pygame.mixer.music.play()
+                                #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
+
+                img = Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), accuray_text, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
                 cv2.imshow('Jumping Jacks', img)
