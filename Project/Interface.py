@@ -6,7 +6,6 @@ from Leg_Raises import Pose_Detected as pose4
 from Jumping_Jacks import Pose_Detected as pose5
 import Global_Use
 import cv2
-import numpy as np
 import time
 import pyttsx3
 

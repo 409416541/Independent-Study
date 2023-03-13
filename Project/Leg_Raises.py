@@ -1,7 +1,6 @@
 from PoseModule import PoseDetector
 import Global_Use
 import cv2
-import winsound
 import pygame
 import pyttsx3
 
@@ -37,7 +36,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     engine.setProperty('rate', 160)
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./Project/Test_Media/Leg_raises.mp4')
+        cap = cv2.VideoCapture('./Test_Media/Leg_raises.mp4')
 
         if not cap.isOpened():
             print("Cannot open camera")
@@ -134,9 +133,8 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
-                                pygame.mixer.music.load('./Project/Test_Media/sound.wav')
+                                pygame.mixer.music.load('./Test_Media/sound.wav')
                                 pygame.mixer.music.play()
-                                #winsound.PlaySound("./Project/Test_Media/sound.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )        
 
                 img = Global_Use.sport(img, angle2_1, 90, 180, str(int(count)), accuray_text, displacement, text, imgc, imgr)
             
