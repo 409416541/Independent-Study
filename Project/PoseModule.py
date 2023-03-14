@@ -65,15 +65,16 @@ class PoseDetector:
 
             calculate.append(angle)
 
-        '''if img is not None:
-            cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 1)
-            cv2.line(img, (x3, y3), (x2, y2), (255, 255, 255), 1)
-            cv2.circle(img, (x1, y1), 4, (240, 222, 0), cv2.FILLED)
-            cv2.circle(img, (x1, y1), 8, (240, 222, 0), 2)
-            cv2.circle(img, (x2, y2), 7, (230, 0, 111), cv2.FILLED)
-            cv2.circle(img, (x2, y2), 11, (230, 0, 111), 2)
-            cv2.circle(img, (x3, y3), 4, (240, 222, 0), cv2.FILLED)
-            cv2.circle(img, (x3, y3), 8, (240, 222, 0), 2)
-            cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50),
-                        cv2.FONT_HERSHEY_PLAIN, 2, (91, 183, 240), 2)'''
+            '''if img is not None:
+                cv2.line(img, (x1, y1), (x2, y2), (255, 255, 255), 1)
+                cv2.line(img, (x3, y3), (x2, y2), (255, 255, 255), 1)
+                cv2.circle(img, (x1, y1), 4, (240, 222, 0), cv2.FILLED)
+                cv2.circle(img, (x1, y1), 8, (240, 222, 0), 2)
+                cv2.circle(img, (x2, y2), 7, (230, 0, 111), cv2.FILLED)
+                cv2.circle(img, (x2, y2), 11, (230, 0, 111), 2)
+                cv2.circle(img, (x3, y3), 4, (240, 222, 0), cv2.FILLED)
+                cv2.circle(img, (x3, y3), 8, (240, 222, 0), 2)
+                cv2.putText(img, str(int(angle)), (x2 - 50, y2 + 50),
+                            cv2.FONT_HERSHEY_PLAIN, 2, (91, 183, 240), 2)'''
+                
         return calculate
