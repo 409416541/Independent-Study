@@ -72,25 +72,40 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                          landmarks[16], landmarks[14], landmarks[12],
                          landmarks[15], landmarks[13], landmarks[11],
                          landmarks[26], landmarks[28], landmarks[27],
-                         landmarks[25], landmarks[27], landmarks[28]]
+                         landmarks[25], landmarks[27], landmarks[28],
+                         landmarks[14], landmarks[15], landmarks[16],
+                         landmarks[15], landmarks[14], landmarks[13]]
                 
                 angle = detector.findAngle(angle)
 
+                #手肘到肩膀到寬的角度
                 angle1_1 = angle[0]
                 angle1_2 = angle[1]
+
+                #膝蓋到寬到寬的角度
                 angle2_1 = angle[2]
                 angle2_2 = angle[3]
+
+                #手腕到手軸到肩膀的角度
                 angle3_1 = angle[4]
                 angle3_2 = angle[5]
+
+                #膝蓋到腳踝到腳踝的角度
                 angle4_1 = angle[6]
                 angle4_2 = angle[7]
-                
+
+                BREAK_1 = angle[8]
+                BREAK_2 = angle[9]
+
+                if 160 <= BREAK_1 + BREAK_2 <= 200:
+                    break
+
                 if 0 <= angle1_1 <= 180 and  0 <= angle1_2 <= 180\
                     and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
                     and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
                         
-                    # 目前狀態:合
-                    if dir == 0: # 之前狀態:open
+                    # 目前狀態:開
+                    if dir == 0: # 之前狀態:close
                         if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
                         and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180:
                             
@@ -101,29 +116,38 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 angle_top2 = (angle2_1 + angle2_2)/2
 
                             count = count + 0.5
-                            dir = 1    # 更新狀態:開
+                            dir = 1    # 更新狀態:關
 
-                    # 目前狀態:開
-                    if dir == 1: # 之前狀態:close
+                    # 目前狀態:關
+                    if dir == 1: # 之前狀態:open
                         if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
                         and 170 <= angle3_1 <= 180 \
                         and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
                         and 170 <= angle3_2 <= 180:
                             
-                            accuracy1 = 100 - 1 * abs(angle_top1 - 165)
-                            accuracy2 = 100 - 1 * abs(angle_top2 - 115)
+                            accuracy1 = 100 - 2.5 * abs(angle_top1 - 165)
+                            accuracy2 = 100 - 1.5 * abs(angle_top2 - 115)
                             accuracy = (accuracy1+accuracy2)/2# 更新正確度
                             angle_top1 = 180
                             angle_top2 = 180
-                            dir = 0    # 更新狀態:合
+                            dir = 0    # 更新狀態:開
 
                             if(accuracy < 80):
                                 count = count - 0.5
-                                accuracy_text = '超出範圍'
                                 displacement = 220
-
                                 print(angle1_1, angle1_2, angle2_1, angle2_2, angle3_1, angle3_2, angle4_1, angle4_2)
-
+                                #最正確 angle1 = 165 angle2 = 115 
+                                
+                                if ( 150 <= angle_top1 < 157 and 90 <= angle_top2 < 102):
+                                     accuracy_text = '手不夠高 腳不夠開' 
+                                elif ( 173 < angle_top1 <= 180 and 90 <= angle_top2 < 102):
+                                     accuracy_text = '手太高 腳不夠開' 
+                                elif ( 150 <= angle_top1 < 157 ):
+                                     accuracy_text = '手不夠高' 
+                                elif ( 173 < angle_top1 <= 180 ):
+                                     accuracy_text = '手太高'
+                                elif ( 90 <= angle_top2 < 102 ):
+                                     accuracy_text = '腳不夠開'
                             else:
                                 count = count + 0.5
                                 accuracy_text = str(int(accuracy)) + ' %'

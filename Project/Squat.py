@@ -52,7 +52,8 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     accuracy = 0
     accuracy_text = '開始動作'
     displacement = 165
-    angle_low = 180
+    angle_top1 = 180
+    angle_top2 = 180
 
     while True:
         if(use_vedio or internal_test):
@@ -68,7 +69,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 angle = [landmarks[12], landmarks[24], landmarks[26],
                          landmarks[11], landmarks[23], landmarks[25],
                          landmarks[24], landmarks[26], landmarks[28],
-                         landmarks[23], landmarks[25], landmarks[27]]
+                         landmarks[23], landmarks[25], landmarks[27],
+                         landmarks[14], landmarks[15], landmarks[16],
+                         landmarks[15], landmarks[14], landmarks[13]]
 
                 angle = detector.findAngle(angle)
 
@@ -80,6 +83,12 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 angle2_1 = angle[2]
                 angle2_2 = angle[3]
                 
+                BREAK_1 = angle[4]
+                BREAK_2 = angle[5]
+
+                if 160 <= BREAK_1 + BREAK_2 <= 200:
+                    break
+
                 # 正確姿勢的範圍
                 if 46 <= angle1_1 <= 180 and 46 <= angle1_2 <= 180 \
                     and 61 <= angle2_1 <= 180 and 61 <= angle2_2 <= 180:
@@ -92,30 +101,35 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             (46 <= angle1_2 <= 128 and 61 <= angle2_2 <= 128)) and \
                             abs(angle1_1 - angle1_2)<25 and abs(angle2_1 - angle2_2)<35):
 
-                            # angle_low:角度極值
-                            if angle_low > (angle1_1 + angle1_2)/2:
-                                angle_low = (angle1_1 + angle1_2)/2
-
-                            elif (angle1_1 + angle1_2)/2 - angle_low > 5:
-                                count = count + 0.5
-                                dir = 1    # 更新狀態:蹲下
+                            # angle_top1:角度極值
+                            if angle_top1 > (angle1_1 + angle1_2)/2:
+                                angle_top1 = (angle1_1 + angle1_2)/2
+                            if angle_top2 > (angle2_1 + angle2_2)/2:
+                                angle_top2 = (angle2_1 + angle2_2)/2    
+                            count = count + 0.5
+                            dir = 1    # 更新狀態:蹲下
 
                     # 目前狀態:站起
                     if dir == 1:  # 之前狀態:蹲下
                         if 141 <= angle1_1 <=180 and 141 <= angle1_2 <= 180 \
                             and 141 <= angle2_1 <= 180 and 141 <= angle2_2 <= 180:
 
-                            accuracy = 100 - 0.75 * abs(angle_low - 65)    # 更新正確度
-                            angle_low = 180
+                            accuracy1 = 100 - 0.6 * abs(angle_top1 - 65)    # 更新正確度
+                            accuracy2 = 100 - 0.75 * abs(angle_top2 - 80)    # 更新正確度
+                            accuracy = (accuracy1 + accuracy2) / 2 
+                            angle_top1 = 180
+                            angle_top2 = 180
                             dir = 0   # 更新狀態:站起
 
                             if(accuracy < 80):
                                 count = count - 0.5
-                                accuracy_text = '超出範圍'
                                 displacement = 220
-
-                                if(angle1_1 < 70 and angle1_2 < 70):
-                                    accuracy_text = '蹲太低'
+                                if ( 88 < angle_top1 <= 128 and 107 < angle_top2 <= 128):
+                                     accuracy_text = '蹲不夠下去 膝蓋不夠彎' 
+                                elif ( 88 < angle_top1 <= 128):
+                                     accuracy_text = '蹲不夠下去' 
+                                elif ( 107 < angle_top2 <= 128):
+                                     accuracy_text = '膝蓋不夠彎'
 
                             else:
                                 count = count + 0.5
