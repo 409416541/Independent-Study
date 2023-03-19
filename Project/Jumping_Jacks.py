@@ -9,7 +9,7 @@ import pyttsx3
 engine = pyttsx3.init()
 engine.setProperty('rate', 160)
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Cannot open camera")
