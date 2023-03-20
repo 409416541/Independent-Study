@@ -89,10 +89,10 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 angle4_1 = angle[6]
                 angle4_2 = angle[7]
 
-                BREAK_1 = angle[8]
-                BREAK_2 = angle[9]
+                break_1 = angle[8]
+                break_2 = angle[9]
 
-                if 160 <= BREAK_1 + BREAK_2 <= 200:
+                if 160 <= break_1 + break_2 <= 200:
                     if(internal_test):
                         break
 
