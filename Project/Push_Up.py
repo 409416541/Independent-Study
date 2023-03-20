@@ -4,23 +4,7 @@ import cv2
 import pygame
 import pyttsx3
 
-'''
-
-engine = pyttsx3.init()
-engine.setProperty('rate', 160)
-
-cap = cv2.VideoCapture(0)
-
-if not cap.isOpened():
-    print("Cannot open camera")
-
-    engine.say('Cannot open camera')
-    engine.runAndWait()
-            
-    exit()
-
-'''
-
+cap = 0
 dir = 0  # 0: 挺身 1: 伏地
 text = 'Push Up'
 count = 0
@@ -38,10 +22,21 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
         
         if not cap.isOpened():
             print("Cannot open video")
+            
+            engine.say('Cannot open video')
+            engine.runAndWait()
+
+            exit()  
+
+    if(internal_test):
+        cap = cv2.VideoCapture(0)
+
+        if not cap.isOpened():
+            print("Cannot open camera")
 
             engine.say('Cannot open camera')
             engine.runAndWait()
-
+                    
             exit()  
 
     detector = PoseDetector()
@@ -93,7 +88,11 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 BREAK_2 = angle[7]
 
                 if 160 <= BREAK_1 + BREAK_2 <= 200:
-                    break
+                    if(internal_test):
+                        break
+
+                    else:
+                        return 100, count, img, accuracy
                 
                 # 正確姿勢的範圍
                 if 140 <= angle2_1 <= 180 and 140 <= angle2_2 <= 180 \
@@ -176,7 +175,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cap.release()
     cv2.destroyAllWindows()
 
-#cap = 0
 #Pose_Detected(cap, 1, dir , count, text, accuracy)
 #internal_test = 1
 #Pose_Detected(cap, 0, dir , count, text, accuracy)
