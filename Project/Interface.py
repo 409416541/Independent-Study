@@ -83,7 +83,8 @@ text = ['請選擇您要做的動作',
 choose_text = ['再見',
                '仰臥起坐', '伏地挺身', '深蹲', '仰臥抬腿', '開合跳', '離開',
                '範例影片', '開始運動', '回到上一頁',
-               str(difficulty[0])+' 次', str(difficulty[1])+' 次', str(difficulty[2])+' 次', '回到上一頁']
+               str(difficulty[0])+' 次', str(difficulty[1])+' 次', str(difficulty[2])+' 次', '回到上一頁',
+               '您已完成 次', '準確度為 %']
 
 while(count+1 >= 0):
 
@@ -341,7 +342,11 @@ while(count+1 >= 0):
                             
                             act_start = time.time()
 
-                        if(count_times == difficulty[int(last_times_choose) - 1]):
+                        if(count_times == difficulty[int(last_times_choose) - 1] or dir == 100):
+                            engine.say(choose_text[14][:4]+str(int(count_times))+choose_text[14][5])
+                            engine.say(choose_text[15][:4]+str(int(accuracy))+choose_text[15][5])
+                            engine.runAndWait()
+
                             confirm = 0
                             has_choose = 0
                             vedio_confirm = 0
