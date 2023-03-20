@@ -54,6 +54,11 @@ count_times_confirm = 0
 count_times_choose = 0
 last_times_choose = 'NAN'
 
+# for fps use
+act_start = 0.0
+act_end = 0.0
+fps = 1/15
+
 # temp per act value
 dir = 0
 count_times= 0.0
@@ -279,6 +284,7 @@ while(count+1 >= 0):
                                         nan_end = 0.0
                                         other_start = 0.0
                                         other_end = 0.0
+                                        act_start = 0.0
 
                                     else:
                                         count_times_confirm = 1
@@ -288,6 +294,7 @@ while(count+1 >= 0):
                                         nan_end = 0.0
                                         other_start = 0.0
                                         other_end = 0.0
+                                        act_start = time.time()
 
                                     engine.say(choose_text[int(last_times_choose)+9])
                                     engine.runAndWait()
@@ -316,18 +323,23 @@ while(count+1 >= 0):
                                 other_start = time.time()                                
 
                     else:
-                        match last_choose:
+                        act_end = time.time()
+
+                        if(act_end - act_start >= fps):
+                            match last_choose:
+                                
+                                case '1':
+                                    dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '2':
+                                    dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '3':
+                                    dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '4':
+                                    dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                case '5':
+                                    dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                             
-                            case '1':
-                                dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '2':
-                                dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '3':
-                                dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '4':
-                                dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-                            case '5':
-                                dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                            act_start = time.time()
 
                         if(count_times == difficulty[int(last_times_choose) - 1]):
                             confirm = 0
@@ -337,9 +349,10 @@ while(count+1 >= 0):
                             count_times_confirm = 0
                             count_times_choose = 0
                             count_times = 0.0
-
                             other_start = 0.0
                             other_end = 0.0
+                            act_start = 0.0
+                            act_end = 0.0
 
                 case '3':
                     confirm = 0
