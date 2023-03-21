@@ -49,6 +49,8 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     displacement = 165
     angle_top1 = 180
     angle_top2 = 180
+    angle1_1 = 0
+    angle1_2 = 0
 
     while True:
         if(use_vedio or internal_test):
