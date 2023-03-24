@@ -335,6 +335,7 @@ while(count+1 >= 0):
                             engine.say(choose_text[15][:4]+str(int(accuracy))+choose_text[15][5])
                             engine.runAndWait()
 
+                            dir = 0
                             confirm = 0
                             has_choose = 0
                             vedio_confirm = 0

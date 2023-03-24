@@ -93,7 +93,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 break_1 = angle[8]
                 break_2 = angle[9]
 
-                if 160 <= break_1 + break_2 <= 200:
+                if 160 <= break_1 + break_2 <= 200 and landmarks[20][0] - landmarks[19][0] > 0:
                     if(internal_test):
                         break
 
@@ -182,5 +182,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cv2.destroyAllWindows()
 
 #Pose_Detected(cap, 1, dir , count, text, accuracy)
-#internal_test = 1
-#Pose_Detected(cap, 0, dir , count, text, accuracy)
+internal_test = 1
+Pose_Detected(cap, 0, dir , count, text, accuracy)
