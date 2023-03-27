@@ -126,7 +126,7 @@ def Hand_Detecter(cap):
                         #Global_Use.thecount(img, text)
                         
             background = img.copy()
-            background[:, :, :] = 255 
+            background[:, :, :] = 0 
             
             return background, last_test
 
