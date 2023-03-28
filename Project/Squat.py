@@ -9,8 +9,6 @@ dir = 0  # 0: 站起  1: 蹲下
 text = 'Squat'
 count = 0
 accuracy = 0
-accuracy_text = '開始動作'
-displacement = 165
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
@@ -46,7 +44,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
     accuracy = 0
     accuracy_text = '開始動作'
-    displacement = 165
+    displacement = 160
     angle_top1 = 180
     angle_top2 = 180
     angle1_1 = 0
@@ -126,16 +124,19 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 count = count - 0.5
                                 displacement = 220
                                 if ( 88 < angle_top1 <= 128 and 107 < angle_top2 <= 128):
+                                     displacement = 380
                                      accuracy_text = '蹲不夠下去 膝蓋不夠彎' 
                                 elif ( 88 < angle_top1 <= 128):
+                                     displacement = 195
                                      accuracy_text = '蹲不夠下去' 
                                 elif ( 107 < angle_top2 <= 128):
+                                     displacement = 195
                                      accuracy_text = '膝蓋不夠彎'
 
                             else:
                                 count = count + 0.5
-                                accuracy_text = str(int(accuracy)) + ' %'
                                 displacement = 100
+                                accuracy_text = str(int(accuracy)) + ' %'
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
@@ -143,10 +144,14 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.play()
 
                 else:
-                    displacement = 165
+                    displacement = 160
 
                     if(count):
                         accuracy_text = '超出範圍'
+
+            else:
+                displacement = 160
+                accuracy_text = '開始動作'
                                 
             img = Global_Use.sport(img, (angle1_1 + angle1_2)/2 - 10, 110, 175, str(int(count)), accuracy_text, displacement, text, imgc, imgr)
             

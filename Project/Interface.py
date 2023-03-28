@@ -63,7 +63,7 @@ angle = 0
 bar_a = 0
 bar_b = 0
 accuracy_text = '開始動作'
-displacement = 165
+displacement = 160
 
 difficulty = [8, 15, 25]
 

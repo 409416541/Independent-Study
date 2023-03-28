@@ -9,8 +9,6 @@ dir = 0  # 0: 仰臥 1: 起坐
 text = 'Sit Ups'
 count = 0
 accuracy = 0
-accuracy_text = '開始動作'
-displacement = 165
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
@@ -47,7 +45,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
     accuracy = 0
     accuracy_text = '開始動作'
-    displacement = 165
+    displacement = 160
     angle_top1 = 180
     angle_top2 = 180
     angle_top3 = 180
@@ -132,24 +130,31 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 count = count - 0.5
                                 displacement = 220
                                 if ( 95 < angle_top1 <= 105 and 78 < angle_top2 <= 90 and 140 <= angle_top3 <= 152):
-                                     accuracy_text = '腰不夠上來 膝蓋不夠彎 手軸太彎' 
+                                     displacement = 195
+                                     accuracy_text = '完全不符合' 
                                 elif ( 95 < angle_top1 <= 105 and 78 < angle_top2 <= 90):
+                                     displacement = 380
                                      accuracy_text = '腰不夠上來 膝蓋不夠彎' 
                                 elif ( 95 < angle_top1 <= 105 and 140 <= angle_top3 <= 152):
+                                     displacement = 345
                                      accuracy_text = '腰不夠上來 手軸太彎' 
                                 elif (78 < angle_top2 <= 90 and 140 <= angle_top3 <= 152):
+                                     displacement = 345
                                      accuracy_text = '膝蓋不夠彎 手軸太彎' 
                                 elif ( 95 < angle_top1 <= 105):
+                                     displacement = 195
                                      accuracy_text = '腰不夠上來'
                                 elif ( 78 < angle_top2 <= 90):
+                                     displacement = 195
                                      accuracy_text = '膝蓋不夠彎'
                                 elif ( 140 <= angle_top3 <= 152):
+                                     displacement = 160
                                      accuracy_text = '手軸太彎'
 
                             else:
                                 count = count + 0.5
-                                accuracy_text = str(int(accuracy)) + ' %'
                                 displacement = 100
+                                accuracy_text = str(int(accuracy)) + ' %'                                
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
@@ -157,10 +162,14 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.play()
 
                 else:
-                    displacement = 165
+                    displacement = 160
 
                     if(count):
                         accuracy_text = '超出範圍'
+
+            else:
+                displacement = 160
+                accuracy_text = '開始動作'
                                     
             img = Global_Use.sport(img, angle1_1, 85, 125, str(int(count)), accuracy_text, displacement, text, imgc, imgr)
             

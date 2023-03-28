@@ -9,8 +9,6 @@ dir = 0  # 0: 開 1: 合
 text = 'Jumping Jacks'
 count = 0
 accuracy = 0
-accuracy_text = '開始動作'
-displacement = 165
 internal_test = 0
 
 def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
@@ -45,7 +43,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
     accuracy = 0
     accuracy_text = '開始動作'
-    displacement = 165
+    displacement = 160
     angle_top1 = 180
     angle_top2 = 180
     angle2_1 = 0
@@ -125,7 +123,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                         and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
                         and 170 <= angle3_2 <= 180:
                             
-                            accuracy1 = 100 - 2.5 * abs(angle_top1 - 165)
+                            accuracy1 = 100 - 2.5 * abs(angle_top1 - 160)
                             accuracy2 = 100 - 1.5 * abs(angle_top2 - 115)
                             accuracy = (accuracy1+accuracy2)/2# 更新正確度
                             angle_top1 = 180
@@ -134,22 +132,28 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
                             if(accuracy < 80):
                                 count = count - 0.5
-                                displacement = 220
-                                print(angle1_1, angle1_2, angle2_1, angle2_2, angle3_1, angle3_2, angle4_1, angle4_2)
-                                #最正確 angle1 = 165 angle2 = 115 
+
+                                #print(angle1_1, angle1_2, angle2_1, angle2_2, angle3_1, angle3_2, angle4_1, angle4_2)
+                                #最正確 angle1 = 160 angle2 = 115 
                                 
                                 if ( 150 <= angle_top1 < 157 and 90 <= angle_top2 < 102):
+                                     displacement = 310
                                      accuracy_text = '手不夠高 腳不夠開' 
                                 elif ( 173 < angle_top1 <= 180 and 90 <= angle_top2 < 102):
+                                     displacement = 275
                                      accuracy_text = '手太高 腳不夠開' 
                                 elif ( 150 <= angle_top1 < 157 ):
+                                     displacement = 160
                                      accuracy_text = '手不夠高' 
                                 elif ( 173 < angle_top1 <= 180 ):
+                                     displacement = 125
                                      accuracy_text = '手太高'
                                 elif ( 90 <= angle_top2 < 102 ):
+                                     displacement = 160
                                      accuracy_text = '腳不夠開'
                             else:
                                 count = count + 0.5
+                                displacement = 100
                                 accuracy_text = str(int(accuracy)) + ' %'
                                 displacement = 100
                             
@@ -159,11 +163,15 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.play()
 
                 else:
-                    displacement = 165
+                    displacement = 160
 
                     if(count):
                         accuracy_text = '超出範圍'
 
+            else:
+                displacement = 160
+                accuracy_text = '開始動作'
+               
             img = Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), accuracy_text, displacement, text, imgc, imgr)
 
             if(use_vedio or internal_test):
@@ -182,5 +190,5 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cv2.destroyAllWindows()
 
 #Pose_Detected(cap, 1, dir , count, text, accuracy)
-#internal_test = 1
-#Pose_Detected(cap, 0, dir , count, text, accuracy)
+internal_test = 1
+Pose_Detected(cap, 0, dir , count, text, accuracy)
