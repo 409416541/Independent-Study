@@ -9,9 +9,10 @@ dir = 0  # 0: 仰臥 1: 起坐
 text = 'Sit Ups'
 count = 0
 accuracy = 0
+accuracy_count = 0
 internal_test = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
+def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Test_Media/Sit_ups.mp4')
@@ -117,14 +118,15 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                     if dir == 1:  # 之前狀態:起坐
                         if (angle1_1 + angle1_2)/2 >= 105:
 
-                            accuracy1 = 100 - 2 * abs(angle_top1 - 85)    # 更新正確度
-                            accuracy2 = 100 - 1.5 * abs(angle_top2 - 65)    # 更新正確度
-                            accuracy3 = 100 - 1.5 * abs(angle_top3 - 165)    # 更新正確度
-                            accuracy = (accuracy1 + accuracy2 + accuracy3)/3
+                            accuracy1 = 100 - 2 * abs(angle_top1 - 85)
+                            accuracy2 = 100 - 1.5 * abs(angle_top2 - 65)
+                            accuracy3 = 100 - 1.5 * abs(angle_top3 - 165)
+                            accuracy = (accuracy1 + accuracy2 + accuracy3)/3    # 更新正確度
+                            accuracy_count += accuracy
                             angle_top1 = 180
                             angle_top2 = 180
                             angle_top3 = 180
-                            dir = 0   # 更新狀態:躺著
+                            dir = 0  # 更新狀態:躺著
 
                             if(accuracy < 80):
                                 count = count - 0.5
@@ -177,7 +179,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 cv2.imshow('Sit Ups', img)
 
             else:
-                return dir, count, img, accuracy
+                return dir, count, img, accuracy, accuracy_count
                 
         else:
             break

@@ -9,9 +9,10 @@ dir = 0  # 0: 抬腿 1: 躺著
 text = 'Leg Raises'
 count = 0
 accuracy = 0
+accuracy_count = 0
 internal_test = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
+def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
     engine = pyttsx3.init()
     engine.setProperty('rate', 160)
 
@@ -123,12 +124,13 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                     if dir == 1:# 之前狀態:抬腿
                         if 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
 
-                            accuracy1 = 100 - 2.5 * abs(angle_top1 - 80)    # 更新正確度
-                            accuracy2 = 100 - 1.5 * abs(angle_top2 - 165)    # 更新正確度
-                            accuracy = (accuracy1 + accuracy2) / 2
+                            accuracy1 = 100 - 2.5 * abs(angle_top1 - 80)   
+                            accuracy2 = 100 - 1.5 * abs(angle_top2 - 165)
+                            accuracy = (accuracy1 + accuracy2) / 2  # 更新正確度
+                            accuracy_count += accuracy
                             angle_top1 = 180
                             angle_top2 = 180
-                            dir = 0    # 更新狀態:躺著
+                            dir = 0  # 更新狀態:躺著
 
                             if(accuracy < 80):
                                 count = count - 0.5
@@ -170,7 +172,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 cv2.imshow('Leg Raises', img)
 
             else:
-                return dir, count, img, accuracy
+                return dir, count, img, accuracy, accuracy_count
 
         else:
             break

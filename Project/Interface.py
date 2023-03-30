@@ -58,6 +58,7 @@ last_times_choose = 'NAN'
 dir = 0
 count_times= 0.0
 accuracy = 0
+accuracy_count = 0
 
 angle = 0
 bar_a = 0
@@ -229,15 +230,15 @@ while(count+1 >= 0):
                     match last_choose:
 
                         case '1':
-                            pose1(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
+                            pose1(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy, accuracy_count)
                         case '2':
-                            pose2(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
+                            pose2(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy, accuracy_count)
                         case '3': 
-                            pose3(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
+                            pose3(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy, accuracy_count)
                         case '4':
-                            pose4(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
+                            pose4(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy, accuracy_count)
                         case '5':
-                            pose5(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy)
+                            pose5(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy, accuracy_count)
                     
                     vedio_confirm = 0
                     vedio_has_choose = 0
@@ -320,19 +321,20 @@ while(count+1 >= 0):
                         match last_choose:
                             
                             case '1':
-                                dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy, accuracy_count)
                             case '2':
-                                dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy, accuracy_count)
                             case '3':
-                                dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy, accuracy_count)
                             case '4':
-                                dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy, accuracy_count)
                             case '5':
-                                dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy, accuracy_count)
                         
                         if(count_times == difficulty[int(last_times_choose) - 1] or dir == 100):
+                            accuracy_count = round(accuracy_count/count_times)
                             engine.say(choose_text[14][:4]+str(int(count_times))+choose_text[14][5])
-                            engine.say(choose_text[15][:4]+str(int(accuracy))+choose_text[15][5])
+                            engine.say(choose_text[15][:4]+str(int(accuracy_count))+choose_text[15][5])
                             engine.runAndWait()
 
                             dir = 0

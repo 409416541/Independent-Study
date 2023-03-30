@@ -9,9 +9,10 @@ dir = 0  # 0: 開 1: 合
 text = 'Jumping Jacks'
 count = 0
 accuracy = 0
+accuracy_count = 0
 internal_test = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
+def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
     engine = pyttsx3.init()
     engine.setProperty('rate', 160)
 
@@ -125,7 +126,8 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                             
                             accuracy1 = 100 - 2.5 * abs(angle_top1 - 160)
                             accuracy2 = 100 - 1.5 * abs(angle_top2 - 115)
-                            accuracy = (accuracy1+accuracy2)/2# 更新正確度
+                            accuracy = (accuracy1+accuracy2)/2  # 更新正確度
+                            accuracy_count += accuracy
                             angle_top1 = 180
                             angle_top2 = 180
                             dir = 0    # 更新狀態:開
@@ -151,6 +153,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 elif ( 90 <= angle_top2 < 102 ):
                                      displacement = 160
                                      accuracy_text = '腳不夠開'
+
                             else:
                                 count = count + 0.5
                                 displacement = 100
@@ -178,7 +181,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 cv2.imshow('Jumping Jacks', img)
 
             else:
-                return dir, count, img, accuracy
+                return dir, count, img, accuracy, accuracy_count
             
         else:
             break
