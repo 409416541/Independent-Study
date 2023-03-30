@@ -12,13 +12,12 @@ accuracy = 0
 accuracy_count = 0
 internal_test = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
+def Pose_Detected(cap, use_vedio, dir, count, text, accuracy_count):
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 160)
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Test_Media/Sit_ups.mp4')
-
-        engine = pyttsx3.init()
-        engine.setProperty('rate', 160)
 
         if not cap.isOpened():
             print("Cannot open video")
@@ -94,15 +93,15 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
                         break
 
                     else:
-                        return 100, count, img, accuracy
+                        return 100, count, img, accuracy_count
 
                 # 正確姿勢的範圍
-                if 53 <= angle2_1 <= 90 and 53 <= angle2_2 <= 90 \
+                if 53 <= angle2_1 <= 110 and 53 <= angle2_2 <= 110 \
                     and 140 <= angle3_1 <= 177 and 140 <= angle3_2 <= 177 :
 
                     # 目前狀態:起坐
                     if dir == 0:  # 之前狀態:躺著
-                        if  76 <= (angle1_1 + angle1_2)/2 <= 105:
+                        if 76 <= (angle1_1 + angle1_2)/2 <= 105:
                             
                             # angle_top1:角度極值
                             if angle_top1 > (angle1_1 + angle1_2)/2:
@@ -128,9 +127,9 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
                             angle_top3 = 180
                             dir = 0  # 更新狀態:躺著
 
-                            if(accuracy < 80):
+                            if(accuracy < 65):
                                 count = count - 0.5
-                                displacement = 220
+
                                 if ( 95 < angle_top1 <= 105 and 78 < angle_top2 <= 90 and 140 <= angle_top3 <= 152):
                                      displacement = 195
                                      accuracy_text = '完全不符合' 
@@ -179,7 +178,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
                 cv2.imshow('Sit Ups', img)
 
             else:
-                return dir, count, img, accuracy, accuracy_count
+                return dir, count, img, accuracy_count
                 
         else:
             break
@@ -190,6 +189,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy, accuracy_count):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir , count, text, accuracy)
+Pose_Detected(cap, 1, dir, count, text, accuracy_count)
 #internal_test = 1
-#Pose_Detected(cap, 0, dir , count, text, accuracy)
+#Pose_Detected(cap, 0, dir, count, text, accuracy_count)
