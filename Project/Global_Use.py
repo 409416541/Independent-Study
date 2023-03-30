@@ -44,6 +44,17 @@ def interface(img, text, row):
 
     #cv2.putText(img, text, (10, row), cv2.FONT_HERSHEY_TRIPLEX, 1.0, (245, 206, 96))
 
+def forshow(img, count, accuracy_count):
+    img[:, :, :] = 0
+    fontpath = './Font/NotoSansTC-Regular.otf'
+    imgPil = Image.fromarray(img)
+    draw = ImageDraw.Draw(imgPil)
+    draw.text((10, 30), count, fill=(245, 206, 96), font=ImageFont.truetype(fontpath, 20))
+    draw.text((10, 65), accuracy_count, fill=(245, 206, 96), font=ImageFont.truetype(fontpath, 20))
+    img = np.array(imgPil)
+
+    return img
+
 def byebyecount(img, count, row, col):
     cv2.putText(img, count, (row//2 -4, col//2 - 4), cv2.FONT_HERSHEY_SIMPLEX, 8, (255, 0, 255), 20)
 
