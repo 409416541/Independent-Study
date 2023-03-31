@@ -56,10 +56,11 @@ last_times_choose = 'NAN'
 
 # temp per act value
 dir = 0
-count_times= 0.0
+count_times = 0.0
 accuracy = 0
 
 # for showing the record
+last_count = 0.0
 accuracy_count = 0
 show = 1
 
@@ -349,6 +350,7 @@ while(count+1 >= 0):
                                 count_times_confirm = 0
                                 count_times_choose = 0
                                 count_times = 0.0
+                                last_count = 0.0
                                 other_start = 0.0
                                 other_end = 0.0
 
@@ -356,15 +358,19 @@ while(count+1 >= 0):
                             match last_choose:
                                 
                                 case '1':
-                                    dir, count_times, img, accuracy_count = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy_count)
+                                    dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                                 case '2':
-                                    dir, count_times, img, accuracy_count = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy_count)
+                                    dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                                 case '3':
-                                    dir, count_times, img, accuracy_count = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy_count)
+                                    dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                                 case '4':
-                                    dir, count_times, img, accuracy_count = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy_count)
+                                    dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
                                 case '5':
-                                    dir, count_times, img, accuracy_count = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy_count)
+                                    dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+
+                            if(last_count and last_count < count_times):
+                                accuracy_count += accuracy
+                                last_count = count_times
                             
                 case '3':
                     confirm = 0
