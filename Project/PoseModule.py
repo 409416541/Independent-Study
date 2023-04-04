@@ -25,7 +25,7 @@ class PoseDetector:
                                      min_tracking_confidence=self.trackCon)
         self.lmList = [] 
 
-    def findPose(self, img, draw=True):
+    def findPose(self, img, draw=False):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
         landmarks = []

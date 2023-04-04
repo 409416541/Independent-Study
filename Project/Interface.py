@@ -86,6 +86,16 @@ choose_text = ['再見',
                str(difficulty[0])+' 次', str(difficulty[1])+' 次', str(difficulty[2])+' 次', '回到上一頁',
                '您已完成 次', '準確度為 %']
 
+'''
+# for testing lag
+confirm = 1
+vedio_confirm = 1
+last_vedio_choose = '2'
+count_times_confirm = 1
+last_times_choose = 2
+last_choose = '1'
+'''
+
 while(count+1 >= 0):
 
     if(bye):
