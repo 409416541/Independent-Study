@@ -162,7 +162,11 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                                 pygame.mixer.music.load('./Test_Media/sound.wav')
                                 pygame.mixer.music.play()
 
-                else:
+                
+                elif angle1_1 > 180 and  angle1_2 > 180\
+                    and (angle2_1< 70 or angle2_1 > 125) and (angle2_2 < 70 or angle2_2) > 125\
+                    and (angle4_1 < 50 or angle4_1 > 110) and (angle4_2 < 50 or angle4_2) > 110:
+                        
                     displacement = 160
 
                     if(count):
@@ -189,6 +193,6 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     cap.release()
     cv2.destroyAllWindows()
 
-#Pose_Detected(cap, 1, dir, count, text, accuracy_count)
+#Pose_Detected(cap, 1, dir, count, text, accuracy)
 #internal_test = 1
-#Pose_Detected(cap, 0, dir, count, text, accuracy_count)
+#Pose_Detected(cap, 0, dir, count, text, accuracy)
