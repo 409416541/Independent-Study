@@ -86,7 +86,12 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                 break_1 = angle[6]
                 break_2 = angle[7]
 
-                if 160 <= break_1 + break_2 <= 200 and landmarks[20][0] - landmarks[19][0] > 0:
+                if 160 <= break_1 + break_2 <= 200\
+                   and landmarks[16][0] - landmarks[15][0] > 0\
+                   and landmarks[18][0] - landmarks[17][0] > 0\
+                   and landmarks[20][0] - landmarks[19][0] > 0\
+                   and landmarks[22][0] - landmarks[21][0] > 0:
+                
                     if(internal_test):
                         break
 
