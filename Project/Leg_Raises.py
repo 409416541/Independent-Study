@@ -163,7 +163,10 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                                 pygame.mixer.music.load('./Test_Media/sound.wav')
                                 pygame.mixer.music.play()
 
-                else:
+                elif (angle1_1<0 or angle1_1 >32) and (angle1_2<0 or angle1_2 >32) \
+                    and (angle2_1<50 or angle2_1 >180) and (angle2_2<50 or angle2_2 >180)\
+                    and (angle3_1<140 or angle3_1 >178) and(angle3_2<140 or angle3_2 >178) \
+                    and (angle4_1<160 or angle4_1 > 180) and (angle4_2<160 or angle4_2 > 180):
                     displacement = 160
 
                     if(count):
