@@ -4,14 +4,10 @@ import cv2
 import pygame
 import pyttsx3
 
-cap = 0
-dir = 0  # 0: 抬腿 1: 躺著
-text = 'Leg Raises'
-count = 0
-accuracy = 0
 internal_test = 0
+choose_count = 0
 
-def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
+def Pose_Detected(cap, use_vedio, internal_test, choose_count):
     engine = pyttsx3.init()
     engine.setProperty('rate', 160)
 
@@ -42,6 +38,11 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
+    dir = 0  # 0: 抬腿 1: 躺著
+    text = 'Leg Raises'
+    count = 0
+    accuracy = 0
+    accuracy_count = 0
     accuracy_text = '開始動作'
     displacement = 160
     angle_top1 = 180
@@ -49,11 +50,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
     angle2_1 = 0
 
     while True:
-        if(use_vedio or internal_test):
-            success, img = cap.read()
-
-        else:
-            success = cap.read()[0]
+        success, img = cap.read()
 
         if success:
             landmarks, img = detector.findPose(img, draw=True)
@@ -95,13 +92,22 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
                    and landmarks[16][0] - landmarks[15][0] > 10\
                    and landmarks[18][0] - landmarks[17][0] > 20\
                    and landmarks[20][0] - landmarks[19][0] > 20\
-                   and landmarks[22][0] - landmarks[21][0] > 20:
+                   and landmarks[22][0] - landmarks[21][0] > 20\
+                   or (count and count == choose_count):
                 
                     if(internal_test):
                         break
 
                     else:
-                        return 100, count, img, accuracy
+                        cv2.destroyAllWindows()
+
+                        if(not count):
+                            accuracy_count = 0
+
+                        else:
+                            accuracy_count = round(accuracy_count/count)
+
+                        return 100, count, accuracy_count
                 
                 # 正確姿勢的範圍
                 if 0 <= angle1_1 <= 32 and 0 <= angle1_2 <= 32 \
@@ -170,11 +176,7 @@ def Pose_Detected(cap, use_vedio, dir, count, text, accuracy):
 
             img = Global_Use.sport(img, angle2_1, 90, 180, str(int(count)), accuracy_text, displacement, text, imgc, imgr)
             
-            if(use_vedio or internal_test):
-                cv2.imshow('Leg Raises', img)
-
-            else:
-                return dir, count, img, accuracy
+            cv2.imshow(text, img)
 
         else:
             break

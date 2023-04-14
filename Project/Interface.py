@@ -54,21 +54,10 @@ count_times_confirm = 0
 count_times_choose = 0
 last_times_choose = 'NAN'
 
-# temp per act value
-dir = 0
-count_times = 0.0
-accuracy = 0
-
 # for showing the record
-last_count = 0.0
+complete_sport = 0
 accuracy_count = 0
 show = 1
-
-angle = 0
-bar_a = 0
-bar_b = 0
-accuracy_text = '開始動作'
-displacement = 160
 
 difficulty = [8, 15, 25]
 
@@ -244,15 +233,15 @@ while(count+1 >= 0):
                     match last_choose:
 
                         case '1':
-                            pose1(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy_count)
+                            pose1(cap, 1, 0, 0)
                         case '2':
-                            pose2(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy_count)
+                            pose2(cap, 1, 0, 0)
                         case '3': 
-                            pose3(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy_count)
+                            pose3(cap, 1, 0, 0)
                         case '4':
-                            pose4(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy_count)
+                            pose4(cap, 1, 0, 0)
                         case '5':
-                            pose5(cap, 1, 0, 0.0, choose_text[int(last_choose)], accuracy_count)
+                            pose5(cap, 1, 0, 0)
                     
                     vedio_confirm = 0
                     vedio_has_choose = 0
@@ -332,14 +321,8 @@ while(count+1 >= 0):
                                 other_start = time.time()                                
 
                     else:
-                        if(count_times == difficulty[int(last_times_choose) - 1] or dir == 100):
+                        if(complete_sport == 100):
                             if(show):
-                                if(not count_times):
-                                    accuracy_count = 0
-
-                                else:
-                                    accuracy_count = round(accuracy_count/count_times)
-
                                 img = Global_Use.forshow(img,\
                                 choose_text[14][:4]+str(int(count_times))+choose_text[14][5],\
                                 choose_text[15][:4]+str(int(accuracy_count))+choose_text[15][5])
@@ -351,7 +334,7 @@ while(count+1 >= 0):
                                 engine.say(choose_text[15][:4]+str(int(accuracy_count))+choose_text[15][5])
                                 engine.runAndWait()
 
-                                dir = 0
+                                complete_sport = 0
                                 show = 1
                                 confirm = 0
                                 has_choose = 0
@@ -359,8 +342,6 @@ while(count+1 >= 0):
                                 vedio_has_choose = 0
                                 count_times_confirm = 0
                                 count_times_choose = 0
-                                count_times = 0.0
-                                last_count = 0.0
                                 other_start = 0.0
                                 other_end = 0.0
 
@@ -368,19 +349,15 @@ while(count+1 >= 0):
                             match last_choose:
                                 
                                 case '1':
-                                    dir, count_times, img, accuracy = pose1(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                    complete_sport, count_times, accuracy_count = pose1(cap, 0, 0, choose_text[int(last_choose)])
                                 case '2':
-                                    dir, count_times, img, accuracy = pose2(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                    complete_sport, count_times, accuracy_count = pose2(cap, 0, 0, choose_text[int(last_choose)])
                                 case '3':
-                                    dir, count_times, img, accuracy = pose3(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                    complete_sport, count_times, accuracy_count = pose3(cap, 0, 0, choose_text[int(last_choose)])
                                 case '4':
-                                    dir, count_times, img, accuracy = pose4(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
+                                    complete_sport, count_times, accuracy_count = pose4(cap, 0, 0, choose_text[int(last_choose)])
                                 case '5':
-                                    dir, count_times, img, accuracy = pose5(cap, 0, dir, count_times, choose_text[int(last_choose)], accuracy)
-
-                            if(last_count and last_count < count_times):
-                                accuracy_count += accuracy
-                                last_count = count_times
+                                    complete_sport, count_times, accuracy_count = pose5(cap, 0, 0, choose_text[int(last_choose)])
                             
                 case '3':
                     confirm = 0
