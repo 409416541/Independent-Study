@@ -1,0 +1,28 @@
+執行 pyi-makespec Interface.py 建立一spec檔
+
+執行 pyinstaller Interface.spec 進行打包
+
+cd (你的路徑)\Independent-Study\Project\dist\Interface
+.\Interface
+debug
+
+從
+(你的路徑)\Python\Python310\Lib\site-packages\mediapipe
+把modle丟到
+(你的路徑)\Independent-Study\Project\dist\Interface\mediapipe
+
+a = Analysis(
+    ['Interface.py', 'PoseModule.py', 'Hand_Detecter.py', 'Global_Use.py', 'Jumping_Jacks.py', 'Leg_Raises.py', 'Push_Up.py', 'Sit_Ups.py', 'Squat.py'],
+    pathex=['.\\Project'],
+    binaries=[],
+    datas=[('.\\Project\\Font\\*.*', '.\\Font'), ('.\\Project\\Test_Media\\*.*', '.\\Test_Media')],
+    hiddenimports=['.\\Project'],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False,
+)

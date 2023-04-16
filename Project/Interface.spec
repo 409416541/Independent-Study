@@ -6,10 +6,10 @@ block_cipher = None
 
 a = Analysis(
     ['Interface.py', 'PoseModule.py', 'Hand_Detecter.py', 'Global_Use.py', 'Jumping_Jacks.py', 'Leg_Raises.py', 'Push_Up.py', 'Sit_Ups.py', 'Squat.py'],
-    pathex=['C:\\Users\\daniel\\Desktop\\Independent-Study\\Project'],
+    pathex=['.\\'],
     binaries=[],
-    datas=[('C:\\Users\\daniel\\Desktop\\Independent-Study\\Project\\Font\\*.*', '.\\Font'), ('C:\\Users\\daniel\\Desktop\\Independent-Study\\Project\\Test_Media\\*.*', '.\\Test_Media')],
-    hiddenimports=['C:\\Users\\daniel\\Desktop\\Independent-Study\\Project'],
+    datas=[('.\\Font\\*.*', '.\\Font'), ('.\\Test_Media\\*.*', '.\\Test_Media')],
+    hiddenimports=['.\\'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
