@@ -2,21 +2,18 @@
 
 執行 pyinstaller Interface.spec 進行打包
 
+debug
 cd (你的路徑)\Independent-Study\Project\dist\Interface
 .\Interface
-debug
 
-從
-(你的路徑)\Python\Python310\Lib\site-packages\mediapipe
-把modle丟到
-(你的路徑)\Independent-Study\Project\dist\Interface\mediapipe
-
+在spec檔裡面要修改
 a = Analysis(
     ['Interface.py', 'PoseModule.py', 'Hand_Detecter.py', 'Global_Use.py', 'Jumping_Jacks.py', 'Leg_Raises.py', 'Push_Up.py', 'Sit_Ups.py', 'Squat.py'],
-    pathex=['.\\Project'],
+    pathex=['.\\'],
     binaries=[],
-    datas=[('.\\Project\\Font\\*.*', '.\\Font'), ('.\\Project\\Test_Media\\*.*', '.\\Test_Media')],
-    hiddenimports=['.\\Project'],
+    datas=[('.\\Font\\*.*', '.\\Font'), ('.\\Test_Media\\*.*', '.\\Test_Media'), 
+           ('C:/Users/daniel/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules', 'mediapipe/modules')],
+    hiddenimports=['.\\'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
