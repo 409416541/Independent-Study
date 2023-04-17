@@ -1,12 +1,25 @@
-執行 pyi-makespec Interface.py 建立一spec檔
+**is remind *is title
 
-執行 pyinstaller Interface.spec 進行打包
+** terminal path needs to be Project
+
+* At terminal
+
+create spec file(if u already have spec file skip this step)
+pyi-makespec Interface.py
+
+** if ur spec file is new remeber modify it, modify that according to the last title
+
+for packing project
+pyinstaller Interface.spec
 
 debug
-cd (你的路徑)\Independent-Study\Project\dist\Interface
+** 2step
+cd (ur path)\Independent-Study\Project\dist\Interface
 .\Interface
 
-在spec檔裡面要修改
+
+* In spec file u need to modify
+
 a = Analysis(
     ['Interface.py', 'PoseModule.py', 'Hand_Detecter.py', 'Global_Use.py', 'Jumping_Jacks.py', 'Leg_Raises.py', 'Push_Up.py', 'Sit_Ups.py', 'Squat.py'],
     pathex=['.\\'],
