@@ -37,7 +37,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
     img = cap.read()[1]
     imgr, imgc = img.shape[:2]
 
-    dir = 0  # 0: 開 1: 合
+    dir = 0 # 0: 開 1: 合
     text = 'Jumping Jacks'
     count = 0
     accuracy = 0
@@ -112,8 +112,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                     and 70 <= angle2_1 <= 125 and 70 <= angle2_2 <= 125\
                     and 50<=angle4_1 <= 110 and 50<=angle4_2 <= 110:
                         
-                    # 目前狀態:開
-                    if dir == 0: # 之前狀態:close
+                    if dir == 0:
                         if 90 <= angle2_1 <= 125 and 150 <= angle1_1 <= 180\
                         and 90 <= angle2_2 <= 125 and 150 <= angle1_2 <= 180:
                             
@@ -124,10 +123,9 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                                 angle_top2 = (angle2_1 + angle2_2)/2
 
                             count = count + 0.5
-                            dir = 1    # 更新狀態:關
+                            dir = 1
 
-                    # 目前狀態:關
-                    if dir == 1: # 之前狀態:open
+                    if dir == 1:
                         if 70 <= angle2_1 <= 90 and 0 <= angle1_1 <= 30\
                         and 170 <= angle3_1 <= 180 \
                         and 70 <= angle2_2 <= 90 and 0 <= angle1_2 <= 30\
@@ -138,13 +136,10 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             accuracy = (accuracy1+accuracy2)/2  # 更新正確度
                             angle_top1 = 180
                             angle_top2 = 180
-                            dir = 0    # 更新狀態:開
+                            dir = 0
 
                             if(accuracy < 65):
                                 count = count - 0.5
-
-                                #print(angle1_1, angle1_2, angle2_1, angle2_2, angle3_1, angle3_2, angle4_1, angle4_2)
-                                #最正確 angle1 = 160 angle2 = 115 
                                 
                                 if ( 150 <= angle_top1 < 157 and 90 <= angle_top2 < 102):
                                      displacement = 310

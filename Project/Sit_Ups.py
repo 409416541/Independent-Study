@@ -104,36 +104,34 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
 
                         return 100, count, accuracy_count
 
-                # 正確姿勢的範圍
                 if 53 <= angle2_1 <= 110 and 53 <= angle2_2 <= 110 \
                     and 140 <= angle3_1 <= 177 and 140 <= angle3_2 <= 177 :
 
-                    # 目前狀態:起坐
-                    if dir == 0:  # 之前狀態:躺著
+                    if dir == 0:
                         if 76 <= (angle1_1 + angle1_2)/2 <= 105:
                             
-                            # angle_top1:角度極值
                             if angle_top1 > (angle1_1 + angle1_2)/2:
                                 angle_top1 = (angle1_1 + angle1_2)/2
+
                             if angle_top2 > (angle2_1 + angle2_2)/2:
                                 angle_top2 = (angle2_1 + angle2_2)/2
+
                             if angle_top3 > (angle3_1 + angle3_2)/2:
                                 angle_top3 = (angle3_1 + angle3_2)/2
                             count = count + 0.5
-                            dir = 1    # 更新狀態:起坐
+                            dir = 1
 
-                    # 目前狀態:躺著
-                    if dir == 1:  # 之前狀態:起坐
+                    if dir == 1:
                         if (angle1_1 + angle1_2)/2 >= 105:
 
                             accuracy1 = 100 - 2 * abs(angle_top1 - 85)
                             accuracy2 = 100 - 1.5 * abs(angle_top2 - 65)
                             accuracy3 = 100 - 1.5 * abs(angle_top3 - 165)
-                            accuracy = (accuracy1 + accuracy2 + accuracy3)/3    # 更新正確度
+                            accuracy = (accuracy1 + accuracy2 + accuracy3)/3  # 更新正確度
                             angle_top1 = 180
                             angle_top2 = 180
                             angle_top3 = 180
-                            dir = 0  # 更新狀態:躺著
+                            dir = 0
 
                             if(accuracy < 65):
                                 count = count - 0.5

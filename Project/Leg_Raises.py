@@ -108,29 +108,25 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             accuracy_count = round(accuracy_count/count)
 
                         return 100, count, accuracy_count
-                
-                # 正確姿勢的範圍
+
                 if 0 <= angle1_1 <= 32 and 0 <= angle1_2 <= 32 \
                     and 50 <= angle2_1 <= 180 and 50 <= angle2_2 <= 180 \
                     and 140 <= angle3_1 <= 178 and 140 <= angle3_2 <= 178 \
                     and 160 <= angle4_1 <= 180 and 160 <= angle4_2 <= 180:
                                     
-                    # 目前狀態:抬腿
-                    if dir == 0:   # 之前狀態:躺著
+                    if dir == 0:
                         if 65 <= angle2_1 <= 90 and 65 <= angle2_2 <= 90:
 
-                            # angle_top1:角度極值
                             if angle_top1 > (angle2_1 + angle2_2)/2:
                                 angle_top1 = (angle2_1 + angle2_2)/2
-                            # angle_top2:角度極值
+
                             if angle_top2 > (angle3_1 + angle3_2)/2:
                                 angle_top2 = (angle3_1 + angle3_2)/2
 
                             count = count + 0.5
-                            dir = 1    # 更新狀態:抬腿      
+                            dir = 1     
 
-                    # 目前狀態:躺著
-                    if dir == 1:# 之前狀態:抬腿
+                    if dir == 1:
                         if 161 <= angle2_1 <= 180 and 161 <= angle2_2 <= 180:
 
                             accuracy1 = 100 - 2.5 * abs(angle_top1 - 80)   
@@ -138,7 +134,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             accuracy = (accuracy1 + accuracy2) / 2  # 更新正確度
                             angle_top1 = 180
                             angle_top2 = 180
-                            dir = 0  # 更新狀態:躺著
+                            dir = 0
 
                             if(accuracy < 65):
                                 count = count - 0.5
@@ -172,7 +168,6 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
 
                     if(count):
                         accuracy_text = '超出範圍'
-                        #print(angle1_1, angle1_2, angle2_1, angle2_2, angle3_1, angle3_2, angle4_1, angle4_2)
 
             else:
                 displacement = 160
