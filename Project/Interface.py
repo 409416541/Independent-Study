@@ -11,6 +11,7 @@ import pyttsx3
 
 engine = pyttsx3.init()
 engine.setProperty('rate', 180)
+engine.setProperty('voice', 'zh')
 
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():

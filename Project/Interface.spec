@@ -9,7 +9,7 @@ a = Analysis(
     pathex=['./'],
     binaries=[],
     datas=[('./Font/*.*', './Font'), ('./Test_Media/*.*', './Test_Media'), 
-           ('~/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules', 'mediapipe/modules')],
+           ('C:/Users/daniel/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules', 'mediapipe/modules')],
     hiddenimports=['./'],
     hookspath=[],
     hooksconfig={},
