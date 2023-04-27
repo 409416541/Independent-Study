@@ -98,28 +98,26 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
 
                         return 100, count, accuracy_count
 
-                # 正確姿勢的範圍
                 if 46 <= angle1_1 <= 180 and 46 <= angle1_2 <= 180 \
                     and 61 <= angle2_1 <= 180 and 61 <= angle2_2 <= 180:
 
-                    # 目前狀態:蹲下
-                    if dir == 0:  # 之前狀態:站起
+                    if dir == 0:
                         if (46 <= angle1_1 <= 128 and 46 <= angle1_2 <= 128 \
                             and 61 <= angle2_1 <= 128 and 61 <= angle2_2 <= 128) or \
                             (((46 <= angle1_1 <= 128 and 61 <= angle2_1 <= 128) or \
                             (46 <= angle1_2 <= 128 and 61 <= angle2_2 <= 128)) and \
                             abs(angle1_1 - angle1_2)<25 and abs(angle2_1 - angle2_2)<35):
 
-                            # angle_top1:角度極值
                             if angle_top1 > (angle1_1 + angle1_2)/2:
                                 angle_top1 = (angle1_1 + angle1_2)/2
-                            if angle_top2 > (angle2_1 + angle2_2)/2:
-                                angle_top2 = (angle2_1 + angle2_2)/2    
-                            count = count + 0.5
-                            dir = 1    # 更新狀態:蹲下
 
-                    # 目前狀態:站起
-                    if dir == 1:  # 之前狀態:蹲下
+                            if angle_top2 > (angle2_1 + angle2_2)/2:
+                                angle_top2 = (angle2_1 + angle2_2)/2
+
+                            count = count + 0.5
+                            dir = 1
+
+                    if dir == 1:
                         if 141 <= angle1_1 <=180 and 141 <= angle1_2 <= 180 \
                             and 141 <= angle2_1 <= 180 and 141 <= angle2_2 <= 180:
 
@@ -128,7 +126,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             accuracy = (accuracy1 + accuracy2) / 2  # 更新正確度
                             angle_top1 = 180
                             angle_top2 = 180
-                            dir = 0  # 更新狀態:站起
+                            dir = 0
 
                             if(accuracy < 65):
                                 count = count - 0.5
