@@ -147,6 +147,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                                 count = count + 0.5
                                 displacement = 100
                                 accuracy_text = str(int(accuracy)) + ' %'
+                                accuracy_count += accuracy
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
