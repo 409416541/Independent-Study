@@ -6,11 +6,11 @@ block_cipher = None
 
 a = Analysis(
     ['Interface.py', 'PoseModule.py', 'Hand_Detecter.py', 'Global_Use.py', 'Jumping_Jacks.py', 'Leg_Raises.py', 'Push_Up.py', 'Sit_Ups.py', 'Squat.py'],
-    pathex=['.\\'],
+    pathex=['./'],
     binaries=[],
-    datas=[('.\\Font\\*.*', '.\\Font'), ('.\\Test_Media\\*.*', '.\\Test_Media'), 
+    datas=[('./Font/*.*', './Font'), ('./Test_Media/*.*', './Test_Media'), 
            ('~/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules', 'mediapipe/modules')],
-    hiddenimports=['.\\'],
+    hiddenimports=['./'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
