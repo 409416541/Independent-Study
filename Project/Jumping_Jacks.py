@@ -138,7 +138,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             angle_top2 = 180
                             dir = 0
 
-                            if(accuracy < 65):
+                            if(accuracy < 75):
                                 count = count - 0.5
                                 
                                 if ( 150 <= angle_top1 < 157 and 90 <= angle_top2 < 102):
