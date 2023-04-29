@@ -20,6 +20,8 @@ debug
 cd (ur path)\Independent-Study\Project\dist\Interface
 .\Interface
 
+** when u done the packing remind to check the new exe file, bec sometime pyinstaller will have some weird problem
+
 
 * In spec file u need to modify
 
