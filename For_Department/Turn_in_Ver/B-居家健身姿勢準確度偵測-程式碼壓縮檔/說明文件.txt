@@ -1,0 +1,2 @@
+data跟Interface.exe要放在同一資料夾，因為我是用相對路徑
+為了防止出問題source code一併附上，主程式為Interface.py
