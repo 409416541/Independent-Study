@@ -13,17 +13,16 @@ engine = pyttsx3.init()
 engine.setProperty('rate', 180)
 engine.setProperty('voice', 'zh')
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
+if cv2.VideoCapture(1).isOpened():
+    cap = cv2.VideoCapture(1)
 if not cap.isOpened():
-    cap = cv2.VideoCapture(0)
+    print('Cannot open camera')
+    
+    engine.say('Cannot open camera')
+    engine.runAndWait()
 
-    if not cap.isOpened():
-        print('Cannot open camera')
-        
-        engine.say('Cannot open camera')
-        engine.runAndWait()
-
-        exit()
+    exit()
 
 img = cap.read()[1]
 imgr, imgc = img.shape[:2]
