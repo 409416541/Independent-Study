@@ -38,7 +38,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
     imgr, imgc = img.shape[:2]
 
     dir = 0 # 0: 開 1: 合
-    text = 'Jumping Jacks'
+    text = '開合跳'
     count = 0
     accuracy = 0
     accuracy_count = 0

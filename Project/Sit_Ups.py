@@ -39,7 +39,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
     imgr, imgc = img.shape[:2]
 
     dir = 0  # 0: 仰臥 1: 起坐
-    text = 'Sit Ups'
+    text = '仰臥起坐'
     count = 0
     accuracy = 0
     accuracy_count = 0

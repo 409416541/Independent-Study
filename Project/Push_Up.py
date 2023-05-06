@@ -38,7 +38,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
     imgr, imgc = img.shape[:2]
 
     dir = 0  # 0: 挺身 1: 伏地
-    text = 'Push Up'
+    text = '伏地挺身'
     count = 0
     accuracy = 0
     accuracy_count = 0

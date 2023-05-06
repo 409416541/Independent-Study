@@ -5,6 +5,8 @@
 
 ** terminal path needs to be Project
 
+** for many file
+
 * At terminal
 
 create spec file(if u already have spec file skip this step)
@@ -22,7 +24,6 @@ cd (ur path)\Independent-Study\Project\dist\Interface
 
 ** when u done the packing remind to check the new exe file, bec sometime pyinstaller will have some weird problem
 
-
 * In spec file u need to modify
 
 a = Analysis(
@@ -30,7 +31,7 @@ a = Analysis(
     pathex=['.\\'],
     binaries=[],
     datas=[('.\\Font\\*.*', '.\\Font'), ('.\\Test_Media\\*.*', '.\\Test_Media'), 
-           ('C:/Users/daniel/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules', 'mediapipe/modules')],
+           ('~/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules', 'mediapipe/modules')],
     hiddenimports=['.\\'],
     hookspath=[],
     hooksconfig={},
@@ -41,3 +42,13 @@ a = Analysis(
     cipher=block_cipher,
     noarchive=False,
 )
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+** for single file
+** ur font path must be Physical path not Relative Path or PIL will error
+
+* At terminal
+
+pyinstaller -F Interface.py --add-data=".\PoseModule.py;." --add-data=".\Hand_Detecter.py;." --add-data=".\Global_Use.py;." --add-data=".\Jumping_Jacks.py;." --add-data=".\Leg_Raises.py;." --add-data=".\Push_Up.py;." --add-data=".\Sit_Ups.py;." --add-data=".\Squat.py;." --add-data=".\Font\*.*;." --add-data=".\Test_Media\*.*;." --add-data="~/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules;./mediapipe/modules"
