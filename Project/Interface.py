@@ -8,11 +8,6 @@ import Global_Use
 import cv2
 import time
 import pygame
-import pyttsx3
-
-engine = pyttsx3.init()
-engine.setProperty('rate', 180)
-engine.setProperty('voice', 'zh')
 
 pygame.mixer.init()
 
@@ -442,8 +437,8 @@ while(count+1 >= 0):
     if cv2.waitKey(5) == ord('q'):
         break
 
-engine.say(choose_text[0])
-engine.runAndWait()
+pygame.mixer.music.load('./voice/' + choose_text[0] + '.wav')
+pygame.mixer.music.play()
 
 cap.release()
 cv2.destroyAllWindows()
