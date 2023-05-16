@@ -17,8 +17,9 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
         if not cap.isOpened():
             print("Cannot open video")
             
-            engine.say('Cannot open video')
-            engine.runAndWait()
+            pygame.mixer.init()
+            pygame.mixer.music.load('./voice/Cannot open video.wav')
+            pygame.mixer.music.play()
 
             exit()  
 
@@ -28,8 +29,9 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
         if not cap.isOpened():
             print("Cannot open camera")
 
-            engine.say('Cannot open camera')
-            engine.runAndWait()
+            pygame.mixer.init()
+            pygame.mixer.music.load('./voice/Cannot open camera.wav')
+            pygame.mixer.music.play()
                     
             exit()  
 
@@ -149,7 +151,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
-                                pygame.mixer.music.load('./Test_Media/sound.wav')
+                                pygame.mixer.music.load('./voice/sound.wav')
                                 pygame.mixer.music.play()
 
                 elif (angle1_1 < 46 or angle1_1 > 180) and(angle1_2 < 46 or angle1_2 > 180) \
