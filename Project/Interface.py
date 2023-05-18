@@ -12,7 +12,7 @@ import pygame
 pygame.mixer.init()
 
 cap = cv2.VideoCapture(0)
-if cv2.VideoCapture(1).isOpened():
+if cv2.VideoCapture(1).read()[0]:
     cap = cv2.VideoCapture(1)
 if not cap.isOpened():
     print('Cannot open Camera')
