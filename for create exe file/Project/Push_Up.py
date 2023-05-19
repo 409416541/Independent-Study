@@ -2,23 +2,22 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 import pygame
-import pyttsx3
 
 internal_test = 0
 choose_count = 0
 
 def Pose_Detected(cap, use_vedio, internal_test, choose_count):
-    engine = pyttsx3.init()
-    engine.setProperty('rate', 160)
+    
+    pygame.mixer.init()
 
     if(use_vedio):
-        cap = cv2.VideoCapture('./data/Push_up.mp4')
+        cap = cv2.VideoCapture('./data/Test_Media/Push_up.mp4')
         
         if not cap.isOpened():
             print("Cannot open video")
             
-            engine.say('Cannot open video')
-            engine.runAndWait()
+            pygame.mixer.music.load('./data/Voice//Cannot open video.wav')
+            pygame.mixer.music.play()
 
             exit()  
 
@@ -28,8 +27,8 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
         if not cap.isOpened():
             print("Cannot open camera")
 
-            engine.say('Cannot open camera')
-            engine.runAndWait()
+            pygame.mixer.music.load('./data/Voice//Cannot open camera.wav')
+            pygame.mixer.music.play()
                     
             exit()  
 
@@ -101,7 +100,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                         else:
                             accuracy_count = round(accuracy_count/count)
 
-                        return 100, count, accuracy_count
+                        return 1, count, accuracy_count
 
                 if 140 <= angle2_1 <= 180 and 140 <= angle2_2 <= 180 \
                     and 140 <= angle3_1 <= 180 and 140 <= angle3_2 <= 180:
@@ -166,7 +165,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
-                                pygame.mixer.music.load('./data/sound.wav')
+                                pygame.mixer.music.load('./data/Voice/sound.wav')
                                 pygame.mixer.music.play()
 
                 elif (angle2_1<140 or angle2_1 > 180) and (angle2_2<140 or angle2_2 > 180) \

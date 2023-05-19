@@ -24,7 +24,7 @@ def sport(img, angle, a, b, count, accuracy, displacement, text, col, row):
     #cv2.putText(img, accuracy, (col-displacement, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
     #cv2.putText(img, text, (10, row-20), cv2, 1, (0, 78, 250), 2)
 
-    fontpath = './data/NotoSansTC-Regular.otf'
+    fontpath = './data/Font/NotoSansTC-Regular.otf'
     imgPil = Image.fromarray(img)
     draw = ImageDraw.Draw(imgPil)
     draw.text((col-displacement, 5), accuracy, fill=(240, 92, 186), font=ImageFont.truetype(fontpath, 35))
@@ -34,7 +34,7 @@ def sport(img, angle, a, b, count, accuracy, displacement, text, col, row):
     return img
     
 def interface(img, text, row):
-    fontpath = './data/NotoSansTC-Regular.otf'
+    fontpath = './data/Font/NotoSansTC-Regular.otf'
     imgPil = Image.fromarray(img)
     draw = ImageDraw.Draw(imgPil)
     draw.text((10, row), text, fill=(245, 206, 96), font=ImageFont.truetype(fontpath, 20))
@@ -46,7 +46,7 @@ def interface(img, text, row):
 
 def forshow(img, count, accuracy_count):
     img[:, :, :] = 0
-    fontpath = './data/NotoSansTC-Regular.otf'
+    fontpath = './data/Font/NotoSansTC-Regular.otf'
     imgPil = Image.fromarray(img)
     draw = ImageDraw.Draw(imgPil)
     draw.text((10, 30), count, fill=(245, 206, 96), font=ImageFont.truetype(fontpath, 20))

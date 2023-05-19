@@ -7,22 +7,19 @@ from Jumping_Jacks import Pose_Detected as pose5
 import Global_Use
 import cv2
 import time
-import pyttsx3
+import pygame
 
-engine = pyttsx3.init()
-engine.setProperty('rate', 180)
-engine.setProperty('voice', 'zh')
+pygame.mixer.init()
 
 cap = cv2.VideoCapture(0)
-if cv2.VideoCapture(1).isOpened():
+if cv2.VideoCapture(1).read()[0]:
     cap = cv2.VideoCapture(1)
-if not cap.isOpened():
-    print('Cannot open camera')
-    
-    engine.say('Cannot open camera')
-    engine.runAndWait()
 
-    exit()
+if not cap.isOpened():
+    print('Cannot open Camera')
+    
+    pygame.mixer.music.load('./data/Voice/Cannot open camera.wav')
+    pygame.mixer.music.play()
 
 img = cap.read()[1]
 imgr, imgc = img.shape[:2]
@@ -78,16 +75,6 @@ choose_text = ['再見',
                str(difficulty[0])+' 次', str(difficulty[1])+' 次', str(difficulty[2])+' 次', '回到上一頁',
                '您已完成 次', '準確度為 %']
 
-'''
-# for testing lag
-confirm = 1
-vedio_confirm = 1
-last_vedio_choose = '2'
-count_times_confirm = 1
-last_times_choose = 2
-last_choose = '1'
-'''
-
 while(count+1 >= 0):
 
     if(bye):
@@ -137,8 +124,8 @@ while(count+1 >= 0):
                     other_start = 0.0
                     other_end = 0.0
 
-                    engine.say(choose_text[int(last_choose)])
-                    engine.runAndWait()
+                    pygame.mixer.music.load('./data/Voice/' + choose_text[int(last_choose)] + '.wav')
+                    pygame.mixer.music.play()
 
                     if(last_choose == '6' and choose == '0'):
                         bye = 1
@@ -203,8 +190,8 @@ while(count+1 >= 0):
                         other_start = 0.0
                         other_end = 0.0
 
-                        engine.say(choose_text[int(last_vedio_choose)+6])
-                        engine.runAndWait()
+                        pygame.mixer.music.load('./data/Voice/' + choose_text[int(last_vedio_choose)+6] + '.wav')
+                        pygame.mixer.music.play()
 
                 elif(not nan_start and choose == 'NAN'):
                     nan_start = time.time()
@@ -297,8 +284,8 @@ while(count+1 >= 0):
                                         other_start = 0.0
                                         other_end = 0.0
 
-                                    engine.say(choose_text[int(last_times_choose)+9])
-                                    engine.runAndWait()
+                                    pygame.mixer.music.load('./data/Voice/' + choose_text[int(last_times_choose)+9] + '.wav')
+                                    pygame.mixer.music.play()
 
                             elif(not nan_start and choose == 'NAN'):
                                 count_times_choose = 1
@@ -324,7 +311,7 @@ while(count+1 >= 0):
                                 other_start = time.time()                                
 
                     else:
-                        if(complete_sport == 100):
+                        if(complete_sport):
                             if(show):
                                 img = Global_Use.forshow(img,\
                                 choose_text[14][:4]+str(int(count_times))+choose_text[14][5],\
@@ -333,9 +320,68 @@ while(count+1 >= 0):
                                 show = 0
 
                             else:
-                                engine.say(choose_text[14][:4]+str(int(count_times))+choose_text[14][5])
-                                engine.say(choose_text[15][:4]+str(int(accuracy_count))+choose_text[15][5])
-                                engine.runAndWait()
+                                # count
+                                pygame.mixer.music.load('./data/Voice/' + choose_text[14][:4] + '.wav')
+                                pygame.mixer.music.play()
+                                time.sleep(1)
+
+                                if(int(count_times) >= 20):
+                                    pygame.mixer.music.load('./data/Voice/' + str(int(count_times))[0] + '.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5)
+                                    pygame.mixer.music.load('./data/Voice/10.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5)
+
+                                    if(str(int(count_times))[1]):                                    
+                                        pygame.mixer.music.load('./data/Voice/' + str(int(count_times))[1] + '.wav')
+                                        pygame.mixer.music.play()
+                                    time.sleep(0.5)
+                                
+                                elif(int(count_times) >= 10):
+                                    pygame.mixer.music.load('./data/Voice/10.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5)
+
+                                    if(str(int(count_times))[1]):                                    
+                                        pygame.mixer.music.load('./data/Voice/' + str(int(count_times))[1] + '.wav')
+                                        pygame.mixer.music.play()
+                                    time.sleep(0.5)
+
+                                else:
+                                    pygame.mixer.music.load('./data/Voice/' + str(int(count_times)) + '.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5)
+
+                                pygame.mixer.music.load('./data/Voice/' + choose_text[14][5] + '.wav')
+                                pygame.mixer.music.play()
+                                time.sleep(0.5)
+
+                                # accuracy
+                                pygame.mixer.music.load('./data/Voice/' + choose_text[15][:4] + '.wav')
+                                pygame.mixer.music.play()
+                                time.sleep(1)
+                                pygame.mixer.music.load('./data/Voice/' + choose_text[15][5] + '.wav')
+                                pygame.mixer.music.play()
+                                time.sleep(1)
+
+                                if(int(accuracy_count) > 0):
+                                    pygame.mixer.music.load('./data/Voice/' + str(int(accuracy_count))[0] + '.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5)
+                                    pygame.mixer.music.load('./data/Voice/10.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5) 
+
+                                    if(str(int(accuracy_count))[1]):                                   
+                                        pygame.mixer.music.load('./data/Voice/' + str(int(accuracy_count))[1] + '.wav')
+                                        pygame.mixer.music.play()
+                                        time.sleep(0.5)
+                                    
+                                else:
+                                    pygame.mixer.music.load('./data/Voice/' + str(int(accuracy_count)) + '.wav')
+                                    pygame.mixer.music.play()
+                                    time.sleep(0.5)
 
                                 complete_sport = 0
                                 show = 1
@@ -375,8 +421,8 @@ while(count+1 >= 0):
     if cv2.waitKey(5) == ord('q'):
         break
 
-engine.say(choose_text[0])
-engine.runAndWait()
+pygame.mixer.music.load('./data/Voice/' + choose_text[0] + '.wav')
+pygame.mixer.music.play()
 
 cap.release()
 cv2.destroyAllWindows()

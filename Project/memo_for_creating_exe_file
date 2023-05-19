@@ -51,4 +51,4 @@ a = Analysis(
 
 * At terminal
 
-pyinstaller -F Interface.py --add-data=".\PoseModule.py;." --add-data=".\Hand_Detecter.py;." --add-data=".\Global_Use.py;." --add-data=".\Jumping_Jacks.py;." --add-data=".\Leg_Raises.py;." --add-data=".\Push_Up.py;." --add-data=".\Sit_Ups.py;." --add-data=".\Squat.py;." --add-data=".\Font\*.*;." --add-data=".\Test_Media\*.*;." --add-data="~/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules;./mediapipe/modules"
+pyinstaller -F Interface.py --add-data=".\PoseModule.py;." --add-data=".\Hand_Detecter.py;." --add-data=".\Global_Use.py;." --add-data=".\Jumping_Jacks.py;." --add-data=".\Leg_Raises.py;." --add-data=".\Push_Up.py;." --add-data=".\Sit_Ups.py;." --add-data=".\Squat.py;." --add-data="~/AppData/Local/Programs/Python/Python310/Lib/site-packages/mediapipe/modules;./mediapipe/modules"

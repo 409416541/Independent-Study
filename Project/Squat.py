@@ -2,14 +2,13 @@ from PoseModule import PoseDetector
 import Global_Use
 import cv2
 import pygame
-import pyttsx3
 
 internal_test = 0
 choose_count = 0
 
 def Pose_Detected(cap, use_vedio, internal_test, choose_count):
-    engine = pyttsx3.init()
-    engine.setProperty('rate', 160)
+    
+    pygame.mixer.init()
 
     if(use_vedio):
         cap = cv2.VideoCapture('./Test_Media/Squat.mp4')
@@ -17,8 +16,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
         if not cap.isOpened():
             print("Cannot open video")
             
-            pygame.mixer.init()
-            pygame.mixer.music.load('./voice/Cannot open video.wav')
+            pygame.mixer.music.load('./Voice/Cannot open video.wav')
             pygame.mixer.music.play()
 
             exit()  
@@ -29,8 +27,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
         if not cap.isOpened():
             print("Cannot open camera")
 
-            pygame.mixer.init()
-            pygame.mixer.music.load('./voice/Cannot open camera.wav')
+            pygame.mixer.music.load('./Voice/Cannot open camera.wav')
             pygame.mixer.music.play()
                     
             exit()  
@@ -151,7 +148,7 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                             
                             if count % 1 == 0:
                                 pygame.mixer.init()
-                                pygame.mixer.music.load('./voice/sound.wav')
+                                pygame.mixer.music.load('./Voice/sound.wav')
                                 pygame.mixer.music.play()
 
                 elif (angle1_1 < 46 or angle1_1 > 180) and(angle1_2 < 46 or angle1_2 > 180) \
