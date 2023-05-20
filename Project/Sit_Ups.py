@@ -39,11 +39,13 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
 
     dir = 0  # 0: 仰臥 1: 起坐
     text = '仰臥起坐'
+    text_en = 'Sit Ups'
+    bar_displacement = 0
     count = 0
     accuracy = 0
     accuracy_count = 0
     accuracy_text = '開始動作'
-    displacement = 160
+    text_displacement = 160
     angle_top1 = 180
     angle_top2 = 180
     angle_top3 = 180
@@ -136,30 +138,30 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                                 count = count - 0.5
 
                                 if ( 95 < angle_top1 <= 105 and 78 < angle_top2 <= 90 and 140 <= angle_top3 <= 152):
-                                     displacement = 195
+                                     text_displacement = 195
                                      accuracy_text = '完全不符合' 
                                 elif ( 95 < angle_top1 <= 105 and 78 < angle_top2 <= 90):
-                                     displacement = 380
+                                     text_displacement = 380
                                      accuracy_text = '腰不夠上來 膝蓋不夠彎' 
                                 elif ( 95 < angle_top1 <= 105 and 140 <= angle_top3 <= 152):
-                                     displacement = 345
+                                     text_displacement = 345
                                      accuracy_text = '腰不夠上來 手軸太彎' 
                                 elif (78 < angle_top2 <= 90 and 140 <= angle_top3 <= 152):
-                                     displacement = 345
+                                     text_displacement = 345
                                      accuracy_text = '膝蓋不夠彎 手軸太彎' 
                                 elif ( 95 < angle_top1 <= 105):
-                                     displacement = 195
+                                     text_displacement = 195
                                      accuracy_text = '腰不夠上來'
                                 elif ( 78 < angle_top2 <= 90):
-                                     displacement = 195
+                                     text_displacement = 195
                                      accuracy_text = '膝蓋不夠彎'
                                 elif ( 140 <= angle_top3 <= 152):
-                                     displacement = 160
+                                     text_displacement = 160
                                      accuracy_text = '手軸太彎'
 
                             else:
                                 count = count + 0.5
-                                displacement = 100
+                                text_displacement = 100
                                 accuracy_text = str(int(accuracy)) + ' %'
                                 accuracy_count += accuracy                                
                             
@@ -170,18 +172,21 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
 
                 elif (angle2_1< 53 or angle2_1 > 110) and (angle2_2< 53 or angle2_2 > 110) \
                     and (angle3_1 < 140 or angle3_1 > 177) and (angle3_1 < 140 or angle3_2 > 177) :
-                    displacement = 160
+                    text_displacement = 160
 
                     if(count):
                         accuracy_text = '超出範圍'
 
             else:
-                displacement = 160
+                text_displacement = 160
                 accuracy_text = '開始動作'
+
+            if(count >= 10):
+                bar_displacement = 40
                                     
-            img = Global_Use.sport(img, angle1_1, 85, 125, str(int(count)), accuracy_text, displacement, text, imgc, imgr)
+            img = Global_Use.sport(img, angle1_1, 85, 125, bar_displacement, str(int(count)), accuracy_text, text_displacement, text, imgc, imgr)
             
-            cv2.imshow('Sit Ups', img)
+            cv2.imshow(text_en, img)
                 
         else:
             break

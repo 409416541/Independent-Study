@@ -17,17 +17,17 @@ img = np.array(imgPil)
 def thecount(img, count):       
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
 
-def sport(img, angle, a, b, count, accuracy, displacement, text, col, row):
-    bar = np.interp(angle, (a, b), (60, 260))
-    cv2.rectangle(img, (60, 28), (int(bar), 48), (91, 245, 150), cv2.FILLED)
+def sport(img, angle, a, b, bar_displacement, count, accuracy, text_displacement, text, col, row):
+    bar = np.interp(angle, (a, b), (60+bar_displacement, 260+bar_displacement))
+    cv2.rectangle(img, (60+bar_displacement, 28), (int(bar), 48), (91, 245, 150), cv2.FILLED)
     cv2.putText(img, count, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (240, 92, 186), 3)
-    #cv2.putText(img, accuracy, (col-displacement, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
+    #cv2.putText(img, accuracy, (col-text_displacement, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (240, 92, 186), 2)
     #cv2.putText(img, text, (10, row-20), cv2, 1, (0, 78, 250), 2)
 
     fontpath = './Font/NotoSansTC-Regular.otf'
     imgPil = Image.fromarray(img)
     draw = ImageDraw.Draw(imgPil)
-    draw.text((col-displacement, 5), accuracy, fill=(240, 92, 186), font=ImageFont.truetype(fontpath, 35))
+    draw.text((col-text_displacement, 5), accuracy, fill=(240, 92, 186), font=ImageFont.truetype(fontpath, 35))
     draw.text((10, row-45), text, fill=(0, 78, 250), font=ImageFont.truetype(fontpath, 25))
     img = np.array(imgPil)
 

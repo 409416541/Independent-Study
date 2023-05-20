@@ -38,11 +38,13 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
 
     dir = 0 # 0: 開 1: 合
     text = '開合跳'
+    text_en = 'Jumping Jacks'
+    bar_displacement = 0
     count = 0
     accuracy = 0
     accuracy_count = 0
     accuracy_text = '開始動作'
-    displacement = 160
+    text_displacement = 160
     angle_top1 = 180
     angle_top2 = 180
     angle2_1 = 0
@@ -141,24 +143,24 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                                 count = count - 0.5
                                 
                                 if ( 150 <= angle_top1 < 157 and 90 <= angle_top2 < 102):
-                                     displacement = 310
+                                     text_displacement = 310
                                      accuracy_text = '手不夠高 腳不夠開' 
                                 elif ( 173 < angle_top1 <= 180 and 90 <= angle_top2 < 102):
-                                     displacement = 275
+                                     text_displacement = 275
                                      accuracy_text = '手太高 腳不夠開' 
                                 elif ( 150 <= angle_top1 < 157 ):
-                                     displacement = 160
+                                     text_displacement = 160
                                      accuracy_text = '手不夠高' 
                                 elif ( 173 < angle_top1 <= 180 ):
-                                     displacement = 125
+                                     text_displacement = 125
                                      accuracy_text = '手太高'
                                 elif ( 90 <= angle_top2 < 102 ):
-                                     displacement = 160
+                                     text_displacement = 160
                                      accuracy_text = '腳不夠開'
 
                             else:
                                 count = count + 0.5
-                                displacement = 100
+                                text_displacement = 100
                                 accuracy_text = str(int(accuracy)) + ' %'
                                 accuracy_count += accuracy
                             
@@ -172,18 +174,21 @@ def Pose_Detected(cap, use_vedio, internal_test, choose_count):
                     and (angle2_1< 70 or angle2_1 > 125) and (angle2_2 < 70 or angle2_2) > 125\
                     and (angle4_1 < 50 or angle4_1 > 110) and (angle4_2 < 50 or angle4_2) > 110:
                         
-                    displacement = 160
+                    text_displacement = 160
 
                     if(count):
                         accuracy_text = '超出範圍'
 
             else:
-                displacement = 160
+                text_displacement = 160
                 accuracy_text = '開始動作'
-               
-            img = Global_Use.sport(img, angle2_1, 80, 100, str(int(count)), accuracy_text, displacement, text, imgc, imgr)
 
-            cv2.imshow(text, img)
+            if(count >= 10):
+                bar_displacement = 40
+                   
+            img = Global_Use.sport(img, angle2_1, 80, 100, bar_displacement, str(int(count)), accuracy_text, text_displacement, text, imgc, imgr)
+
+            cv2.imshow(text_en, img)
             
         else:
             break
